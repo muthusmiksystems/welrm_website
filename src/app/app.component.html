@@ -1,0 +1,40 @@
+<app-toast> </app-toast>
+<router-outlet ></router-outlet>
+<app-spinner></app-spinner>
+<p-toast position="bottom-center"></p-toast>
+
+<!-- whatsapp -->
+<div class="whatsapp" (cdkDragStarted)="handleDragStart($event)" (click)="handleClick($event)" cdkDrag>
+    <img src="assets/imgs/whatsapp.png" alt="Whatsapp Icon">
+</div>
+
+
+<!-- go to top -->
+<div class="scroll-to-top">
+    <button type="button" class="btn scl-top-btn" pTooltip="Go to Top" *ngIf="isShow" data-toggle="button" (click)="scrollToTop()">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+</div>
+
+<!-- responsive footerbar -->
+ <div class="res-footer" *ngIf="isMobileView">
+    <div class="res-footerInner">
+        <ng-container *ngFor="let item of footerItems">
+            <div class="footer-items" [routerLink]="[item.route]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="item?.name === 'Home'" (click)="closeSidebar()">
+                <div class="icon-img">
+                    <img class="img-cover" src="{{ item.icon }}" alt="">
+                </div>                
+                <label>{{ item.name }}</label>
+            </div>
+            <div class="footer-items" [routerLink]="[item.route]" [queryParams]="{ active: item?.slug ? item.slug : '' }" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="item?.name !== 'Home'">
+                <div class="icon-img">
+                    <img class="img-cover" src="{{ item.icon }}" alt="">
+                </div>                
+                <label>{{ item.name }}</label>
+            </div>
+        </ng-container>
+    </div>
+ </div>
+
+<!-- responsive sidebar -->
+<app-pr-sidebar *ngIf="isMobileView"></app-pr-sidebar>

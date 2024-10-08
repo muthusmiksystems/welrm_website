@@ -1,0 +1,32 @@
+<div id="myprofile" class="profile-card">
+    <div class="profile-bd">
+        <form>
+            <div class="profile-detail">
+                <div class="pr-img">
+                    <label for="uplode-dp" class="upload-lb">
+                        <input type="file" name="" id="upload-dp" (change)="fileUpload($event)">
+                        <img class="img-cover" [src]="userImg" alt="" *ngIf="userImg">
+                        <img class="camara-icon" src="assets/imgs/camera-red.svg" alt="" *ngIf="!userImg">
+                        <span class="over-span">Change Image</span>
+                    </label>
+                </div>
+                <div class="pr-info">
+                    <div class="info-inner custom-input">
+                        <label class="info-lb form-label">Name</label>
+                        <input type="text" class="input-field" placeholder="" name="name" [(ngModel)]="fullName" value="{{fullName}}">
+                    </div>
+                    <div class="info-inner custom-input">
+                        <label class="info-lb form-label">Email</label>
+                        <input type="text" class="input-field" placeholder="" name="email" [(ngModel)]="email"  value="{{email}}">
+                    </div>
+                    <div class="info-inner custom-input">
+                        <label class="info-lb form-label">Phone Number</label>
+                        <input class="hide-spin input-field" type="number" name="number" [(ngModel)]="mobile"  value="{{mobile}}" disabled>
+                        <img class="verified-num" src="assets/imgs/email-verified.svg" alt="">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="custom-btn">Update <img src="assets/imgs/redirect-arrow-white.svg" alt=""></button>
+        </form>
+    </div>
+</div>

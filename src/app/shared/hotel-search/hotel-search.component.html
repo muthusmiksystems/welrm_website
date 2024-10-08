@@ -1,0 +1,146 @@
+<div class="container">
+  <div class="search-card" [ngClass]="{ 'list-route': isListRoute }">
+    <form class="sForm" [formGroup]="form" (ngSubmit)="submit(guestsRoomsDropdown)"
+      [ngClass]="{ 'list-route': isListRoute }">
+      <div class="form-row" [ngClass]="{ 'list-route': isListRoute }">
+        <div class="left-row">
+          <span class="bestprice-span">Search hotels In best prices</span>
+          <div class="form-input location" [ngClass]="{ 'list-route': isListRoute }">
+            <div class="input-head">
+              <img [ngClass]="{ 'list-route': isListRoute }" src="assets/imgs/location.svg" alt="">
+              <!-- <span>Location</span> -->
+              <span [ngClass]="{ 'list-route': isListRoute }">Enter City Name,Location or Specific hotel</span>
+            </div>
+            <div class="wl-dropdown" ngbDropdown [ngClass]="{ 'list-route': isListRoute }">
+              <input class="inputfield" [ngClass]="{ 'list-route': isListRoute }" type="text"
+                formControlName="cityOrhotelOrneighborhood" placeholder="Search...">
+              <span class="countryName" [ngClass]="{ 'list-route': isListRoute }"
+                style="margin-left: 28px;">India</span>
+              <!-- <div ngbDropdownMenu aria-labelledby="dropdownConfig1">   ngbDropdownToggle
+                <div class="wl-quantity">
+                  <div class="wlqlt-head">
+                    <label>Explore Destinations</label>
+                  </div>
+                  <div class="wlquantity-grp">
+                    <div class="searchbar">
+                      <img class="search-red" src="assets/imgs/search-red.svg" alt="">
+                      <input type="text" name="searchbar" placeholder="Search...">
+                    </div>
+                    <ul class="wlsrc-ul">
+                      <li *ngFor="let city of searchCities" (click)="selectCity(city.name)" ngbDropdownItem><img src="assets/imgs/location-search-pin.svg" alt="">{{city.name}}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+
+          <div class="form-input checkIn" [ngClass]="{ 'list-route': isListRoute }">
+            <div class="input-head">
+              <img [ngClass]="{ 'list-route': isListRoute }" src="assets/imgs/calendar.svg" alt="">
+              <span [ngClass]="{ 'list-route': isListRoute }">Check-in</span>
+            </div>
+            <p-calendar id="checkInDate" [minDate]="minimumDate" dateFormat="d M y" class="calendar-control"
+              [ngClass]="{ 'list-route': isListRoute }" formControlName="checkInDate" (onSelect)="onSelectClose($event)"
+              
+              ></p-calendar>
+            <span class="countryName" [ngClass]="{ 'list-route': isListRoute }">{{form.controls.checkInDate.value ?
+              (form.controls.checkInDate.value | date :
+              'EEEE'):''}}</span>
+          </div>
+
+          <div class="form-input checkOut" [ngClass]="{ 'list-route': isListRoute }">
+            <div class="input-head">
+              <img [ngClass]="{ 'list-route': isListRoute }" src="assets/imgs/calendar.svg" alt="">
+              <span [ngClass]="{ 'list-route': isListRoute }">Check-out</span>
+            </div>
+            <p-calendar id="checkOutDate" [ngClass]="{ 'list-route': isListRoute }" [minDate]="minimumDatecIn"
+              dateFormat="d M y" class="calendar-control" formControlName="checkOutDate"></p-calendar>
+            <span class="countryName" [ngClass]="{ 'list-route': isListRoute }">{{form.controls.checkOutDate.value ?
+              (form.controls.checkOutDate.value | date :
+              'EEEE'):''}}</span>
+          </div>
+
+          <div class="form-input gRooms" [ngClass]="{ 'list-route': isListRoute }">
+            <div class="input-head">
+              <img [ngClass]="{ 'list-route': isListRoute }" src="assets/imgs/profile-2user.svg" alt="">
+              <span [ngClass]="{ 'list-route': isListRoute }">Rooms & Guests</span>
+            </div>
+            <div class="wl-dropdown" ngbDropdown #guestsRoomsDropdown="ngbDropdown">
+              <button type="button" class="btn inputfield" id="dropdownConfig" ngbDropdownToggle
+                style="margin-left: 0px;" [ngClass]="{ 'list-route': isListRoute }">
+                {{room}}
+                <pre> Room </pre> {{adults}}
+                <pre> Adults</pre>
+              </button>
+              <!-- <span class="countryName">{{room}} Rooms</span> -->
+              <div ngbDropdownMenu aria-labelledby="dropdownConfig">
+                <div class="wl-quantity">
+                  <div class="wlquantity-grp">
+                    <div class="wlbox">
+                      <label>Room <span>(Max 7)</span></label>
+                      <div class="wlqty">
+                        <button class="wlminus wl-btn" type="button" (click)="roomDeceaseF()">-</button>
+                        <div class="wlvalue">{{room}}</div>
+                        <button class="wlplus wl-btn" type="button" (click)="roomIncreseF()">+</button>
+                      </div>
+                    </div>
+                    <div class="wlbox">
+                      <label>Adults <span>(12+ years)</span></label>
+                      <div class="wlqty">
+                        <button class="wlminus wl-btn" type="button" (click)="adultDeceaseF()">-</button>
+                        <div class="wlvalue">{{adults}}</div>
+                        <button class="wlplus wl-btn" type="button" (click)="adultIncreseF()">+</button>
+                      </div>
+                    </div>
+                    <div class="wlbox">
+                      <label>Children <span>(0-12 years)</span></label>
+                      <div class="wlqty">
+                        <button class="wlminus wl-btn" type="button" (click)="childDeceaseF()">-</button>
+                        <div class="wlvalue">{{childs}}</div>
+                        <button class="wlplus wl-btn" type="button" (click)="childIncreseF()">+</button>
+                      </div>
+                    </div>
+                    <div class="child-grp">
+                      <div class="wlbox" *ngFor="let child of childArr; let i = index">
+                        <div>
+                          <label>Child <span>({{child.id}}) Age</span></label>
+                          <span class="childError" *ngIf="child?.msg">{{child.msg}}</span>
+                        </div>
+                        <div class="wlqty childdropdown">
+                          <div class="wlvalue">{{child.selected ? child.selected : ''}}</div>
+                          <div class="dropdown">
+                            <button class="btn dropdown-toggle wlplus wl-btn" type="button" data-bs-toggle="dropdown"
+                              aria-expanded="false"></button>
+                            <ul class="dropdown-menu">
+                              <li *ngFor="let age of childAge" (click)="child.selected = age.name">{{age.name}}</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="wl-ftr">
+                    <!-- <div class="wl-radio">
+                      <p-radioButton name="petFriendly" inputId="petfriendly" formControlName="petFriendly" />
+                      <label for="petfriendly">Pet-friendly accommodations only.</label>
+                    </div> -->
+                    <button class="csprimary-btn" type="button"
+                      (click)="checkChildAge(guestsRoomsDropdown)">Done</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-input form-submit">
+          <label for="submit-btn" [ngClass]="{ 'list-route': isListRoute }">
+            <span class="search-span" [ngClass]="{ 'list-route': isListRoute }">{{ isRoomDetailsRoute ? 'Update' : 'Search' }}</span>
+            <!-- <img class="search-icon" src="assets/imgs/search-normal.svg" alt=""> -->
+            <input type="submit" value="">
+          </label>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

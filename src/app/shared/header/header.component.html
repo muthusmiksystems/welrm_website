@@ -1,0 +1,143 @@
+<div *ngIf="!isScrolled && !showHotelSearch" class="header"
+  [ngClass]="wrapperClasses && wrapperClasses.length > 0 ? wrapperClasses : []">
+  <div class="inner-header">
+    <div class="left-inner">
+      <div class="logo">
+        <a routerLink="/" class="desktop">
+          <img src="assets/imgs/logo.png" alt="Logo" height="42" width="145" />
+        </a>
+        <a routerLink="/" class="responsive">
+          <img src="assets/imgs/logo-white.png" alt="Logo" height="32" width="94" />
+        </a>
+      </div>
+      <ul class="callPropertyLinks">
+        <li>
+          <figure>
+            <img src="assets/imgs/call.svg" alt="Call" />
+          </figure>
+          <div class="links">
+            <span>Book now:</span>
+            <a href="tel:9584290842">+91-9584290842</a>
+          </div>
+        </li>
+        <li>
+          <figure>
+            <img src="assets/imgs/dollar-square.svg" alt="Dollar" />
+          </figure>
+          <div class="links">
+            <span>Start Earning:</span>
+            <a href="/hotel-partner">List Your Property</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="right-inner">
+      <ul>
+        <li routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</li>
+        <li routerLink="/about-us" routerLinkActive="active">About Us</li>
+        <li routerLink="/contact-us" routerLinkActive="active">Contact Us</li>
+        <li routerLink="/blog" routerLinkActive="active">Blogs</li>
+      </ul>
+      <div class="notification" *ngIf="isLoggedIn">
+        <i class="bi bi-bell-fill" id="heart" (click)="gotoNext('Notifications')">
+          <span class="badge" *ngIf="notification">{{ notification }}</span>
+        </i>
+      </div>
+      <div class="responsive call">
+        <a href="tel:9584290842">
+          <img class="profile-img" src="assets/imgs/call-white.svg" alt="Call" />
+        </a>
+      </div>
+
+      <!-- Desktop login button -->
+      <button class="login-btn" *ngIf="!isLoggedIn" (click)="openLogin()">
+        <img class="log-img" src="assets/imgs/profile.svg" alt="Login" />
+        Login
+      </button>
+
+      <!-- Responsive login button -->
+      <button type="button" class="responsive log-responsive" *ngIf="!isLoggedIn" (click)="openLogin()">
+        <img src="assets/imgs/profile-white.svg" alt="Login" />
+      </button>
+      <div class="profile-item" *ngIf="isLoggedIn" (click)="gotoNext()">
+        <div class="profile-img">
+          <img class="user-img img-cover desktop" src="assets/imgs/profile.svg" alt="User Profile" />
+          <img class="user-img img-cover responsive" src="assets/imgs/profile-white.svg" alt="User Profile" />
+        </div>
+        <span class="user-name desktop" *ngIf="userData?.data?.user?.fullName">
+          {{ userData?.data?.user?.fullName }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isScrolled" class="header1">
+  <div class="inner-header">
+    <div class="left-inner">
+      <div class="logo">
+        <a routerLink="/" class="desktop">
+          <img src="assets/imgs/logo.png" alt="Logo" height="42" width="145" />
+        </a>
+        <a routerLink="/" class="responsive">
+          <img src="assets/imgs/logo-white.png" alt="Logo" height="32" width="94" />
+        </a>
+      </div>
+    </div>
+    <div class="right-inner">
+      <button class="search-toggle" (click)="toggleHotelSearch()">
+        <img src="assets/imgs/menu.png" alt="Search" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Ensure this div is outside .inner-header -->
+  <div *ngIf="showHotelSearch" class="search">
+    <app-hotel-search (searchChange)="onSearchChange($event)"></app-hotel-search>
+  </div>
+</div>
+
+<div *ngIf="isScrolled" class="search-head">
+  <div class="search">
+    <app-hotel-search (searchChange)="onSearchChange($event)"></app-hotel-search>
+  </div>
+</div>
+
+<ng-template #becomeHost let-modal>
+  <div class="modal-body">
+    <button type="button" class="close-x-btn" (click)="modal.dismiss('Cross click')">
+      <i class="fa-solid fa-x"></i>
+    </button>
+    <div class="bd-inner">
+      <div class="host-mobile">
+        <img class="img-cover" src="assets/imgs/iphone-mockup.svg" alt="iPhone Mockup" />
+      </div>
+      <div class="host-content">
+        <h2>Download</h2>
+        <h3>Our App & Log In!</h3>
+        <p>
+          Experience the convenience of managing your bookings on the go with WELRM. Download our app now to access
+          exclusive features, enjoy seamless login, and stay updated with the latest deals anytime, anywhere.
+        </p>
+        <div class="host-dl">
+          <div class="barcode">
+            <img class="img-cover" src="assets/imgs/banner-Qr.png" alt="QR Code" />
+          </div>
+          <div class="host-platform">
+            <div class="platform-inner">
+              <a href="https://apps.apple.com/ca/app/welrm/id1643890398" target="_blank" rel="noopener noreferrer">
+                <img src="assets/imgs/iphone-dl.svg" alt="Download on App Store" />
+              </a>
+            </div>
+            <div class="platform-inner">
+              <a href="https://play.google.com/store/apps/details?id=com.welrm" target="_blank"
+                rel="noopener noreferrer">
+                <img src="assets/imgs/google-dl.svg" alt="Download on Google Play" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

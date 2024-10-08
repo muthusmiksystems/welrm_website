@@ -1,0 +1,336 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@import url('https://site-assets.fontawesome.com/releases/v6.4.2/css/all.css');
+
+
+/* font-family: 'Montserrat', sans-serif; */
+
+/* font-family: 'Inter', sans-serif; */
+
+:root{
+  --bodyFont: 'Inter', sans-serif;
+  --headingFont: 'Montserrat', sans-serif;
+  --bodyColor: #565656;
+  --headingColor: #1E1E1E;
+  --btnColor: #C80000;
+  --blackColor: #000;
+  --whiteColor: #fff;
+}
+
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--bodyFont);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+    font-weight: normal;
+    font-style: normal;
+    color: var(--bodyColor);
+    font-size: 18px;
+    line-height: 1.5;
+    /* background-color: var(--whiteColor); */
+    /* padding-top: 90px; */
+    background-color: #f1f1f1;
+    padding-top: 120px;
+    overflow-x: hidden;
+    @media only screen and (max-width: 1399px) {
+        padding-top: 100px;
+    }
+    @media only screen and (max-width: 767px) {
+        padding-top: 54px;
+        padding-bottom: 55px;
+    }
+}
+
+
+b,
+strong {
+    font-weight: 700;
+}
+
+p {
+    margin: 0 0 22px 0;
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0 0 25px 0;
+    padding: 0;
+    font-family: var(--headingFont);
+    color: var(--headingColor);
+    font-weight: 700;
+}
+
+h1:last-child,
+h2:last-child,
+h3:last-child,
+h4:last-child,
+h5:last-child,
+h6:last-child {
+    margin-bottom: 0;
+}
+
+
+h1, .h1-title {
+    font-size: 52px;
+    line-height: 1.2;
+}
+
+h2, .h2-title {
+    font-size: 42px;
+    line-height: 1.2;  
+}
+
+h2 span {
+    color: var(--btnColor);
+}
+
+h3, .h3-title { font-size: 32px; line-height: 1.2; }
+
+h4, .h4-title {
+    font-size: 22px;
+    line-height: 1.2;
+}
+
+h5, .h5-title{ font-size: 18px; line-height: 1.2; }
+
+h6, .h6-title{ font-size: 15px; line-height: 1.2; }
+
+
+img {
+    max-width: 100%;
+}
+
+
+.p-galleria .p-galleria-item-nav{ 
+    z-index: 3;
+  }
+
+.search-banner{
+    background: url(../imgs/banner-2.jpg) no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+    z-index: 0;
+  }
+
+  .search-banner:before {
+    position: absolute;
+    content: "";
+    background-color: rgb(34 34 34 / 53%);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.facility span i {
+    padding-right: 9px;
+    font-size: 16px;
+}
+
+.form-check .form-check-input {
+    float: left;
+    margin-left: 0;
+    margin-top: 3px;
+}
+
+
+.slider-section{
+    display: flex;
+    align-items: center;
+    padding: 22px;
+    gap: 30px;
+    margin: 0 40px 57px;
+    border-radius: 5px;
+    margin-top: 48px;
+    box-shadow: 0 0 4px #ccc;
+}
+
+.chk-in p {
+    color: #777;
+}
+
+button.btn.btn-danger.signup-btn:hover {
+    /* background-color: #006a4e;
+    border: none; */
+  
+}
+
+input.form-control.form-control-lg {
+    width: 100%;
+    height: 52px;
+    outline: none;
+    margin: 6px 0px;
+    padding: 0 15px;
+    font-size: 15px;
+    font-weight: 400;
+    color: #333;
+    border-radius: 8px;
+    background: #eef9fe;
+    font-family: "Roboto", sans-serif;
+    border: none;
+}
+
+pre {
+    display: block;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    overflow: auto;
+    font-size: 0.875em;
+    font-family: "Roboto", sans-serif;
+    letter-spacing: 0;
+}
+
+button.btn.btn-lg.btn-danger {
+    font-size: 17px;
+    text-transform: uppercase;
+    border-radius: 6px;
+}
+
+button.btn.btn-lg.btn-danger:hover {
+    background-color: #006a4e;
+    border: 1p solid #006a4e;
+}
+
+h3.panel-title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 23px;
+    text-align: center;
+}
+.panel.panel-info {
+    box-shadow: 0 0 4px #ccc;
+    border-radius: 6px;
+    padding: 26px;
+}
+
+.form-group input {
+    width: 100%;
+    height: 52px;
+    outline: none;
+    margin: 6px 0px;
+    padding: 0 15px;
+    font-size: 15px;
+    font-weight: 400;
+    color: #333;
+    border-radius: 8px;
+    background: #eef9fe;
+    font-family: "Roboto", sans-serif;
+    border: none;
+}
+
+/* button.btn.btn-success:hover {
+    background-color: #b02a37;
+    border: 1px solid #b02a37;
+} */
+
+.dropdown-menu.show {
+    position: absolute;
+    inset: 0px auto auto 0px;
+    margin: 0px;
+    transform: translate(0px, 41px);
+    border: none;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 13px 16px;
+    width: 142px !important;
+}
+
+button.dropdown-item {
+    font-size: 15px;
+    line-height: 25px;
+    padding: 5px;
+}
+
+button.book:hover {
+    background-color: #006a4e !important;
+    color: #fff !important;
+}
+
+
+/* Custom scroll bar*/
+/* width */
+.c-scroll::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  .c-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  /* Handle */
+  .c-scroll::-webkit-scrollbar-thumb {
+    background: #777;
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  .c-scroll::-webkit-scrollbar-thumb:hover {
+    background: #777;
+  }
+  /* End Custom scroll bar*/
+
+
+  /* custom hr css start*/
+
+  hr.c-line {
+    overflow: visible; /* For IE */
+    padding: 0;
+    border: none;
+    border-top: medium double #333;
+    color: #333;
+    text-align: center;
+}
+hr.c-line:after {
+    content: "§";
+    display: inline-block;
+    position: relative;
+    top: -0.7em;
+    font-size: 1.5em;
+    padding: 0 0.25em;
+    background: white;
+}
+  /* custom hr css end*/
+
+  h4.bold-class {
+    font-weight: bold;
+}
+
+.modal.show .modal-dialog{ 
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  .modal{ 
+    --bs-modal-width: 700px;
+  }
+
+/* @media(min-width:1400px){ 
+    .container{ 
+      padding: 0 12px;
+      margin: 0 auto;
+      max-width: 1494px;  
+    }
+  } */
+
+  /* @media(max-width:767px){
+    body{
+        padding-top: 70px;
+    }
+  } */

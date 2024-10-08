@@ -1,0 +1,236 @@
+#review {
+    @media only screen and (max-width: 767px) {
+        background-color: transparent;
+    }
+    .profile-bd  {
+        @media only screen and (max-width: 1199px) {
+            padding: 20px;
+        }
+        @media only screen and (max-width: 767px) {
+            padding: 0;
+        }
+    }
+    h4 {
+        margin-bottom: 15px;
+        @media only screen and (max-width: 767px) {
+            margin-bottom: 10px;
+        }
+    }
+    .review-cat {
+        .time-limit-lb {
+            color: #6B7280;
+            font-family: 'Mona-Sans Regular';
+            font-size: 16px;
+            line-height: 20px;
+            margin-bottom: 10px;
+            @media only screen and (max-width: 767px) {
+                font-size: 14px;
+                line-height: 18px;
+            }
+        }
+        .review-list {
+            margin-bottom: 40px;
+            @media only screen and (max-width: 767px) {
+                margin-bottom: 20px;
+            }
+            .custom-card {
+                border: 1px solid #D6D6D6;
+                border-radius: 20px;
+                padding: 20px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                margin-bottom: 20px;
+                @media only screen and (max-width: 991px) {
+                    flex-direction: column;
+                }
+                @media only screen and (max-width: 767px) {
+                    background-color: #FFFFFF;
+                    border: 0;
+                    padding: 12px;
+                }
+                &:last-child {
+                    margin-bottom: 0;
+                }   
+                .card-img {
+                    width: 234px;
+                    border-radius: 15px;
+                    max-height: 100%;
+                    overflow: hidden;
+                    margin-right: 20px;
+                    @media only screen and (max-width: 991px) {
+                       width: 100%;
+                       max-height: 200px;
+                       margin-right: 0;
+                       margin-bottom: 20px;
+                    }
+                    @media only screen and (max-width: 767px) {
+                        max-height: 150px;
+                    }
+                }
+                .card-content {
+                    flex: 1;
+                    .desc {
+                        color: #6B7280;
+                        font-family: 'Mona-Sans Regular';
+                        font-size: 16px;
+                        line-height: 20px;
+                        margin-bottom: 15px;
+                        @media only screen and (max-width: 1199px) {
+                            font-size: 14px;
+                            line-height: 14px;
+                        }
+                        @media only screen and (max-width: 991px) {
+                            font-size: 12px;
+                            line-height: 12px;
+                            margin-bottom: 12px;
+                        }
+                    }
+                    .rate {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: flex-end;
+                        @media only screen and (max-width: 767px) {
+                            flex-direction: column;
+                        }
+                        .rate-inner {
+                            @media only screen and (max-width: 1199px) {
+                                display: flex;
+                            }
+                            @media only screen and (max-width: 767px) {
+                                flex-direction: row-reverse;
+                                justify-content: space-between;
+                                width: 100%;
+                                margin-bottom: 8px;
+                            }
+                            .ratingbox {
+                                background-color: #C42A251A;
+                                border-radius: 6px 6px 6px 0px;
+                                width: 32px;
+                                height: 36px;
+                                font-family: 'Mona-Sans Medium';
+                                font-size: 18px;
+                                line-height: 22px;
+                                color: #C42A25;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                padding: 8px 4px;
+                                margin-bottom: 8px; 
+                                @media only screen and (max-width: 1199px) {
+                                    margin-bottom: 0;
+                                    margin-right: 8px;
+                                    font-size: 16px;
+                                    line-height: 20px;
+                                }
+                                @media only screen and (max-width: 767px) {
+                                    margin-right: 0;
+                                }
+                            }
+                            .rating-star {
+                                display: flex;
+                                justify-content: space-around;
+                                align-items: flex-end;
+                                @media only screen and (max-width: 1399px) {
+                                    justify-content: unset;
+                                    align-items: flex-end;
+                                    flex-wrap: wrap;
+                                }
+                                @media only screen and (max-width: 767px) {
+                                    align-items: flex-start;
+                                    flex-direction: column;
+                                }
+                                .star-inner {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    flex-direction: column;
+                                    margin-right: 30px;
+                                    p-rating {
+                                        margin-bottom: 10px;
+                                        @media only screen and (max-width: 1199px) {
+                                            margin-bottom: 2px;
+                                        }
+                                        @media only screen and (max-width: 767px) {
+                                            margin-bottom: 10px;
+                                        }
+                                    }
+                                    span {
+                                        font-family: 'Mona-Sans Regular';
+                                        font-size: 14px;
+                                        line-height: 17px;
+                                        color: #0A0A0A;
+                                        @media only screen and (max-width: 1199px) {
+                                            margin-bottom: 4px;
+                                        }
+                                        @media only screen and (max-width: 767px) {
+                                            margin-bottom: 18px;
+                                        }
+                                    }
+                                }
+                            }
+                            .r-date {
+                                font-family: 'Mona-Sans Regular';
+                                font-size: 12px;
+                                line-height: 12px;
+                                color: #000000;
+                                img {
+                                    margin-right: 4px;
+                                }
+                            }
+                        }
+                        .status-btn {
+                            padding: 14px 30px;
+                            text-wrap: nowrap;
+                            @media only screen and (max-width: 1399px) {
+                                padding: 10px 24px;
+                                font-size: 16px;
+                                line-height: 16px;
+                                height: 42px;
+                            }
+                            @media only screen and (max-width: 767px) {
+                                padding: 10px 20px;
+                                font-size: 14px;
+                                line-height: 14px;
+                                height: 40px;                        
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .viewmore-btn {
+        min-width: 144px;
+        height: 46px;
+        border: 1px solid #C42A25;
+        padding: 10px 32px;
+        border-radius: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
+        font-size: 18px;
+        line-height: 21px;
+        font-family: 'Mona-Sans SemiBold';
+        color: #C42A25;
+        margin-left: auto;
+        margin-right: auto;
+        @media only screen and (max-width: 1199px) {
+            min-width: 130px;
+            height: 42px;
+            padding: 10px 24px;
+            font-size: 16px;
+            line-height: 18px;
+        }
+        @media only screen and (max-width: 767px) {
+            min-width: 100px;
+            height: 36px;
+            border: 0;
+            padding: 10px 20px;
+            border-radius: 6px;
+            background-color: #C42A2526;
+            font-size: 14px;
+            line-height: 16px;
+        }
+    }
+}

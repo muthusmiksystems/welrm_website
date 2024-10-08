@@ -1,0 +1,127 @@
+<app-header></app-header>
+<div class="blog-page">
+    <div class="bg-banner">
+        <div class="bg-banner-inner">
+            <div class="searchbar">
+                <img class="search-red" src="assets/imgs/search-red.svg" alt="">
+                <input type="text" name="searchbar" placeholder="Search.....">
+            </div>
+            <h1>Welcome to Welrm, We have Trending & Latest Blogs For You</h1>
+        </div>
+    </div>
+    <div class="top-blogs">
+       <!-- <div class="container">
+             <div class="top-bg-inner">
+                <div class="tp-item" *ngFor="let item of blogs?.slice(0,3)" (click)="navigateToBlogDetails(item.slug)">
+                    <div class="tp-img">
+                        <img [src]="item.banner_photo" alt="" class="img-cover">
+                    </div>
+                    <div class="tp-content">
+                        <div class="tp-head">
+                            <span class="tp-span">{{ item.post_date | date:'MMM d, y' }}</span>
+                            <h4>{{ item.title }}</h4>
+                        </div>
+                        <div class="address">
+                            <img src="assets/imgs/location-pin.svg" alt="">
+                            <span class="tp-span">India</span>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div> -->
+
+        <div class="container-md container-fluid g-0">
+            <p-carousel
+            [value]="blogs?.slice(0,3)"
+            styleClass="blogs-sub"
+            [numVisible]="3"
+            [numScroll]="1"
+            [circular]="blog_responsive"
+            [responsiveOptions]="blog_responsive">
+              <ng-template let-blogs pTemplate="item">
+                <div class="top-bg-inner">
+                    <div class="tp-item" (click)="navigateToBlogDetails(blogs.slug)">
+                        <div class="tp-img">
+                            <img [src]="blogs.banner_photo" alt="" class="img-cover">
+                        </div>
+                        <div class="tp-content">
+                            <div class="tp-head">
+                                <span class="tp-span">{{ blogs.post_date | date:'MMM d, y' }}</span>
+                                <h4>{{ blogs.title }}</h4>
+                            </div>
+                            <div class="address">
+                                <img src="assets/imgs/location-pin.svg" alt="">
+                                <span class="tp-span">India</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </ng-template>
+            </p-carousel>
+        </div>
+
+    </div>
+    <!-- <div class="travelblog-section section">
+        <div class="p-relative">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Latest Travel Blogs</h2>
+                </div>
+            </div>
+            <div class="container-fluid g-0">
+                <p-carousel
+                    [value]="blogs?.slice(0,8)"
+                    styleClass="blog-sub"
+                    [numVisible]="4"
+                    [numScroll]="1"
+                    [circular]="false"
+                    [responsiveOptions]="blog_responsive">
+                    <ng-template let-blog pTemplate="item">
+                        <div class="blog-card">
+                            <div class="blog-img">
+                                <img class="img-cover" [src]="blog.banner_photo" alt="">
+                            </div>
+                            <div class="blog-content">
+                                <div class="content-head">
+                                    <h3>{{ blog.title }}</h3>
+                                </div>
+                                <p class="blog-desc">{{ blog.meta_description?.substring(0,80) }}{{blog.meta_description?.length > 80 ? '...':''}}</p>
+                            </div>
+                            <div class="content-foot">
+                                <span class="tp-span">{{ blog.post_date | date:'MMM d, y' }}</span>
+                                <button class="booknow-btn" (click)="navigateToBlogDetails(blog.slug)">Read More</button>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-carousel> 
+            </div>
+        </div>
+    </div> -->
+    <div class="properties-section recent-blog" *ngIf="blogs?.length">
+        <div class="p-relative">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Recent Blogs</h2>
+                    <!-- <button class="status-btn">View All</button> -->
+                </div>
+                <div class="section-bd">
+                    <div class="section-card" *ngFor="let item of blogs">
+                        <div class="section-img">
+                            <img [src]="item.banner_photo" alt="" class="img-cover">
+                        </div>
+                        <div class="section-content">
+                            <p class="cont-info">{{ item.post_date | date:'MMM d, y' }}</p>
+                            <div class="cont-title" (click)="navigateToBlogDetails(item.slug)">
+                                <h3>{{item.title}}</h3>
+                                <img src="assets/imgs/arrow-up-right.svg" alt="" class="up-right-arrow">
+                            </div>
+                            <p class="cont-disc">{{ item.meta_description?.substring(0,150) }}{{item.meta_description?.length > 150 ? '...':''}}</p>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="status-btn" *ngIf="currentPage < totalPages && blogs.length !== 0" (click)="showMore(currentPage + 1)">View More</button>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,153 @@
+.sidebar {
+    background-color: #C42A25;
+    padding: 45px 0 45px 40px;
+    width: 355px;
+    position: sticky;
+    min-height: calc(100vh - 120px);
+    top: 120px;
+    @media only screen and (max-width: 1399px) {
+        min-height: calc(100vh - 100px);
+        top: 100px;
+    }
+    @media only screen and (max-width: 1199px) {
+        padding: 35px 0 35px 30px;
+        width: 300px;
+    }
+    @media only screen and (max-width: 991px) {
+        width: 230px;
+        padding: 16px 0 16px 16px;
+    }
+    @media only screen and (max-width: 767px) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 230px;
+        min-height: auto;
+        z-index: 10;
+        transform: translateX(-150%);
+        transition: 0.4s;
+        overflow: hidden;
+        &.open {
+            transform: translateX(0%);
+        }
+    }
+    .logo {
+        text-align: center;
+        padding: 0px 0 16px;    
+    }
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        li {
+            display: flex;
+            align-items: center;
+            padding: 6px 0 6px 6px;
+            margin-bottom: 10px;
+            height: 62px;
+            border-radius: 32px 0 0 32px;
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+            @media only screen and (max-width: 991px) {
+                height: 46px;
+                padding: 4px 0px 4px 4px;
+                margin-bottom: 6px;
+            }
+            &:last-child {
+                margin-bottom: 0;
+            }
+            .menu-img {
+                margin-right: 15px;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background-color: transparent;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-image: url("../../../assets/imgs/sidebar-icon.png");
+                background-size: 500px 100px !important;
+                background-repeat: no-repeat;
+                @media only screen and (max-width: 991px) {
+                    width: 40px;
+                    height: 40px;
+                    margin-right: 10px;
+                }
+             }
+            .menu-lb {
+                font-family: 'Mona-Sans SemiBold';
+                font-size: 20px;
+                line-height: 20px;
+                color: #ffffff;
+                cursor: pointer;
+                @media only screen and (max-width: 1199px) {
+                    font-size: 18px;
+                    line-height: 18px;    
+                }
+                @media only screen and (max-width: 991px) {
+                    font-size: 14px;
+                    line-height: 17px;
+                }
+            }
+            &.active {
+                background-color: #F1F1F1;
+                padding: 6px 0px 6px 6px;
+                &::before {
+                    content: "";
+                    position: absolute;
+                    top: -24px;
+                    right: 0px;
+                    width: 24px;
+                    height: 24px;
+                    background: transparent;
+                    border-radius: 50%;
+                    box-shadow: 10px 10px 0 #f1f1f1;
+                    z-index: 100;
+                    @media only screen and (max-width: 767px) {
+                        content: unset;
+                    }
+                }
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: -24px;
+                    right: 0px;
+                    width: 24px;
+                    height: 24px;
+                    background: transparent;
+                    border-radius: 50%;
+                    box-shadow: 10px -10px 0 #f1f1f1;
+                    @media only screen and (max-width: 767px) {
+                        content: unset;
+                    }
+                }
+                .menu-img {
+                    background-color: #C42A251A;
+                }
+                .menu-lb {
+                    color: #000000;
+                }
+            }
+        }
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgb(35 35 36 / 30%);
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    transition: 0.4s;
+    z-index: 9;
+    opacity: 0;
+    display: none;
+}
+.sidebar.open + .overlay {
+    opacity: 1;
+    display: block;
+}

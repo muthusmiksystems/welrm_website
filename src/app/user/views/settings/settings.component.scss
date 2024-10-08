@@ -1,0 +1,261 @@
+#settings {
+    .profile-hd {
+        @media only screen and (max-width: 991px) {
+            padding: 20px;
+        }
+        @media only screen and (max-width: 767px) {
+            padding: 16px;
+        }
+        p {
+            font-family: 'Mona-Sans Regular';
+            font-size: 14px;
+            line-height: 14px;
+            text-align: center;
+            margin-bottom: 0;
+            color: #000000;
+            @media only screen and (max-width: 767px) {
+                font-size: 12px;
+                line-height: 12px;
+            }
+        }
+    }
+    .profile-bd {
+        @media only screen and (max-width: 991px) {
+            padding: 20px;
+        }
+        @media only screen and (max-width: 767px) {
+            padding: 16px;
+        }
+        .set-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 34px;
+            .set-info {
+                margin-right: 10px;
+                h5 {
+                    font-family: 'Mona-Sans Medium';
+                    font-size: 20px;
+                    font-weight: normal;
+                    line-height: 24px;
+                    margin-bottom: 8px;
+                    color: #000000;
+                    @media only screen and (max-width: 1399px) {
+                        font-size: 18px;
+                        line-height: 18px;
+                    }
+                    @media only screen and (max-width: 1199px) {
+                        font-size: 16px;
+                        line-height: 16px;
+                    }
+                    @media only screen and (max-width: 991px) {
+                        font-size: 14px;
+                        line-height: 14px;
+                    }
+                    @media only screen and (max-width: 767px) {
+                        font-size: 12px;
+                        line-height: 12px;
+                    }
+                }
+                span,.red {
+                    font-family: 'Mona-Sans Regular';
+                    font-size: 14px;
+                    line-height: 14px;
+                    color: #6B7280;
+                    display: block;
+                    @media only screen and (max-width: 991px) {
+                        font-size: 12px;
+                        line-height: 12px;
+                    }
+                }
+                .red {
+                    color: #C42A25;
+                    font-family: 'Mona-Sans Medium';
+                    display: block;
+                }
+            }
+            .custom-pr-btn {
+                width: 194px;
+                @media only screen and (max-width: 1399px) {
+                    width: 180px;
+                }
+                @media only screen and (max-width: 1199px) {
+                    width: 160px;
+                    height: 40px;
+                    font-size: 16px;
+                    line-height: 16px;
+                    padding: 8px 12px;
+                    text-wrap: nowrap;
+                }
+                @media only screen and (max-width: 991px) {
+                    width:  140px;
+                    font-size: 14px;
+                    line-height: 14px;
+                    padding: 8px;
+                    height: 38px;
+                }
+                @media only screen and (max-width: 767px) {
+                    width: 110px;
+                    font-size: 12px;
+                    line-height: 12px;
+                    height: 36px;
+                }
+            }
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            min-width: 36px;
+            height: 20px;
+            input { 
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+            input:checked + .slider {
+                background-color: #C42A25;
+                &:before {
+                    -webkit-transform: translateX(16px);
+                    -ms-transform: translateX(16px);
+                    transform: translateX(16px);
+                }
+            }
+            input:focus + .slider {
+                box-shadow: 0 0 1px #C42A25;
+            }
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #525252;
+                -webkit-transition: .2s;
+                transition: .2s;
+                &:before {
+                    position: absolute;
+                    content: "";
+                    height: 16px;
+                    width: 16px;
+                    left: 2px;
+                    bottom: 2px;
+                    -webkit-transition: .4s;
+                    background-color: #FFFFFF;
+                    transition: .2s;
+                }
+                &.round {
+                    border-radius: 25px;
+                    &:before {
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+::ng-deep.delete-ac-modal {
+    --bs-modal-width: 600px;
+    border: 1px solid #D6D6D6;
+    .modal-dialog {
+        .modal-content {
+            border-radius: 20px;
+            .modal-header {
+                border-bottom: 0px !important;
+                justify-content: center;
+                padding: 50px 60px 0 50px;
+                @media only screen and (max-width: 767px) {
+                    padding: 20px;
+                }
+                h5 {
+                    font-family: 'Mona-Sans SemiBold';
+                    font-size: 22px;
+                    font-weight: normal;
+                    line-height: 22px;
+                    text-align: center;
+                    color: #000000;
+                    margin-bottom: 24px;
+                    @media only screen and (max-width: 1199px) {
+                        font-size: 20px;
+                        line-height: 22px;
+                        margin-bottom: 20px;
+                    }
+                    @media only screen and (max-width: 767px) {
+                        font-size: 18px;
+                        line-height: 20px;
+                        margin-bottom: 8px;
+                    }
+                }
+            }
+            .modal-body {
+                padding: 0 60px;
+                @media only screen and (max-width: 767px) {
+                    padding: 0 20px;
+                }
+                .d-ac-disc {
+                    color: #000000;
+                    font-family: 'Mona-Sans Regular';
+                    font-size: 16px;
+                    line-height: 22px;
+                    text-align: center;
+                    margin-bottom: 50px;
+                    @media only screen and (max-width: 1199px) {
+                        margin-bottom: 36px;
+                        font-size: 14px;
+                        line-height: 20px;
+                    }
+                    @media only screen and (max-width: 767px) {
+                        margin-bottom: 24px;
+                    }
+                }
+            }
+            .modal-footer {
+                justify-content: center;
+                border-top: 0px !important;
+                padding: 0 50px 38px 50px;
+                @media only screen and (max-width: 767px) {
+                    padding: 0 20px 20px 20px;
+                }
+                .custom-pr-btn {
+                    background-color: #C42A25;
+                    color: #fff;
+                    padding: 8px 16px;
+                    border: 1px solid #C42A25;
+                    border-radius: 10px;
+                    font-size: 18px;
+                    line-height: 18px;
+                    font-family: 'Mona-Sans SemiBold';
+                    min-width: 178px;
+                    height: 42px;
+                    transition: 0.2s;
+                    margin: 0 40px 0 0;
+                    @media only screen and (max-width: 1199px) {
+                        min-width: 150px;
+                        font-size: 16px;
+                        line-height: 16px;
+                    }
+                    @media only screen and (max-width: 767px) {
+                        min-width: 100px;
+                        height: 38px;
+                        font-size: 14px;
+                        line-height: 14px;
+                        margin: 0 20px 0 0;
+                    }
+                    &:hover:not(:disabled) {
+                        background-color: #b4201b;
+                    }
+                    &.outline {
+                        border: 1px solid #ECDDDD;
+                        background-color: #ECDDDD;
+                        color: #C42A25;
+                        margin-right: 0;
+                        &:hover:not(:disabled) {
+                            background-color: #edc6c6;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

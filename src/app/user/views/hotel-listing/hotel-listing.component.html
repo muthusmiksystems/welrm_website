@@ -1,0 +1,225 @@
+<app-header></app-header>
+<div *ngIf="!isScrolled" class="banner-search">
+  <app-hotel-search (searchChange)="onSearchChange($event)"></app-hotel-search>
+</div>
+<div class="hotel-listing">
+  <div class="container-lg container-fluid">
+    <div class="hotel-listing-inner">
+      <div class="listing-left">
+        <app-filters (changeRangeSlider)="handleChange($event)"></app-filters>
+      </div>
+      <div class="listing-right">
+        <div>
+          <div class="d-flex justify-content-between align-content-center d-lg-none mb-3">
+            <button type="button" class=" filterModal-btn" (click)="open(filterModal)"><i class="fa-solid fa-sliders"></i> Filter</button>
+            <ng-container *ngIf="isMobileView">
+              <div class="sort-dropdown" *ngIf="results.length>0">
+                <div ngbDropdown>
+                  <span class="sort-label">Sort by</span>
+                  <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>
+                    {{ selectedFilter?.value }}
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button class="dropdown-item" *ngFor="let filterItem of filterItems"
+                      (click)="ChangeSortOrder(filterItem)">
+                      {{ filterItem.value }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="select-check" *ngIf="isMobileView && false">
+          <div class="checkBtn" *ngFor="let option of chips">
+              {{option.name}}
+          </div>
+        </div>
+        <div class="listing-head">
+          <h1>Showing Hotels for Booking in {{cityOrhotelOrneighborhood}}</h1>
+          <ng-container *ngIf="!isMobileView">
+            <div class="sort-dropdown" *ngIf="results.length>0">
+              <div ngbDropdown>
+                <span class="sort-label">Sort by:</span>
+                <button class="btn btn-outline-dark" id="dropdownBasic1" ngbDropdownToggle>
+                  {{ selectedFilter?.value }}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button class="dropdown-item" *ngFor="let filterItem of filterItems"
+                    (click)="ChangeSortOrder(filterItem)">
+                    {{ filterItem.value }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div class="card-grp">
+          <div class="list-card" *ngFor="let result of results; let i = index">
+            <div class="list-img">
+              <div class="vertical-imgs">
+                <div class="ver-img" [ngClass]="{'overlay': imgindex === 4 && result.images?.length > 5}"
+                  *ngFor="let img of result.images?.slice(0,5); let imgindex = index"
+                  (click)="imgindex === 4 && result.images?.length > 5 ? openModal(imgmodal, result.images) : result.vindex = imgindex">
+                  <img class="img-cover" [src]="img" alt="">
+                  <span class="s-count" *ngIf="imgindex === 4 && result.images?.length > 5">+{{result.images?.length - 5}}</span>
+                </div>
+              </div>
+              <div class="preview-img">
+                <img class="img-cover" [src]="result?.vindex ? result.images[result.vindex] : result.images[0]" alt="" (click)="openModal(imgmodal, result.images)">
+                <div class="favorite" [ngStyle]="{'background-color': result?.inWishlist ? '#C42A25' : '', 'pointer-events': result?.isLoading ? 'none' : '' }" (click)="postHotelData(result)">
+                  <img [src]="result?.inWishlist ? 'assets/imgs/favorite-white.svg' : 'assets/imgs/favorite.svg'" alt="">
+                </div>
+              </div>
+            </div>
+            <div class="list-content">
+              <div class="content-head">
+                <h3>{{ result.hotelName }}</h3>
+                <div class="view-details" (click)="booking(result.id, result.hotelName)">
+                  <label>View Details</label>
+                  <img src="assets/imgs/redirect-arrow.svg" alt="">
+                </div>
+              </div>
+              <div class="address">
+                <p class="addressPara">{{ result.address | titlecase }} <span class="span-link" (click)="gotoLocation(result)">Show on maps</span></p>
+                <p-rating [readonly]="true" class="star-rating" [(ngModel)]="defaultrating" [cancel]="false"></p-rating>
+              </div>
+              <div class="content-inner">
+                <div class="content-left">
+                  <div class="review-grp">
+                    <div class="review">
+                      <!-- <div class="review-rate">{{result.rating}}</div> -->
+                      <div class="review-rate">{{result.rating}}</div>
+                      <div class="review-type">
+                        <span class="review-label">Excellent</span>
+                        <span class="review-number">(0 Reviews)</span>
+                      </div>
+                    </div>
+                    <div class="review">
+                      <div class="review-rate"><img src="assets/imgs/walikng-man.svg" alt=""></div>
+                      <p class="walking-distance">{{ result.address | titlecase }}</p>
+                    </div>
+                  </div>
+                  <div class="spacs-and-book show699">
+                    <button type="button" class="book-now" (click)="booking(result.id, result.hotelName)">BOOK NOW</button>
+                  </div>
+                </div>
+                <div class="spacs-and-book show699">
+                  <div class="complementaries">
+                    <div class="spacs" *ngFor="let list of result?.moreComp ? result.roomComplementaries : result.roomComplementaries?.slice(0,3);">
+                      <div class="spacs-inner">
+                        <img src="assets/imgs/wifi.svg" alt="" *ngIf="list.name === 'WiFi'">
+                        {{list.name}}
+                      </div>
+                    </div>
+                    <label class="more-label">{{result?.moreComp ? "less" :'+'+(result.roomComplementaries?.length - 3 )+' more...'}}</label>
+                  </div>
+                </div>
+                <div class="content-right">
+                 
+                  <div class="discount-ribbon">
+                    <label>{{ result.discount }}% OFF</label>
+                  </div>
+                  <div class="price-info">
+                    <div class="discount-price">₹ <span>{{ getCeilPrice(result.price) }}</span></div>
+                    <div class="actual-price">₹ <span>{{ result.newPrice }}</span></div>
+                    <div class="tax">+₹<span class="tax-span"> {{ result?.tax }} taxes & fees</span></div>
+                    <span class="duration">1 Room per night</span>
+                  </div>
+                </div>
+              </div>
+              <div class="spacs-and-book none699">
+                <div class="complementaries">
+                  <div class="spacs" *ngFor="let list of result?.moreComp ? result.roomComplementaries : result.roomComplementaries?.slice(0,3);">
+                    <div class="spacs-inner">
+                      <img src="assets/imgs/wifi.svg" alt="" *ngIf="list.name === 'WiFi'">
+                      <!-- <img src="assets/imgs/adults.svg" alt="" *ngIf="list.name === 'Adults'">  -->
+                      <!-- <img src="assets/imgs/bed.svg" alt="" *ngIf="list.name === 'Bed'"> -->
+                      {{list.name}}
+                    </div>
+                  </div>
+                  <label class="more-label">{{result?.moreComp ? "less" :'+'+(result.roomComplementaries?.length - 3 )+' more...'}}</label>
+                </div>
+                <button type="button" class="book-now" (click)="booking(result.id, result.hotelName)">BOOK NOW</button>
+              </div>
+            </div>
+          </div>
+          <h1 class="nohotel-found" *ngIf="results.length==0 && !isLoading">No Hotel Found.</h1>
+          <button type="button" class="show-more" *ngIf="currentPage < totalPages && results.length != 0" (click)="showMore(currentPage + 1)">View More</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-lg">
+    <div class="hotelnearby-section">
+      <div class="section-title">
+      <h2>Hunt for Hotels Nearby</h2>
+      </div>
+      <div class="hotel-tabs">
+          <p-tabView>
+              <p-tabPanel *ngFor="let tab of footerTabs" [header]="tab.title">
+                  <div class="tab-body">
+                  <h5>{{tab.title}}</h5>
+                  <ul class="nearby-list">
+                      <ng-container *ngIf="tab.id === 'TopCities'">
+                          <li *ngFor="let top_city of top_cities" (click)="onCityChange(top_city.cityName)">Hotels in <b>{{top_city.cityName}}</b>(<b>{{top_city.count}}</b>)</li>
+                      </ng-container>
+                      <ng-container *ngIf="tab.id === 'TopHotels' || tab.id === 'PopularHotels'">
+                          <li *ngFor="let top_property of top_Rated_Properties" (click)="booking(top_property.id, top_property.hotelName)">Hotels in <b>{{top_property.hotelName}}</b></li>
+                      </ng-container>
+                      <ng-container *ngIf="tab.id === 'PopularDestinations'">
+                          <li *ngFor="let top_dest of top_destinations" (click)="onCityChange(top_dest.address)">Hotels in <b>{{top_dest.address}}</b>(<b>{{top_dest.count}}</b>)</li>
+                      </ng-container>
+                  </ul>
+                  </div>
+              </p-tabPanel>
+          </p-tabView>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div
+  class="d-grid gap-2 col-3 mx-auto p-4"
+  *ngIf="currentPage < totalPages && results.length != 0"
+>
+  <button
+    class="btn btn-danger"
+    (click)="showMore(currentPage + 1)"
+    type="button"
+  >
+    SHOW MORE
+  </button>
+</div> -->
+<app-footer></app-footer>
+<ng-template #imgmodal let-modal>
+  <button type="button" class="close-x-btn" (click)="modal.dismiss('Cross click')">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <div class="modal-body">
+    <div class="blogimg-list">
+      <div class="main-img">
+        <img alt="" class="img-cover" [src]="blogImages?.vindex ? blogImages.list[blogImages.vindex] : blogImages.list[0]">
+      </div>
+      <div class="ver-imgs">
+        <div class="v-img" *ngFor="let img of blogImages.list; let imgindex = index" (click)="blogImages.vindex = imgindex" [ngClass]="{'activImg': blogImages?.vindex === imgindex }">
+          <img class="img-cover" [src]="img" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #filterModal let-modal>
+  <button type="button" class="close-x-btn" (click)="modal.dismiss('Cross click')">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <div class="modal-body">
+    <app-filters></app-filters>
+  </div>
+  <div class="modal-footer">
+    <button class="custom-pr-btn outline" (click)="modal.dismiss()">Cancel</button>
+    <button class="custom-pr-btn" type="submit" (click)="modal.dismiss()" >Apply</button>
+  </div>
+</ng-template>

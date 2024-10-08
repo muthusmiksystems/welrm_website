@@ -1,0 +1,66 @@
+<div id="notification">
+  <div class="custom-tabs">
+    <div class="tab-header">
+      <div class="tab-item" [ngClass]="{'active': i === activeTab}" *ngFor="let tab of tabs; let i = index" (click)="toggleTab(i)">{{tab.label}}</div>
+    </div>
+  </div>
+  <div class="profile-card offwhite">
+    <div class="profile-bd" *ngIf="tabs[activeTab].content?.length">
+      <div class="tb-inner" *ngIf="activeTab === 0">
+        <!-- <div class="not-cat"> -->
+          <!-- <label class="time-limit-lb">{{list.label}}</label> -->
+          <div class="not-list">
+            <div class="custom-card" *ngFor="let item of tabs[activeTab].content">
+              <div class="card-img icon-img">
+                <img class="img-cover" [src]="item.img" alt="">
+              </div>
+              <div class="card-content">
+                <div class="content-left">
+                  <h4>{{item.title}}</h4>
+                  <p class="desc">{{item.message}}</p>
+                </div>
+                <div class="content-right">
+                  <div class="arrow">
+                    <img src="assets/imgs/redirect-arrow.svg" alt="" class="img-cover">
+                  </div>
+                </div>
+              </div>
+              <div class="new-not" *ngIf="item?.seen === 0">New</div>
+            </div>
+          </div>
+        <!-- </div> -->
+      </div>
+      <div class="tb-inner" *ngIf="activeTab === 1">
+        <div class="not-cat" *ngFor="let list of allOffers">
+          <label class="time-limit-lb">{{list.label}}</label>
+          <div class="not-list">
+            <div class="custom-card" *ngFor="let item of list.child">
+              <div class="card-img">
+                <img class="img-cover" [src]="item.img" alt="">
+                <label class="green-label">TRENDING</label>
+              </div>
+              <div class="card-content">
+                <div class="content-left">
+                  <h4>{{item.title}}</h4>
+                  <p class="desc">{{item.desc}}</p>
+                </div>
+                <div class="content-right">
+                  <div class="arrow">
+                    <img src="assets/imgs/redirect-arrow.svg" alt="" class="img-cover">
+                  </div>
+                </div>
+              </div>
+              <div class="new-not">New</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="profile-bd h-100 d-flex align-items-center justify-content-center" *ngIf="!tabs[activeTab].content?.length && !isLoading">
+      <div class="norecord-msg">
+          <img src="assets/imgs/norecord.svg" alt="">
+          <p>{{userData?.data?.user?.fullName}} You have no {{tabs[activeTab].label}} </p>
+      </div>
+  </div>
+  </div>
+</div>

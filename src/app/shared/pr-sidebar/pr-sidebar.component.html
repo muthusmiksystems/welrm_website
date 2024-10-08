@@ -1,0 +1,14 @@
+<div class="sidebar" [ngClass]="{'open': sidebarOpen}">
+    <div class="logo" *ngIf="isMobileView">
+        <img src="assets/imgs/logo-white.png" alt="" height="32px" width="94px" />
+      </div>
+    <ul>
+        <li [ngClass]="{'active': item.active }" *ngFor="let item of sidebar" (click)="swichTabs(item.slug)">
+            <div class="menu-img" [style.background-position]="item?.active ? item.hSize : item.size">
+                <!-- <img src="{{ item.img }}" alt=""> -->
+            </div>
+            <label class="menu-lb">{{ item.name }}</label>
+        </li>
+    </ul>
+</div>
+<div class="overlay" *ngIf="isMobileView" (click)="toggleSidebar(false)"></div>

@@ -1,0 +1,582 @@
+<app-header></app-header>
+<div class="bill-details">
+    <div class="container">
+        <div class="custom-stepper">
+            <div class="line">
+                <span class="fillline" [style.width]="stepper[activeStep].progress"></span>
+            </div>
+            <div class="stepper-item" [ngClass]="{'active': item?.active, 'complete': item?.complete }" *ngFor="let item of stepper; let i = index">
+                <span>{{item.step}}</span>
+                <div class="step-desc">
+                    <label>{{item.label}}</label>
+                    <label class="mt-1" *ngIf="i === 1 && selectedPaymentTypeId === 'cod'">Pay At Hotel</label>
+                </div>
+            </div>
+        </div>
+        <div class="stepper-content">
+            <ng-container *ngIf="activeStep === 0 || activeStep === 1">
+                <div class="booking-detail">
+                    <!-- step 1 left section -->
+                    <div class="detail-left" *ngIf="activeStep === 0">
+                        <div class="form-card custom-card">
+                            <div class="card-head">
+                                <h4>Let us know who you are</h4>
+                                <div class="head-right" *ngIf="!isLoggedIn">
+                                    <label class="right-label">Already Registered?</label>
+                                    <button class="login-btn" (click)="openLogin()">
+                                        <img src="assets/imgs/login-avtar-red.svg" alt="" />
+                                        Login
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-form">
+                                 <!-- sign-in form -->
+                                <div *ngIf="!isLoggedIn">
+                                    <app-register></app-register>
+                                </div>
+                                
+                                <form [formGroup]="userForm" class="detail-Form" *ngIf="isLoggedIn">
+                                    <div class="custom-input read-only">
+                                        <label class="form-label">Full name</label>
+                                        <div class="position-relative">
+                                            <input type="text" class="input-field" formControlName="fullName" placeholder="Enter Your Full Name" [readonly]="userData?.data?.user?.fullName" >
+                                            <img src="assets/imgs/checkmark-green.svg" alt="" class="green-checkmark">
+                                        </div>
+                                        <span class="inline-error" *ngIf="userForm.controls.fullName.hasError('required') && userForm.controls.fullName.touched">Full name is required</span>
+                                    </div>
+                                    <div class="custom-input">
+                                        <label class="form-label">Email address</label>
+                                        <input type="text" class="input-field" formControlName="email" placeholder="Enter Your E-mail" [readonly]="userData?.data?.user?.email">
+                                        <span class="inline-error" *ngIf="userForm.controls.email.hasError('required') && userForm.controls.email.touched">Email is required</span>
+                                    </div>
+                                    <div class="custom-input">
+                                        <label class="form-label">Phone Number</label>
+                                        <input type="number" maxlength="10" class="input-field hide-spin" formControlName="mobile" placeholder="Enter Your Phone Number" [readonly]="userData?.data?.user?.mobile">
+                                        <span class="inline-error" *ngIf="userForm.controls.mobile.hasError('required') && userForm.controls.mobile.touched">Phone number is required</span>
+                                    </div>
+                                </form>
+                                <div class="check-request">
+                                    <p-checkbox [binary]="true" inputId="request" [(ngModel)]="isChecked"/>
+                                    <label for="request">Special request select or type</label>
+                                </div>
+                                <div *ngIf="isChecked">
+                                    <!-- <div class="free-to-select">
+                                        <h5>Feel free to Select</h5>
+                                        <div class="select-check">
+                                            <div class="checkBtn" [ngClass]="{'checked': option?.checked}" *ngFor="let option of selectedBed" (click)="option.checked = !option.checked">
+                                                <img class="red-check" src="assets/imgs/checkmark-red.svg" alt="" *ngIf="option?.checked">
+                                                {{option.name}}
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="textarea">
+                                        <h5 class="textarea-h5">Additional Request?</h5>
+                                        <textarea id="textarea" name="textarea" rows="4" cols="50" maxlength="500" placeholder="Type your special request here" [formControl]="additionalRequest"></textarea>
+                                        <span class="textlength">{{ additionalRequest.value.length }} / 500</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="custom-card room-upgrede-deal desktop">
+                            <h5>Room upgrade deals</h5>
+                            <span class="dis-addon">Discounted add-ons for your trip</span>
+                            <div class="risk-free">
+                                <div class="red-card">
+                                    <img class="red-calendar" src="assets/imgs/red-calendar.svg" alt="">
+                                    <div class="free-refundable">
+                                        <h5 class="refundable-h5">Risk-free and fully refundable <span class="Included">Included</span></h5>
+                                            <span class="cancel">Cancel before {{ this.receivedData.cancelFromDate | date: 'd MMM y' }} and you'll pay nothing.</span>
+                                    </div>
+                                </div>
+                                <div class="freeDiv">
+                                    <span class="free-span">FREE</span>
+                                    <button class="added-btn">Added</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pay-btns responsive">
+                            <button class="paybtn hotel-pay" (click)="openPayHotel(payhotelmodal)" [disabled]="!isLoggedIn">Pay At Hotel</button>
+                            <button class="paybtn" (click)="openPayNow(paynowmodal)" [disabled]="!isLoggedIn">Pay Now</button>
+                        </div>
+                    </div>
+                    <!-- step 2 left section -->
+                    <div class="detail-left" *ngIf="activeStep === 1">
+                        <div class="payment-radio">
+                            <div class="radio-btn" [ngClass]="{'active': paymentMode === 'creditdebit'}">
+                                <p-radioButton inputId="creditdebit" name="creditdebit" value="creditdebit"
+                                    [(ngModel)]="paymentMode" />
+                                <label for="creditdebit" class="radio-lb">
+                                    <span>CREDIT/DEBIT CARD</span>
+                                    <div class="crd-img">
+                                        <img src="assets/imgs/visa.svg" alt="">
+                                        <img src="assets/imgs/master-card.svg" alt="">
+                                        <img src="assets/imgs/american-ex.svg" alt="">
+                                        <img src="assets/imgs/jcb.svg" alt="">
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="radio-btn" [ngClass]="{'active': paymentMode === 'digital'}">
+                                <p-radioButton inputId="digital" name="digital" value="digital"
+                                    [(ngModel)]="paymentMode" />
+                                <label for="digital" class="radio-lb">
+                                    <span>DIGITAL PAYMENT</span>
+                                    <div class="crd-img">
+                                        <img src="assets/imgs/paypal.svg" alt="">
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <ng-container *ngIf="paymentMode === 'creditdebit'">
+                            <div class="pay-content credit-debit">
+                                <div class="select-method">
+                                    <label class="select-label">Select payment method</label>
+                                    <p-dropdown [options]="payment" [(ngModel)]="selectedPayment"
+                                        optionLabel="option" placeholder="Select payment method" />
+                                </div>
+                                <div class="green-note">
+                                    Final step! Your card will not be charged today. Your card is only required to
+                                    confirm the booking
+                                </div>
+                                <div class="card-info">
+                                    <form class="detail-Form">
+                                        <div class="custom-input">
+                                            <label class="form-label">Card holder name</label>
+                                            <input type="text" class="input-field" placeholder="">
+                                        </div>
+                                        <div class="custom-input">
+                                            <label class="form-label">Credit/debit card number</label>
+                                            <input type="number" class="input-field" placeholder="">
+                                        </div>
+                                        <div class="phoneForm">
+                                            <div class="custom-input flex50">
+                                                <label class="form-label">Expiry date</label>
+                                                <input type="text" class="input-field" placeholder="">
+                                            </div>
+                                            <div class="custom-input flex50">
+                                                <label class="form-label">CVC/CVV</label>
+                                                <input type="number" maxlength="3" class="input-field hide-spin" placeholder="">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <img class="desktop" src="assets/imgs/card.png" alt="">
+                                </div>
+                                <p-checkbox
+                                    label="I agree to receive updates and promotions about Welrm and it’s affiliates or business partners viavarious channels, including WhatsApp. Opt out anytime. Read more in the Privacy Policy."
+                                    name="aggre" value="isAggre" />
+                                <p class="paragraph">By proceedig with this booking, I agree to Welrm”s <span>Terms
+                                        of Use</span> and <span>Privacy Policy.</span></p>
+                                <div class="green-note">
+                                    RISK FREE! No cancellation fee before 23:59 hrs. on 18 May 2024 (Property local
+                                    time)
+                                </div>
+                                <div class="final-text">
+                                    <label>Pay nothing until 16 May 2024</label>
+                                    <div class="cancel-msg">
+                                        <span>
+                                            <img src="assets/imgs/shield-icon.svg" alt="">
+                                            Cancellation is FREE
+                                        </span>
+                                        <p>This room is covered by Welrm EasyCance!</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="confirm-email">
+                                <img src="assets/imgs/confirm-email.svg" alt="">
+                                <p>We’ll send confirmation of your booking to <b>{{userForm.value?.email}}</b></p>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="paymentMode === 'digital'">
+                            <div class="pay-content credit-debit">
+                                <div class="select-method">
+                                    <label class="select-label">Select payment method</label>
+                                    <p-dropdown [options]="payment" [(ngModel)]="selectedPayment"
+                                        optionLabel="option" placeholder="Select payment method" />
+                                </div>
+                                <div class="green-note">
+                                    Final step! Your card will not be charged today. Your card is only required to
+                                    confirm the booking
+                                </div>
+                                <ul>
+                                    <li>You have chosen to pay by PayPal. You will be forwarded to
+                                        the PayPal website to proceed with this transaction.</li>
+                                    <li>The total amount you will be charged is: Rupees 32,098.82</li>
+                                </ul>
+                                <p-checkbox
+                                    label="I agree to receive updates and promotions about Welrm and it’s affiliates or business partners viavarious channels, including WhatsApp. Opt out anytime. Read more in the Privacy Policy."
+                                    name="aggre" value="isAggre" />
+                                <p class="paragraph">By proceedig with this booking, I agree to Welrm”s <span>Terms
+                                        of Use</span> and <span>Privacy Policy.</span></p>
+                                <div class="green-note">
+                                    RISK FREE! No cancellation fee before 23:59 hrs. on 18 May 2024 (Property local
+                                    time)
+                                </div>
+                                <div class="final-text {{paymentMode}}">
+                                    <div class="left">
+                                        <div class="cancel-msg">
+                                            <span>
+                                                <img src="assets/imgs/shield-icon.svg" alt="">
+                                                Cancellation is FREE
+                                            </span>
+                                            <p>This room is covered by Welrm EasyCance!</p>
+                                        </div>
+                                        <label>Pay nothing until 16 May 2024</label>
+                                    </div>
+                                    <button class="paypal-btn">
+                                        <img src="assets/imgs/paypal-text.svg" alt="">
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="confirm-email">
+                                <img src="assets/imgs/confirm-email.svg" alt="">
+                                <p>We’ll send confirmation of your booking to <b>abcd1234@gmail.com</b></p>
+                            </div>
+                        </ng-container>
+                        <div class="responsive" *ngIf="activeStep === 1">
+                            <div class="pay-btns">
+                                <button class="paybtn flex100" [disabled]="!isLoggedIn">Continue To Pay</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- step 1 & 2 right section -->
+                    <div class="detail-right">
+                        <div class="detail-head">
+                            <div class="head-inner">
+                                <h3>{{hotelName}}</h3>
+                                <span><img class="star" src="assets/imgs/star.svg" alt="">{{receivedData?.rating}}</span>
+                                <div class="discount-ribbon responsive">
+                                    <label>{{receivedData?.discount}}% OFF</label>
+                                </div>
+                            </div>
+                            <div class="location">
+                                <img src="assets/imgs/location-pin.svg" alt="" class="location-pin">
+                                <p class="address">{{receivedData?.address}}<span class="see-span" (click)="gotoLocation()">SEE MAP</span></p>
+                            </div>
+                        </div>
+                        <div class="hotel-info">
+                            <div class="hotel-img">
+                                <img class="img-cover" [src]="receivedData?.roomImages?.length ? receivedData?.roomImages[0] : 'assets/imgs/destination5.jpeg'" alt="">
+                            </div>
+                            <div class="hotel-content">
+                                <div class="hotel-row top">
+                                    <div class="d-flex flex-column">
+                                        <label class="tagline">Exceptional room comfort & quality</label>
+                                        <span class="review-lb">From 14036 reviews</span>
+                                    </div>
+                                    <div class="discount-ribbon desktop">
+                                        <label>{{receivedData?.discount}}% OFF</label>
+                                    </div>
+                                </div>
+                                <div class="hotelcontent-inner">
+                                    <div class="hotel-row center">
+                                        <div class="center-inner">
+                                            <label class="room-type">{{roomQuantity}} x {{receivedData?.roomType}}</label>
+                                            <div class="room-capacity">
+                                                <div class="cap-inner">
+                                                    <img class="cap-img" src="assets/imgs/bed.svg" alt="">
+                                                    <span class="cap-span">{{roomQuantity}} Room</span>
+                                                </div>
+                                                <div class="cap-inner">
+                                                    <img class="cap-img" src="assets/imgs/adults.svg" alt="">
+                                                    <span class="cap-span">{{receivedData?.adults}} Adults</span>
+                                                </div>
+                                                <div class="cap-inner" *ngIf="receivedData?.childs">
+                                                    <img class="cap-img" src="assets/imgs/adults.svg" alt="">
+                                                    <span class="cap-span">{{receivedData?.childs}} Kids</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <img class="edit-icon" src="assets/imgs/edit.svg" alt="" (click)="gotoedit()" *ngIf="activeStep === 0">
+                                    </div>
+                                    <div class="hotel-row bottom">
+                                        <div class="room-item checkin">
+                                            <span>Check-In</span>
+                                            <span class="bold">{{ bookingFromDate | date: 'EE, MMM d, y' }}</span>
+                                            <span>{{receivedData?.checkIn}}</span>
+                                        </div>
+                                        <div class="room-item checkout">
+                                            <span>Check-Out</span>
+                                            <span class="bold">{{ bookingToDate | date: 'EE, MMM d, y' }}</span>
+                                            <span>{{receivedData?.checkOut}}</span>
+                                        </div>
+                                        <div class="room-item roomguest">
+                                            <span>Guest/Room</span>
+                                            <span class="bold">{{receivedData?.guest}} Guest {{roomQuantity}} Room</span>
+                                            <span>{{numberOfDays}} night</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="price-sum custom-card">
+                            <h3>Price Summary</h3>
+                            <ul class="prices">
+                                <li class="black23">
+                                    <label class="label">Original price ({{roomQuantity}} room {{numberOfDays}} night)</label>
+                                    <label class="value res-red">₹ <span class="new-price res-red">{{roomPrice * numberOfDays * roomQuantity}}</span></label>
+                                </li>
+                                <!-- <li class="black23">
+                                    <label class="label">Total Discount</label>
+                                    <div class="discount-ribbon">
+                                        <label>{{receivedData?.discount}}% OFF</label>
+                                    </div>
+                                </li> -->
+                                <!-- <li class="black23">
+                                    <label class="label">Price After Discount</label>
+                                    <label class="value">₹ <span class="new-price">{{roomPrice * numberOfDays * roomQuantity}}</span></label>
+                                </li> -->
+                                <li class="price-dis grey" *ngIf="isCouponAplied">
+                                    <label class="label">Other Discount ({{couponValue}})</label>
+                                    <label class="value">-₹ <span>{{getDiscount()}}</span></label>
+                                </li>
+                                <li class="price-dis black3f">
+                                    <div class="d-flex align-items-center">
+                                        <p-checkbox [binary]="true" inputId="inputId" [(ngModel)]="isBreakfastIncludes" [disabled]="activeStep !== 0" />
+                                        <label for="inputId" class="label">Breakfast</label>
+                                    </div>
+                                    <label class="value">+₹<span>{{isBreakfastIncludes ? (breakFastPrice * roomQuantity * numberOfDays) : 0}}</span></label>
+                                </li>
+                                <li class="price-dis black3f">
+                                    <label class="label">Total Amount</label>
+                                    <label class="value">₹<span>{{getSubtotal()}}</span></label>
+                                </li>
+                                <li class="price-dis grey">
+                                    <label class="label">Hotel Taxes & service Fees</label>
+                                    <label class="value">+₹ <span>{{getTax()}}</span></label>
+                                </li>
+                            </ul>
+                            <div class="payable-amount">
+                                <label class="label">Total Amount to be paid</label>
+                                <label class="value">₹ <span>{{getTotal()}}</span></label>
+                            </div>
+                        </div>
+                        <div *ngIf="activeStep === 0">
+                            <div class="promo-code custom-card">
+                                <div class="flex1">
+                                    <input #myInput type="text" maxlength="6" placeholder="Got A Promocode?">
+                                    <span class="inline-error" *ngIf="couponValidationError">{{couponValidationError}}</span>
+                                </div>
+                                <button class="custom-btn" (click)="checkCoupon()">Apply</button>
+                            </div>
+                            <div class="pay-btns desktop">
+                                <button class="paybtn hotel-pay" (click)="openPayHotel(payhotelmodal)" [disabled]="!isLoggedIn">Pay At Hotel</button>
+                                <button class="paybtn" (click)="openPayNow(paynowmodal)" [disabled]="!isLoggedIn">Pay Now</button>
+                            </div>
+                        </div>
+                        <div class="desktop" *ngIf="activeStep === 1">
+                            <div class="pay-btns">
+                                <button class="paybtn flex100" [disabled]="!isLoggedIn">Continue To Pay</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- step 3 section -->
+            <ng-container *ngIf="activeStep === 2 && isLoggedIn">
+                <div class="booking-detail confirmed-detail">
+                    <div class="detail-left">
+                        <div class="detail-head">
+                            <div class="head-inner">
+                                <h3>{{hotelName}}</h3>
+                            </div>
+                            <div class="location">
+                                <img src="assets/imgs/location-pin.svg" alt="" class="location-pin">
+                                <p class="address">{{receivedData?.address}}<span class="see-span" (click)="gotoLocation()">SEE MAP</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="custom-card">
+                            <h4>Your booking is confirmed</h4>
+                            <div class="confirm-box">
+                                <span class="fitbox"><img src="assets/imgs/checkmark-green.svg" alt=""></span>
+                                <div>
+                                    <p class="confirm-show"><span>Booking Confirmed</span> Your booing until {{ bookingSuccess?.bookingToDate | date:'MMM d, y' }}</p>
+                                    <p>Free cancellation before 23:59 hrs. on {{ bookingSuccess?.bookingFromDate | date:'MMM d, y' }} (property local time)</p>
+                                </div>
+                            </div>
+                            <h4>Booking Details</h4>
+                            <div class="row booking-info">
+                                <div class="col-sm-4 col-6 info-box">
+                                    <label>Name</label>
+                                    <span>{{bookingSuccess?.customerName}}</span>
+                                </div>
+                                <div class="col-sm-4 col-6 info-box">
+                                    <label>Check-In</label>
+                                    <span>{{bookingSuccess?.bookingFromDate | date: 'EE, MMM d, y'}}</span>
+                                    <small>from {{receivedData?.checkIn}}</small>
+                                </div>
+                                <div class="col-sm-4 col-6 info-box">
+                                    <label>Check-Out</label>
+                                    <span>{{bookingSuccess?.bookingToDate | date: 'EE, MMM d, y'}}</span>
+                                    <small>from {{receivedData?.checkOut}}</small>
+                                </div>
+                                <div class="col-sm-4 col-6 info-box">
+                                    <label>Your Reservation</label>
+                                    <span>{{bookingSuccess?.numberOfDays}} Nights, {{bookingSuccess?.roomQuantity}} Room</span>
+                                </div>
+                                <div class="col-sm-4 col-6 info-box">
+                                    <label>Room type</label>
+                                    <span>{{bookingSuccess?.roomName}}</span>
+                                </div>
+                                <div class="col-sm-4 col-6 info-box">
+                                    <label>Booking number</label>
+                                    <span>#{{bookingSuccess?.id}}</span>
+                                </div>
+                                <div class="col-sm-4 col-6 info-box">
+                                    <label>PassCode</label>
+                                    <span>{{bookingSuccess?.confirmation_code}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pay-btns responsive">
+                            <button class="paybtn flex100" [disabled]="!isLoggedIn">Download Invoice</button>
+                        </div>
+                    </div>
+                    <div class="detail-right he-auto">
+                        <div class="price-sum custom-card">
+                            <div class="flex1">
+                                <h3>Price Summary</h3>
+                                <ul class="prices">
+                                    <li class="black23">
+                                        <label class="label">Original price ({{bookingSuccess?.roomQuantity}} room {{bookingSuccess?.numberOfDays}} night)</label>
+                                        <label class="value">₹ <span class="new-price">{{bookingSuccess?.roomPrice * bookingSuccess?.numberOfDays * bookingSuccess?.roomQuantity}}</span></label>
+                                    </li>
+                                    <!-- <li class="black23">
+                                        <label class="label">Total Discount</label>
+                                        <div class="discount-ribbon">
+                                            <label>{{receivedData?.discount}}% OFF</label>
+                                        </div>
+                                    </li> -->
+                                    <!-- <li class="black23">
+                                        <label class="label">Price After Discount</label>
+                                        <label class="value">₹ <span class="new-price">{{roomPrice * numberOfDays * roomQuantity}}</span></label>
+                                    </li> -->
+                                    <li class="price-dis grey" *ngIf="isCouponAplied">
+                                        <label class="label">Other Discount ({{couponValue}})</label>
+                                        <label class="value">-₹ <span>{{getDiscount()}}</span></label>
+                                    </li>
+                                    <li class="price-dis black3f">
+                                        <div class="d-flex align-items-center">
+                                            <p-checkbox [binary]="true" inputId="inputId" [(ngModel)]="isBreakfastIncludes" [disabled]="true" />
+                                            <label for="inputId" class="label">Breakfast</label>
+                                        </div>
+                                        <label class="value">+₹<span>{{isBreakfastIncludes ? (breakFastPrice * bookingSuccess?.roomQuantity * bookingSuccess?.numberOfDays) : 0}}</span></label>
+                                    </li>
+                                    <li class="price-dis black3f">
+                                        <label class="label">Total Amount</label>
+                                        <label class="value">₹<span>{{getSubtotal()}}</span></label>
+                                    </li>
+                                    <li class="price-dis grey">
+                                        <label class="label">Hotel Taxes & service Fees</label>
+                                        <label class="value">+₹ <span>{{getTax()}}</span></label>
+                                    </li>
+                                </ul>
+                                <div class="payable-amount">
+                                    <label class="label">Total Amount to be paid</label>
+                                    <label class="value">₹ <span>{{bookingSuccess?.price}}</span></label>
+                                </div>
+                            </div>
+                            <div class="pay-btns desktop">
+                                <button class="paybtn flex100" [disabled]="!isLoggedIn">Download Invoice</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        
+        <!-- support-card started here -->
+        <div class="support-card custom-card">
+            <div class="suport-inner">
+                <img class="support-img" src="assets/imgs/hotel-icon.svg" alt="">
+                <div>
+                    <label class="red-label">Explore a Variety of Hotel Options</label>
+                    <span class="support-span">Find the perfect room, from budget-friendly to luxurious. Enjoy a wide selection of hotels.</span>
+                </div>
+            </div>
+            <div class="suport-inner">
+                <img class="support-img" src="assets/imgs/hotel-icon.svg" alt="">
+                <div>
+                    <label class="red-label">Easy and Hassle-Free Booking</label>
+                    <span class="support-span">Book your hotel in a few clicks. Our platform makes it quick and easy.</span>
+                </div>
+            </div>
+            <div class="suport-inner">
+                <img class="support-img" src="assets/imgs/hotel-icon.svg" alt="">
+                <div>
+                    <label class="red-label">Exclusive Member Discounts</label>
+                    <span class="support-span">Join our membership for exclusive hotel discounts. Save on your next stay and maximize your travel budget.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
+
+
+<!-- Pay at Hotel Modal -->
+<ng-template #payhotelmodal let-modal>
+    <div class="modal-header">
+        <h5>Are you sure you Pay At Hotel?</h5>
+    </div>
+    <div class="modal-body">
+        <div class="modal-body-inner">
+            <div class="detail-head">
+                <h3>{{hotelName}}</h3>
+            </div>
+            <div class="hotel-info">
+                <div class="hotel-content">
+                    <div class="hotel-row center">
+                        <div>
+                            <label class="room-type mb-1">{{roomQuantity}} x {{receivedData?.roomType}}</label>
+                            <label class="room-type included">{{isBreakfastIncludes ? 'With':'Without'}} Breakfast</label>
+                            <div class="room-capacity">
+                                <div class="cap-inner">
+                                    <img class="cap-img" src="assets/imgs/bed.svg" alt="">
+                                    <span class="cap-span">{{roomQuantity}} Room</span>
+                                </div>
+                                <div class="cap-inner">
+                                    <img class="cap-img" src="assets/imgs/adults.svg" alt="">
+                                    <span class="cap-span">{{receivedData?.adults}} Adults</span>
+                                </div>
+                                <div class="cap-inner" *ngIf="receivedData?.childs">
+                                    <img class="cap-img" src="assets/imgs/adults.svg" alt="">
+                                    <span class="cap-span">{{receivedData?.childs}} Kids</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hotel-row bottom">
+                        <div class="room-item checkin">
+                            <span>Check-In</span>
+                            <span class="bold">{{ bookingFromDate | date: 'EE, MMM d, y' }}</span>
+                            <span>{{receivedData?.checkIn}}</span>
+                        </div>
+                        <div class="room-item checkout">
+                            <span>Check-Out</span>
+                            <span class="bold">{{ bookingToDate | date: 'EE, MMM d, y' }}</span>
+                            <span>{{receivedData?.checkOut}}</span>
+                        </div>
+                        <div class="room-item roomguest">
+                            <span>Guest/Room</span>
+                            <span class="bold">{{receivedData?.guest}} Guest {{roomQuantity}} Room</span>
+                            <span>{{numberOfDays}} night</span>
+                        </div>
+                    </div>
+                    <span class="finalamount"><b>Amount to be paid</b> ₹<b>{{getTotal()}}</b></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="custom-pr-btn outline" (click)="modal.dismiss()">No</button>
+        <button class="custom-pr-btn" (click)="modal.dismiss('PayHotel')">Yes</button>
+    </div>
+</ng-template>
+
+<!-- Pay now Modal -->
+<ng-template #paynowmodal id="staticBackdrop" let-modal  class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-body">
+        <p>We are not storing any information and redirect to third party razorpay.</p>
+    </div>
+</ng-template>

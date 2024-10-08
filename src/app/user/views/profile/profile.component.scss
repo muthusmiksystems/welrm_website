@@ -1,0 +1,157 @@
+.profile {
+    display: flex;
+    .profile-sidebar {
+        @media only screen and (max-width: 767px) {
+            display: none;
+        }
+    }
+    .profile-body {
+        flex: 1;
+        padding: 30px;
+        min-height: calc(100% - 120px);
+        @media only screen and (max-width: 767px) {
+            padding: 16px;
+        }
+        label {
+            margin-bottom: 0;
+        }
+    }
+    ::ng-deep .profile-card {
+        background-color: #ffffff;
+        border-radius: 15px;
+        height: 100%;
+        &.offwhite {
+            background-color: #FBFBFB;
+        }
+        .profile-hd {
+            padding: 24px 40px;
+            border-bottom: 1px solid #CBD5E1;
+        }
+        .profile-bd {
+            padding: 24px 40px;
+            @media only screen and (max-width: 1199px) {
+                padding: 20px;
+            }
+            @media only screen and (max-width: 767px) {
+                padding: 16px;
+            }
+        }
+        h3 {
+            font-family: 'Mona-Sans SemiBold';
+            font-weight: normal;
+            font-size: 28px;
+            line-height: 30px;
+            color: #000000;
+            margin-bottom: 0;
+        }
+        h4 {
+            font-family: 'Mona-Sans Bold';
+            font-weight: normal;
+            font-size: 22px;
+            line-height: 22px;
+            color: #000000;
+            margin-bottom: 0;
+            letter-spacing: 0.04em;
+            @media only screen and (max-width: 1199px) {
+                font-size: 20px;
+                line-height: 20px;
+            }
+            @media only screen and (max-width: 991px) {
+                font-size: 16px;
+                line-height: 16px;
+            }
+            @media only screen and (max-width: 767px) {
+                font-size: 14px;
+                line-height: 14px;
+            }
+        }
+    }
+    ::ng-deep .custom-tabs {
+        .tab-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 750px;
+            margin: 0 auto 30px;
+            @media only screen and (max-width: 767px) {
+                max-width: 100%;
+                margin: 0 auto 22px;
+            }
+            .tab-item {
+                font-family: "Mona-Sans Medium";
+                font-size: 20px;
+                line-height: 20px;
+                color: #000000;
+                width: 50%;
+                height: 68px;
+                padding: 10px 20px;
+                border-bottom: 2px solid #E3E3E3;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: 0.2s;
+                @media only screen and (max-width: 1199px) {
+                    font-size: 18px;
+                    line-height: 18px;
+                }
+                @media only screen and (max-width: 991px) {
+                    font-size: 16px;
+                    line-height: 16px;
+                }
+                @media only screen and (max-width: 767px) {
+                    font-size: 14px;
+                    line-height: 14px;
+                    height: 58px;
+                }
+                &.active {
+                    color: #C42A25;
+                    border-color: #C42A25;
+                }
+            }
+        }
+        .tab-body {
+            .viewmore-btn {
+                min-width: 144px;
+                height: 46px;
+                border: 1px solid #C42A25;
+                padding: 10px 32px;
+                border-radius: 35px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: transparent;
+                font-size: 18px;
+                line-height: 21px;
+                font-family: 'Mona-Sans SemiBold';
+                color: #C42A25;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    }
+    ::ng-deep .custom-pr-btn {
+        background-color: #C42A25;
+        color: #fff;
+        padding: 8px 16px;
+        border: 1px solid #C42A25;
+        border-radius: 10px;
+        font-size: 18px;
+        line-height: 18px;
+        font-family: 'Mona-Sans SemiBold';
+        height: 42px;
+        transition: 0.2s;
+        &:hover:not(:disabled) {
+            background-color: #b4201b;
+        }
+        &.outline {
+            border: 1px solid #64748B;
+            background-color: #FFFFFF;
+            color: #6B7280;
+            margin-right: 30px;
+            &:hover:not(:disabled) {
+                background-color: #FBFBFB;
+            }
+        }
+    }
+}

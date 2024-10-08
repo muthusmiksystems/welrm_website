@@ -1,0 +1,37 @@
+<div id="settings" class="profile-card">
+    <div class="profile-hd">
+        <p>Decide what you want to be notified about, and unsubscribe from what you don't</p>
+    </div>
+    <div class="profile-bd">
+        <div class="set-inner" *ngFor="let item of settings">
+            <div class="set-info">
+                <h5>{{ item.name }}</h5>
+                <span>{{ item.disc }}</span>
+            </div>
+            <label [for]="item.id" class="switch">
+                <input type="checkbox" [id]="item.id">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="set-inner mb-0">
+            <div class="set-info">
+                <h5>Delete My Account</h5>
+                <label class="red">Please note:</label>
+                <span>Deleting your account will permanently remove all your data from our system.</span>
+            </div>
+            <button class="custom-pr-btn" (click)="openModal(mymodal)">Delete Account</button>
+        </div>
+    </div>
+
+</div><ng-template #mymodal let-modal>
+    <div class="modal-header">
+        <h5>Are you sure you want to delete your account?</h5>
+    </div>
+    <div class="modal-body">
+        <p class="d-ac-disc">This action cannot be undone. All your data will be permanently removed from our system</p>
+    </div>
+    <div class="modal-footer">
+        <button class="custom-pr-btn" (click)="deleteAccount()">Done</button>
+        <button class="custom-pr-btn outline" (click)="modal.dismiss('Cross click')">Cancel</button>
+    </div>
+</ng-template>

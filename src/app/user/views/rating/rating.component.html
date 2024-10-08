@@ -1,0 +1,73 @@
+<div id="review" class="profile-card offwhite">
+    <div class="profile-bd" *ngIf="allRating?.length">
+        <!-- <div class="review-cat" *ngFor="let review of allReview">
+            <label class="time-limit-lb">{{review.label}}</label>
+            <div class="review-list">
+              <div class="custom-card" *ngFor="let item of review.list">
+                  <div class="card-img">
+                      <img class="img-cover" src="{{item.img}}" alt="">
+                  </div>
+                  <div class="card-content">
+                      <h4>{{item.hotelName}}</h4>
+                      <p class="desc">{{item.desc}}</p>
+                      <div class="rate">
+                          <div class="rate-inner">
+                              <div class="ratingbox">{{item.rating}}</div>
+                              <div class="rating-star">
+                                  <div class="star-inner">
+                                      <p-rating [(ngModel)]="item.rating" [readonly]="true" [cancel]="false"/>
+                                      <span class="review-type">{{item.rStatus}}</span>
+                                  </div>
+                                  <div class="r-date">
+                                      <img src="assets/imgs/review-black.svg" alt="">
+                                      Review Date: {{item.date}}
+                                  </div>
+                              </div>
+                          </div>
+                          <button class="status-btn">Booking Details</button>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </div> -->
+
+        <div class="review-cat">
+            <!-- <label class="time-limit-lb">{{review.label}}</label> -->
+            <div class="review-list">
+              <div class="custom-card" *ngFor="let row of allRating">
+                  <div class="card-img">
+                      <img class="img-cover" src="{{ row.hotel.images[0].url }}" alt="">
+                  </div>
+                  <div class="card-content">
+                      <h4>{{row.hotel.hotelName}}</h4>
+                      <p class="desc">{{row.review}}</p>
+                      <div class="rate">
+                          <div class="rate-inner">
+                              <div class="ratingbox">{{row.rating}}</div>
+                              <div class="rating-star">
+                                  <div class="star-inner">
+                                      <p-rating [(ngModel)]="row.rating" [readonly]="true" [cancel]="false"/>
+                                      <span class="review-type">Below Average</span>
+                                  </div>
+                                  <div class="r-date">
+                                      <img src="assets/imgs/review-black.svg" alt="">
+                                      Review Date: {{ row.createdAt | date : "medium" }}
+                                  </div>
+                              </div>
+                          </div>
+                          <button class="status-btn">Booking Details</button>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+        <button class="viewmore-btn">View More</button>
+    </div>
+
+    <div class="profile-bd h-100 d-flex align-items-center justify-content-center" *ngIf="!allRating?.length">
+        <div class="norecord-msg">
+            <img src="assets/imgs/norecord.svg" alt="">
+            <p>{{userData?.data?.user?.fullName}} You have no review</p>
+        </div>
+    </div>
+</div>

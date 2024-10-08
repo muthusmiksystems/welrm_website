@@ -1,0 +1,127 @@
+
+<div id="wishlist" >
+    <div class="searchbar">
+        <img class="search-red" src="assets/imgs/search-red.svg" alt="">
+        <input type="text" name="searchbar" placeholder="Search.....">
+    </div>
+    <div class="profile-card offwhite">
+        <div class="profile-bd" *ngIf="results?.length">
+            <h4 class="mb-4">{{results?.length}} Saved Items</h4>
+            <div class="card-grp">
+              <div class="list-card" *ngFor="let result of results; let i = index">
+                <div class="list-img">
+                  <div class="vertical-imgs">
+                    <div class="ver-img" [ngClass]="{'overlay': imgindex === 4 && result.images?.length > 5}"
+                      *ngFor="let img of result.images?.slice(0,5); let imgindex = index"
+                      (click)="imgindex === 4 && result.images?.length > 5 ? openModal(imgmodal, result.images) : result.vindex = imgindex">
+                      <img class="img-cover" [src]="img" alt="">
+                      <span class="s-count" *ngIf="imgindex === 4 && result.images?.length > 5">+{{result.images?.length - 5}}</span>
+                    </div>
+                  </div>
+                  <div class="preview-img">
+                    <img class="img-cover" [src]="result?.vindex ? result.images[result.vindex] : result.images[0]" alt="" (click)="openModal(imgmodal, result.images)">
+                    <!-- <div class="favorite">
+                      <img src="assets/imgs/favorite.svg" alt="">
+                    </div> -->
+                  </div>
+                </div>
+                <div class="list-content">
+                  <div class="content-head">
+                    <h3>{{ result.hotelName }}</h3>
+                    <div class="view-details" (click)="booking(result.id, result.hotelName)">
+                      <label>View Details</label>
+                      <img src="assets/imgs/redirect-arrow.svg" alt="">
+                      <img class="red-x" src="assets/imgs/red-x-mark.svg" alt="" (click)="postHotelData(result)">
+                    </div>
+                  </div>
+                  <div class="address">
+                    <p class="addressPara">{{ result.address | titlecase }} <span class="span-link" (click)="gotoLocation(result)">Show on maps</span></p>
+                    <p-rating [readonly]="true" class="star-rating" [(ngModel)]="result.rating" [cancel]="false"></p-rating>
+                  </div>
+                  <div class="content-inner">
+                    <div class="content-left">
+                      <div class="review-grp">
+                        <div class="review">
+                          <div class="review-rate">{{result.rating}}</div>
+                          <div class="review-type">
+                            <span class="review-label">Excellent</span>
+                            <span class="review-number">(0 Reviews)</span>
+                          </div>
+                        </div>
+                        <div class="review">
+                          <div class="review-rate"><img src="assets/imgs/walikng-man.svg" alt=""></div>
+                          <p class="walking-distance">{{ result.address | titlecase }}</p>
+                        </div>
+                      </div>
+                      <div class="spacs-and-book show699">
+                        <button type="button" class="book-now" (click)="booking(result.id, result.hotelName)">BOOK NOW</button>
+                      </div>
+                    </div>
+                    <div class="spacs-and-book show699">
+                      <div class="complementaries">
+                        <div class="spacs" *ngFor="let list of result?.moreComp ? result.roomComplementaries : result.roomComplementaries?.slice(0,3);">
+                          <div class="spacs-inner">
+                            <img src="assets/imgs/wifi.svg" alt="" *ngIf="list.name === 'WiFi'">
+                            {{list.name}}
+                          </div>
+                        </div>
+                        <label class="more-label">{{result?.moreComp ? "less" :'+'+(result.roomComplementaries?.length - 3 )+' more...'}}</label>
+                      </div>
+                    </div>
+                    <div class="content-right">
+                     
+                      <div class="discount-ribbon">
+                        <label>{{ result.discount }}% OFF</label>
+                      </div>
+                      <div class="price-info">
+                        <div class="discount-price">₹ <span>{{ result.price }}</span></div>
+                        <div class="actual-price">₹ <span>{{ result.price - (result.price * result.discount) / 100 }}</span></div>
+                        <div class="tax">+₹<span class="tax-span"> {{ result?.tax }} taxes & fees</span></div>
+                        <span class="duration">1 Room per night</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="spacs-and-book none699">
+                    <div class="complementaries">
+                      <div class="spacs" *ngFor="let list of result?.moreComp ? result.roomComplementaries : result.roomComplementaries?.slice(0,3);">
+                        <div class="spacs-inner">
+                          <img src="assets/imgs/wifi.svg" alt="" *ngIf="list.name === 'WiFi'">
+                          <!-- <img src="assets/imgs/adults.svg" alt="" *ngIf="list.name === 'Adults'">  -->
+                          <!-- <img src="assets/imgs/bed.svg" alt="" *ngIf="list.name === 'Bed'"> -->
+                          {{list.name}}
+                        </div>
+                      </div>
+                      <label class="more-label">{{result?.moreComp ? "less" :'+'+(result.roomComplementaries?.length - 3 )+' more...'}}</label>
+                    </div>
+                    <button type="button" class="book-now" (click)="booking(result.id, result.hotelName)">BOOK NOW</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="profile-bd h-100 d-flex align-items-center justify-content-center" *ngIf="!results?.length">
+          <div class="norecord-msg">
+              <img src="assets/imgs/norecord.svg" alt="">
+              <p>{{userData?.data?.user?.fullName}} You have no wishlist</p>
+          </div>
+        </div>
+    </div>
+</div>
+  <ng-template #imgmodal let-modal>
+    <button type="button" class="close-x-btn" (click)="modal.dismiss('Cross click')">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="modal-body">
+      <div class="blogimg-list">
+        <div class="main-img">
+          <img alt="" class="img-cover" [src]="blogImages?.vindex ? blogImages.list[blogImages.vindex] : blogImages.list[0]">
+        </div>
+        <div class="ver-imgs">
+          <div class="v-img" *ngFor="let img of blogImages.list; let imgindex = index" (click)="blogImages.vindex = imgindex" [ngClass]="{'activImg': blogImages?.vindex === imgindex }">
+            <img class="img-cover" [src]="img" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>

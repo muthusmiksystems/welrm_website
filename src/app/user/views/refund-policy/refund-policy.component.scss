@@ -1,0 +1,9 @@
+#refund-policy {
+    &.content-page .profile-card .profile-bd {
+        p {
+            @media only screen and (max-width: 991px) {
+                margin-bottom: 14px;
+            }
+        }
+    }
+}

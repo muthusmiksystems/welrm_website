@@ -1,0 +1,154 @@
+<div id="booking">
+    <div class="custom-tabs">
+        <div class="tab-header">
+            <div class="tab-item" [ngClass]="{'active': i === activeTab}" *ngFor="let tab of tabs; let i = index" (click)="toggleTab(i)">{{tab.label}}</div>
+        </div>
+    </div>
+    <div class="profile-card offwhite">
+        <div class="profile-bd" *ngIf="tabs[activeTab].content?.length">
+            <div class="booking-list">
+                <div class="item-card" *ngFor="let item of tabs[activeTab].content">
+                    <div class="item-img">
+                        <img class="img-cover" src="{{item.hotelDetail?.images[0]?.url}}" alt="">
+                    </div>
+                    <div class="item-content">
+                        <div class="i-head">
+                            <h3>{{item.hotelDetail?.hotelName}}</h3>
+                            <button class="edit-btn" (click)="gotoedit(item)" *ngIf="tabs[activeTab].slug === 'activeBookings'"><img class="img-icon" src="assets/imgs/edit-pencil.svg" alt="">Edit</button>
+                        </div>
+                        <div class="i-info">
+                            <div class="info-left">
+                                <div>
+                                    <label class="roomtype-lb">Room type: <span class="bold">{{item.roomDetail.roomType.name}}</span></label>
+                                    <ul class="fc-list" [ngClass]="{'d-flex': tabs[activeTab].slug === 'activeBookings'}">
+                                        <li><img src="assets/imgs/date-range.svg" alt="">No. of Days: {{item.numberOfDays}}</li>
+                                        <li *ngIf="tabs[activeTab].slug === 'activeBookings'"><img src="assets/imgs/lock.svg" alt="">Passcode: {{item.confirmation_code}}</li>
+                                        <li><img src="assets/imgs/home.svg" alt="">No. of Rooms: {{item.roomQuantity}}</li>
+                                        <li *ngIf="tabs[activeTab].slug === 'activeBookings'"><img src="assets/imgs/chart.svg" alt="">Booking Status: {{item.status | titlecase }}</li>
+                                        <li><img src="assets/imgs/tag.svg" alt="">Price: ₹ {{getCeilPrice(item.price)}}</li>
+                                    </ul>
+                                </div>
+                                <div class="book-dates" *ngIf="item.status == 'pending'">
+                                    <div class="dates-inner">
+                                        <img src="assets/imgs/date-range.svg" alt="">
+                                        Booking From Date: {{item.bookingFromDate | date }}
+                                    </div>
+                                    <div class="dates-inner">
+                                        <img src="assets/imgs/date-range.svg" alt="">
+                                        Booking To Date: {{item.bookingToDate | date }}
+                                    </div>
+                                </div>
+                                <div class="book-dates" *ngIf="item.status == 'cancelled'">
+                                    <div class="dates-inner">
+                                        <img src="assets/imgs/date-range.svg" alt="">
+                                        Booking Date: {{item.bookingFromDate | date }}
+                                    </div>
+                                    <div class="dates-inner">
+                                        <img src="assets/imgs/date-range.svg" alt="">
+                                        Cancel Date: {{item.cancelation_date | date }}
+                                    </div>
+                                </div>
+                                <div class="check-date" *ngIf="item.status == 'completed'">
+                                    <div class="check-in">
+                                        <img src="assets/imgs/date-range-white.svg" alt="">
+                                        <div class="check-inner">
+                                            <span>Check-in</span>
+                                            <span class="date">{{item.bookingFromDate | date }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="check-out">
+                                        <img src="assets/imgs/date-range.svg" alt="">
+                                        <div class="check-inner">
+                                            <span>Check-out</span>
+                                            <span class="date">{{item.bookingToDate | date }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-right">
+                                <button class="dl-invoice" type="button" (click)="printInvoice(item)"><i class="fa-solid fa-file-arrow-down"></i>Invoice</button>
+                                <div>
+                                    <button class="status-btn" *ngIf="item.status == 'pending'" (click)="openModal(cancelmodal, 'cancelmodal', item)">Cancel</button>
+                                    <div *ngIf="item.status == 'cancelled'">
+                                        <button class="status-btn" readonly>Cancelled</button>
+                                        <div class="view-details">
+                                            <span>Reason</span>
+                                            <img src="assets/imgs/redirect-arrow.svg" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="right-inner" *ngIf="item.status == 'completed'">
+                                        <div class="review"  (click)="openModal(ratingmodal, 'ratingmodal',  item)">
+                                            <div class="review-rate">{{item.rating}}</div>
+                                            <div class="review-type">
+                                              <span class="review-label">Excellent</span>
+                                              <p-rating [readonly]="true" class="star-rating" [(ngModel)]="item.rating" [cancel]="false"></p-rating>
+                                            </div>
+                                        </div>
+                                        <button class="status-btn complete" readonly>Completed</button>
+                                        <div class="book-dates me-0">
+                                            <div class="dates-inner me-0 mt-3">
+                                                <img src="assets/imgs/date-range.svg" alt="">
+                                                Booking Date: {{ item.createdAt | date }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <button class="viewmore-btn" *ngIf="tabs[activeTab].content?.length > 10">View More</button> -->
+        </div>
+        <div class="profile-bd h-100 d-flex align-items-center justify-content-center" *ngIf="!tabs[activeTab].content?.length && !isLoading">
+            <div class="norecord-msg">
+                <img src="assets/imgs/norecord.svg" alt="">
+                <p>{{userData?.data?.user?.fullName}} You have no {{tabs[activeTab].label}} </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Booking Cancel Modal -->
+<ng-template #cancelmodal let-modal>
+    <div class="modal-header">
+      <h3 class="modal-title text-center" id="modal-basic-title">Booking Cancellation</h3>
+    </div>
+    <div class="modal-body">
+        <label class="radio-span">Reason for the cancellation of your booking</label>
+        <div class="r-reason">
+            <div *ngFor="let type of reasons" class="field-checkbox">
+                <p-radioButton [inputId]="type.key" name="type.key" [value]="type.key" [(ngModel)]="selectedType"/>
+                <label [for]="type.key" class="radio-lb">{{ type.name }}</label>
+            </div>
+        </div>
+        <textarea rows="4" cols="50" class="other-text" placeholder="Give your reason here if other that the above" *ngIf="selectedType === 'others'"></textarea>
+    </div>
+    <div class="modal-footer">
+        <button class="custom-btn" (click)="BookingCancel(hotelDetail?.roomDetail?.id, hotelDetail?.id)" [disabled]="!selectedType">Submit</button>
+        <button class="custom-btn cancel" (click)="modal.dismiss('Cross click')">Cancel</button>
+    </div>
+</ng-template>
+
+<ng-template #ratingmodal let-modal>
+    <div class="modal-header">
+        <div class="rate-head">
+            <h2>Give Feedback</h2>
+            <p>How Satisfy you With Your Experience With Us....</p>
+        </div>
+        <button class="close-x-btn" (click)="modal.dismiss('Cross click')"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+        <p-rating class="star-rating" [(ngModel)]="userRating" [cancel]="false"></p-rating>
+        <div class="textarea">
+            <label>Do you have any thoughts you'd Like to share ? </label>
+            <textarea rows="4" cols="50" [(ngModel)]="productReview" class="other-text" placeholder="Give your reason here if other that the above"></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="custom-btn" (click)="submitReview(bookingId)">Send</button>
+        <button class="custom-btn cancel" (click)="modal.dismiss('Cross click')">Cancel</button>
+    </div>
+</ng-template>

@@ -1,0 +1,152 @@
+<app-header></app-header>
+
+<div class="container" id="invoice" #invoice >
+  <div class="row  mt-4">
+    <div class="col-md-12" style="display: flex; justify-content: center;">
+      <div class="logo col-lg-2">
+        <img src="../../../../assets/imgs/logo1.png" />
+      </div>
+    </div>
+      
+<div class="row ">
+  <div class="col-lg-6">
+      <div class="booking-id p-4 ">
+          <p class="text-uppercase fw-bold fs-5 text-start">
+            Booking ID <br><b>#{{response.data.data.id}}</b>
+          </p>    
+        </div>
+      </div>
+   
+      
+      <div class="p-4 col-lg-6 upper-left">
+          <h5 class="">Booked By <b>{{response.data.data.customerName}}</b></h5> 
+          <p class="">Date <b>{{response.data.data.createdAt | date}}</b></p>
+        </div>
+</div>
+
+        <div class="row  p-2">
+          <div class="col-lg-12 border-top p-4">
+              <b>{{response.data.data.hotelName}}</b>
+                  <p class="other-p">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-fill" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.3 1.3 0 0 0-.37.265.3.3 0 0 0-.057.09V14l.002.008.016.033a.6.6 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.6.6 0 0 0 .146-.15l.015-.033L12 14v-.004a.3.3 0 0 0-.057-.09 1.3 1.3 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465s-2.462-.172-3.34-.465c-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411"/>
+                        </svg>
+
+                        {{response.data.data.hotelAddress}}
+
+                  </p>
+          </div>
+          <div class="col-lg-12 border-top p-4">
+              <b>Hotel Contact</b>
+                  <p class="other-p">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-compass" viewBox="0 0 16 16">
+                          <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016m6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0"/>
+                          <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z"/>
+                        </svg>
+                        {{response.data.data.hotelContact}}
+                  </p>
+          </div>
+          <!-- <div class="col-lg-12 border-top p-4">
+              <b>Landmark</b>
+                  <p class="other-p">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                          <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
+                        </svg>
+                        Rabindra sadar prashikshan kendra
+                  </p>
+          </div>         -->
+        </div>
+
+     
+        <table  class="table table-striped book-cnf-dtls-tbl" >
+          <thead>
+            <tr>
+              <th scope="col"> Guest</th>
+              <th scope="col">Number</th>
+              <th scope="col">Email Address</th>
+                  <th scope="col">Room </th>
+                  <th scope="col">Duration</th>
+          
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"> {{response.data.data.customerName}}</th>
+              <td> {{response.data.data.customerPhone}}</td>
+              <td> {{response.data.data.customerMail}}</td>
+              <th scope="row"> {{response.data.data.roomName}}</th>
+              <td>{{response.data.data.numberOfDays}} Day</td>
+            </tr>
+        
+          </tbody>
+        </table>
+
+
+        
+        <table class="table table-striped">
+            <thead>
+              <tr>
+          
+                <th scope="col">Check In</th>
+                <th scope="col">Check out</th>
+                <th scope="col">BreakFast</th>
+               
+                <th scope="col">Grand Total</th>
+               
+            
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+        
+                <td>{{response.data.data.bookingFromDate | date}}</td>
+                <td>{{response.data.data.bookingToDate | date}}</td>
+                <td>{{response.data.data.isBreakfastIncludes==1 ? 'Yes' : 'No'}}</td>
+               
+                <td>{{response.data.data.price}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="row text-center">
+              <div class="col-lg-12">
+                   <b>PAYMENT ID:</b>
+              {{response.data.data.payment_Id== null ? 'Cash on Delivery' : response.data.data.payment_Id}}
+              </div>
+              <!-- <div class="col-lg-4">
+                   <b>GSTIN</b>
+              12564577454572455
+              </div>
+              <div class="col-lg-4">
+                   <b>CIN</b>
+                   U63090DL2012PTC231770
+              </div> -->
+
+                </div>
+                <div class="row mt-4">
+              <!-- <div class="col-lg-12" style="padding-bottom: 20px;">
+                   <b>Please Note:</b>
+               Amount payable is inclusive of Central & State Goods & Services Tax at applicable slab rates. Please ask Hotelfor invoice at the time of check-out.
+                Room tariff includes a fee of Rs 1243.0. Invoice for this fee can be requested via OYO Assist.
+              </div> -->
+                </div>
+  </div>
+
+  
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6" style="text-align: right;
+    margin-bottom: 20px;">
+      <button class="goto-bookings" routerLink="/profile">Go To MyBooking</button>
+    </div>
+    
+    <div class="col-md-6">
+      <button class="goto-bookings"(click)="downloadPdf()">Download Invoice</button>
+    </div>
+  </div>
+
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,59 @@
+<app-header></app-header>
+<div class="contact-page">
+  <div class="container">
+    <div class="cs-banner">
+      <div class="cs-banner-inner">
+        <h1>Contact Us</h1>
+        <p>Welcome to our Contact Us page! We're thrilled to hear from you. Please fill out the form below or use the contact details to get in touch with us. We'll respond to your inquiry promptly.</p>
+      </div>
+    </div>
+    <div class="cs-info">
+      <div class="cs-info-left">
+        <h2>Let's talk with us</h2>
+        <p>Questions, comments, or suggestions? Simply fill in the form and we’ll be in touch shortly.</p>
+        <ul>
+          <li>
+            <img src="assets/imgs/c-mappin.svg" alt="">
+            C/O Satpal, opposite Sr. Sec. School Ghanauli, VPO Ghanauli, Distt. Ropar, Rupnagar, Punjab 140113.
+          </li>
+          <li>
+            <img src="assets/imgs/c-phone.svg" alt="">
+            <a href="tel:9584290842">+91 95842 90842</a>
+          </li>
+          <li>
+            <img src="assets/imgs/c-email.svg" alt="">
+            <a href="mailto:info@welrm.com">info@welrm.com</a>
+          </li>
+        </ul>
+      </div>
+      <div class="cs-info-right">
+        <form [formGroup]="contactForm" (ngSubmit)="submit()">
+          <div class="form-row">
+            <div class="custom-input flex50">
+              <input type="text" class="input-field" formControlName="name" placeholder="First Name">
+              <span class="inline-error" *ngIf="contactForm.controls.name.hasError('required') && contactForm.controls.name.touched">Name is required</span>
+            </div>
+            <div class="custom-input flex50">
+              <input type="text" class="input-field" formControlName="lastname" placeholder="Last Name">
+              <span class="inline-error" *ngIf="contactForm.controls.lastname.hasError('required') && contactForm.controls.lastname.touched">Last Name is required</span>
+            </div>
+          </div>
+          <div class="custom-input">
+            <input type="text" class="input-field" formControlName="email" placeholder="Email">
+            <span class="inline-error" *ngIf="contactForm.controls.email.hasError('required') && contactForm.controls.email.touched">Email is required</span>
+          </div>
+          <div class="custom-input">
+            <input type="number" maxlength="10" class="input-field hide-spin" formControlName="phone" placeholder="Phone Number">
+            <span class="inline-error" *ngIf="contactForm.controls.phone.hasError('required') && contactForm.controls.phone.touched">Phone number is required</span>
+          </div>
+          <div class="custom-input">
+            <textarea class="input-field textarea-field" placeholder="Your message..." formControlName="message"></textarea>
+            <span class="inline-error" *ngIf="contactForm.controls.message.hasError('required') && contactForm.controls.message.touched">Message is required</span>
+          </div>
+          <button class="csprimary-btn" type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

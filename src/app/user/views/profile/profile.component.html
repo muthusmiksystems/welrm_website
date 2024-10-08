@@ -1,0 +1,18 @@
+<app-header></app-header>
+
+<div class="profile">
+    <div class="profile-sidebar">
+        <app-pr-sidebar></app-pr-sidebar>
+    </div>
+    <div class="profile-body">
+        <app-myprofile *ngIf="activeTab === 'MyProfile'"></app-myprofile>
+        <app-bookings *ngIf="activeTab === 'MyBookings'"></app-bookings>
+        <app-notfication *ngIf="activeTab === 'Notifications'"></app-notfication>
+        <app-rating *ngIf="activeTab === 'MyReviews'"></app-rating>
+        <app-wishlist *ngIf="activeTab === 'WishList'"></app-wishlist>
+        <app-changepassword *ngIf="activeTab === 'ChangePassword'"></app-changepassword>
+        <app-settings *ngIf="activeTab === 'Settings'"></app-settings>
+        <app-signout *ngIf="activeTab === 'SignOut'"></app-signout>
+    </div>
+</div>
+<app-footer></app-footer>

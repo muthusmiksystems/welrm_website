@@ -1,0 +1,83 @@
+<app-header></app-header>
+<div class="blog-details">
+    <div class="bd-banner" *ngIf="blogDetails">
+        <img src="{{blogDetails.banner_photo}}" alt="" class="img-cover">
+        <div class="banner-content">
+            <div class="container">
+                <h1>{{ blogDetails.title }}</h1>
+                <label class="last-update-lb">Last update {{ blogDetails.updated_at | date:'MMM d, y' }}</label>
+            </div>
+        </div>
+    </div>
+    <div class="bd-content">
+        <div class="container" *ngIf="blogDetails" >
+            <label  class="published-date">Published Date: {{ blogDetails.post_date | date:'MMM d, y' }}</label>
+            <div class="bd-details" [innerHTML]="blogDetails.details"></div>
+            <div class="img-list" style="display: none;">
+                <div class="preview-img">
+                    <img alt="" class="img-cover preview" [src]="blogImages?.vindex ? blogImages.list[blogImages.vindex] : blogImages.list[0]">
+                </div>
+                <div class="vertical-img">
+                    <img class="img-cover" [src]="img" alt="" *ngFor="let img of blogImages.list.slice(0,5); let imgindex = index" (click)="blogImages.vindex = imgindex">
+                </div>
+            </div>
+            <!-- <div class="browse-categories">
+                <h4>Browse More on Categories</h4>
+                <div class="select-check">
+                    <div class="checkBtn" [ngClass]="{'checked': option.checked}" *ngFor="let option of categories" (click)="toggleRadio(option)">
+                      <span>{{ option.name }}</span>
+                    </div>
+                  </div>
+                <div class="recomended-ads">
+                    <div class="ads-inner" *ngFor="let item of ads">
+                        <div class="ads-img">
+                            <img [src]="item.img" alt="" class="img-cover">
+                        </div>
+                        <div class="ads-content">
+                            <h6>{{ item.title }}</h6>
+                            <span class="content-span">{{ item.disc }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- <div class="explore-section section">
+                <div class="p-relative">
+                    <div class="container">
+                        <div class="section-title">
+                            <h2>More To Explore</h2>
+                        </div>
+                    </div>
+                    <div class="container-fluid g-0">
+                        <p-carousel
+                            [value]="[1,2,3,4]"
+                            styleClass="explore-sub"
+                            [numVisible]="4"
+                            [numScroll]="1"
+                            [circular]="false"
+                            [responsiveOptions]="explore_responsive">
+                            <ng-template let-explore pTemplate="item">
+                                <div class="explore-card">
+                                    <div class="explore-img">
+                                        <img class="img-cover" [src]="'assets/imgs/aboutus2.png'" alt="">
+                                    </div>
+                                    <div class="explore-content">
+                                        <div class="content-head">
+                                            <h3>35 Best Weekend Getaways from Delhi within 300kms Distance</h3>
+                                            <p class="explore-desc">Get upto 50% off on Hotel bookings. Let's enjoy your vacation</p>
+                                        </div>
+                                    </div>
+                                    <div class="content-foot">
+                                        <span class="tp-span">17-May-2024</span>
+                                        <button class="booknow-btn">Read More</button>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-carousel> 
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

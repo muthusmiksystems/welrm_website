@@ -1,0 +1,191 @@
+<app-header></app-header>
+<div class="aboutus-page">
+    <div class="banner-section section">
+        <div class="container">
+            <div class="section-title bg-white">
+                <span>About Us</span>
+                <h1>Meeting your unique travel needs</h1>
+            </div>
+            <div class="aboutus-detail">
+                <div class="aboutus-inner bg-white">
+                    <p class="para">At WELRM, we are committed to meeting your unique travel needs with personalized experiences and exceptional service. Whether you're a guest looking for the perfect stay or a hotel owner eager to showcase your property, our platform provides seamless solutions.</p>
+                    <p class="para">With a focus on quality, transparency, and convenience, WELRM ensures every booking leads to memorable stays. Our curated selection of accommodations caters to diverse preferences, promising comfort and satisfaction. Join our community of travelers and hosts who trust WELRM for its innovative approach to hospitality. Experience a new standard of travel, where every detail is designed to elevate your journey.</p>
+                </div>
+                <div class="aboutus-info">
+                    <div class="detail-img">
+                        <div class="dimg-inner">
+                            <img class="img-cover" src="assets/imgs/aboutImg1.svg" alt="">
+                        </div>
+                        <div class="dimg-inner">
+                            <img class="img-cover" src="assets/imgs/aboutImg2.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="cube-grp">
+                        <div class="cube-inner" *ngFor="let info of cubeGrp">
+                            <span>{{ info.numberofCube }}</span>
+                            <label>{{ info.label }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="our-story section bg-white">
+        <div class="container">
+            <div class="story-inner">
+                <div class="story-content">
+                    <div class="section-title">
+                        <span>Why WELRM</span>
+                        <h2>Our Story</h2>
+                        <p class="para">At WELRM, we believe in transforming travel experiences by connecting guests with the perfect accommodations and empowering hotel owners to showcase their properties. Founded with a vision to offer seamless booking and personalized service, we've grown into a trusted platform that prioritizes quality, transparency, and convenience. Our commitment to innovation and excellence has enabled us to create unforgettable journeys for travelers and a robust marketplace for hosts.</p>
+                    </div>
+                    <div class="accdn">
+                        <div ngbAccordion [closeOthers]="true">
+                            <div ngbAccordionItem *ngFor="let item of accordItems" [collapsed]="false">
+                                <h2 ngbAccordionHeader>
+                                    <button ngbAccordionButton>
+                                        <div class="acc-btn-title">
+                                            <img class="green-check" src="assets/imgs/checkmark-green.svg" alt="">
+                                            {{ item.title }}
+                                        </div>
+                                        <span class="plus-icon">
+                                            <img class="plus" src="assets/imgs/plus.svg" alt="">
+                                            <img class="minus"  src="assets/imgs/minus.svg" alt="">
+                                        </span>
+                                    </button>
+                                </h2>
+                                <div ngbAccordionCollapse>
+                                    <div ngbAccordionBody>
+                                        <ng-template>
+                                            {{item.content}}
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="story-img">
+                    <div class="storyImg-inner">
+                        <img class="img-cover" src="assets/imgs/our-story1.png" alt="">
+                    </div>
+                    <div class="storyImg-inner">
+                        <img class="img-cover" src="assets/imgs/our-story2.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="meet-team section">
+        <div class="container">
+            <div class="section-title">
+                <span>Meet the Team</span>
+                <h2>Meet Our Dedicated Team</h2>
+            </div>
+            <div class="team-inner">
+                <p-carousel
+                    [value]="meet_team"
+                    styleClass="team-sub"
+                    [numVisible]="5"
+                    [numScroll]="1"
+                    [circular]="true"
+                    [responsiveOptions]="meet_team_responsive">
+                    <ng-template let-team pTemplate="list">
+                    <div class="team-card">
+                        <!-- <div class="team-inner"> -->
+                            <div class="team-img bg-white">
+                                <img class="img-cover" [src]="team.img" alt="">
+                            </div>
+                            <div class="team-info">
+                                <label>{{team.name}}</label>
+                                <span>{{team.post}}</span>
+                            </div>
+                        <!-- </div> -->
+                    </div>
+                    </ng-template>
+                </p-carousel> 
+            </div>
+        </div>
+    </div>
+    <div class="mission-section section bg-white">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-6">
+              <div class="section-title">
+                <span>Our Top Mission</span>
+                <h2>Our Mission</h2>
+              </div>
+              <div class="btn-holder">
+                <button class="info-btn custom-btn cursor-default" (click)="scrollTop()"><img src="assets/imgs/house.svg" alt=""> Luxurious Stay</button>
+                <button class="info-btn custom-btn cursor-default" (click)="scrollTop()"><img src="assets/imgs/heart.svg" alt=""> Guest-Centric Care</button>
+              </div>
+              <p class="para">Our mission is to redefine hospitality by offering unparalleled comfort and personalized service.</p>
+              <ol>
+                <li class="para"><b>Redefine Hospitality:</b> This phrase conveys a commitment to innovation and excellence in the hospitality industry. By stating a mission to redefine hospitality, your hotel aims to break away from traditional norms and set new standards that prioritize guest satisfaction and overall experience.</li>
+                <li class="para"><b>Unparalleled Comfort:</b> The term "unparalleled" emphasizes that your hotel strives to provide an exceptional level of comfort that surpasses expectations. This could include aspects such as high-quality bedding, well-appointed rooms, modern amenities, and attention to detail in ensuring guests feel truly relaxed and cared for during their stay.</li>
+                <li class="para"><b>Personalized Service:</b> Highlighting personalized service underscores a dedication to understanding and meeting each guest's individual needs and preferences.</li>
+              </ol>
+            </div>
+            <div class="col-lg-6">
+              <div class="mission-images">
+                <div class="image-column">
+                  <div class="top-img">
+                    <img class="img-cover" src="assets/imgs/mission1.jpeg" alt="">
+                  </div>
+                  <div class="bottom-img">
+                    <img class="img-cover" src="assets/imgs/mission2.jpeg" alt="">
+                  </div>
+                </div>
+                <div class="image-column">
+                  <div class="half-img">
+                    <img class="img-cover" src="assets/imgs/mission3.png" alt="">
+                  </div>
+                  <div class="half-img">
+                    <img class="img-cover" src="assets/imgs/mission4.jpeg" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="boostsuccess">
+        <div class="boost-inner p-relative">
+            <img class="img-cover" src="assets/imgs/boost-your-success.jpg" alt="">
+            <button type="button" class="boost-btn" routerLink="/hotel-partner"></button>
+        </div>
+        <div class="boost-inner p-relative">
+            <img class="img-cover" src="assets/imgs/grow-with-us.jpg" alt="">
+            <button type="button" class="boost-btn join-now" routerLink="/hotel-partner"></button>
+        </div>
+    </div>
+    <app-testimonial></app-testimonial>
+    <div class="container-lg">
+        <div class="hotelnearby-section">
+          <div class="section-title">
+          <h2>Hunt for Hotels Nearby</h2>
+          </div>
+          <div class="hotel-tabs">
+              <p-tabView>
+                  <p-tabPanel *ngFor="let tab of footerTabs" [header]="tab.title">
+                      <div class="tab-body">
+                      <h5>{{tab.title}}</h5>
+                      <ul class="nearby-list">
+                          <ng-container *ngIf="tab.id === 'TopCities'">
+                              <li *ngFor="let top_city of top_cities" (click)="onCityChange(top_city.cityName)">Hotels in <b>{{top_city.cityName}}</b></li>
+                          </ng-container>
+                          <ng-container *ngIf="tab.id === 'TopHotels' || tab.id === 'PopularHotels'">
+                              <li *ngFor="let top_property of top_Rated_Properties" (click)="booking(top_property.id, top_property.hotelName)">Hotels in <b>{{top_property.hotelName}}</b></li>
+                          </ng-container>
+                          <ng-container *ngIf="tab.id === 'PopularDestinations'">
+                              <li *ngFor="let top_dest of top_destinations" (click)="onCityChange(top_dest.address)">Hotels in <b>{{top_dest.address}}</b></li>
+                          </ng-container>
+                      </ul>
+                      </div>
+                  </p-tabPanel>
+              </p-tabView>
+          </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

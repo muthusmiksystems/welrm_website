@@ -1,0 +1,72 @@
+<app-header></app-header>
+<app-hotel-search>
+</app-hotel-search>
+
+<!-- details page start -->
+<div class="slider-section">
+  <div class="slider-container">
+    <div class="slider">
+      <div class="slide">
+        <img class="test" [src]="roomImages[currentImageIndex]" alt="Slide" />
+        <button class="slider-button prev-button" (click)="moveSlider(-1)">
+          <i class="bi bi-caret-left-fill"></i>
+        </button>
+        <button class="slider-button next-button" (click)="moveSlider(1)">
+          <i class="bi bi-caret-right-fill"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="slider-next">
+    <div class="images-next">
+      <img
+        *ngFor="let photo of roomImages.slice(0, 4)"
+        alt="Slide 1"
+        src="{{ photo }}"
+      />
+    </div>
+  </div>
+  <div class="content">
+    <div class="content-head">
+      <h2>{{ name }}</h2>
+    </div>
+    <div class="location">
+      <p>
+        {{ address }}
+      </p>
+    </div>
+
+    <div class="star-main">
+      <div class="star">
+        <p>{{ rating }}<i class="bi bi-star"></i></p>
+      </div>
+    </div>
+
+    <h2 class="ame">Amenities</h2>
+    <div class="facility">
+      <span><i class="fa-solid fa-wifi"></i> Free Wifi </span>
+      <span><i class="fa-regular fa-air-conditioner"></i>AC</span>
+      <span><i class="fa-solid fa-tv"></i>TV</span>
+      <span><i class="fa-solid fa-hot-tub-person"></i>Geyser</span>
+      <span><i class="fa-solid fa-house"></i>Reception</span>
+      <span><i class="fa-solid fa-shield-check"></i>Security</span>
+    </div>
+
+    <div class="select-container">
+      <select class="custom-select" [(ngModel)]="selectedRoomTypeId">
+        <option *ngFor="let item of roomTypes" [value]="item.id">
+          {{ item.name }}
+        </option>
+      </select>
+    </div>
+
+    <div class="section-price">
+      <div class="button-price">
+        <button class="book" (click)="navigateToSecondPage()">Apply</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- details page end -->
+<app-footer></app-footer>

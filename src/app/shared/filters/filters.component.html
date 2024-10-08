@@ -1,0 +1,76 @@
+<div class="filter-card">
+    <div class="filter-inner">
+      <div class="filter-head" *ngIf="false">
+        <label class="filter-label">Filter by:</label>
+        <button type="button" class="btn btn-danger clear-button">Clear All</button>
+      </div>
+      <div class="filter-body">
+        <!-- Applied Filters Section -->
+        <div class="filter-box" *ngIf="appliedFilters.length > 0">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h4>Applied Filters:</h4>
+            <button type="button" class="btn btn-link text-danger p-0 btn-noline"
+              (click)="clearAllFilters()">Clear All</button>
+          </div>
+  
+          <div>
+            <div class="row">
+              <div *ngFor="let filter of appliedFilters" class="applied-filter col overlay-hidden">
+                <span class="bgsecondary rounded-pill px-3 py-2">
+                  {{ filter.label }}
+                </span>
+                <span class="cursor-pointer" (click)="removeFilter(filter)">×</span>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Price Filter Section -->
+        <div class="filter-box">
+          <h4>Your budget <span>(per night)</span></h4>
+  
+          <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"
+            (userChange)="onChangeSlider($event)" style="width:225px;margin-left: 25px;"></ngx-slider>
+  
+          <div class="or-divider">
+            <span class="divider-line"></span>
+            <span class="divider-text">or</span>
+            <span class="divider-line"></span>
+          </div>
+  
+          <div class="checkbox-group">
+            <div class="row ">
+              <div class="col-6 my-2 checkbox-item d-flex justify-content-center" *ngFor="let price of priceFilters">
+                <p-checkbox 
+                  [(ngModel)]="price.checked"
+                  name="{{price.name}}" 
+                  [value]="price.value" 
+                  binary="true"
+                  (onChange)="togglePriceFilter(price.min, price.max, price.label, price.checked)">
+                </p-checkbox>
+                <span class="span-count">₹ {{ price.label }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Other Filters Section -->
+        <div class="filter-box" *ngFor="let item of filterList">
+          <h4>{{item.title}}</h4>
+          <div class="checkbox-group" *ngFor="let data of item.child">
+            <div class="checkbox-item d-flex justify-content-between">
+              <p-checkbox 
+                [(ngModel)]="data.checked" 
+                [label]="data.label" 
+                [name]="item.title" 
+                (onChange)="toggleFilter(item.title, data)"
+                [value]="data.label">
+              </p-checkbox>
+              <span class="span-count">[{{data.count}}]</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

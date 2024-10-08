@@ -1,0 +1,180 @@
+.auth-page {
+  border-top: 100px solid #C42A25;
+  border-bottom: 100px solid #C42A25;
+  background-color: #fff;
+  @media only screen and (max-width: 1366px) {
+    border-top-width: 60px;
+    border-bottom-width: 60px;
+  }
+  @media only screen and (max-width: 1199px) {
+    border-top-width: 40px;
+    border-bottom-width: 40px;
+  }
+  @media only screen and (max-width: 991px) {
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+  }
+  .auth-inner {
+    padding: 35px 16px 60px;
+    margin: 0 auto;
+    max-width: 540px;
+    @media only screen and (max-width: 767px) {
+      padding: 35px 16px 40px;
+    }
+    h1 {
+      font-size: 30px;
+      line-height: 30px;
+      color: #000;
+      font-family: 'Mona-Sans Bold';
+      font-weight: normal;
+      text-align: center;
+      margin-bottom: 30px;
+      @media only screen and (max-width: 767px) {
+        font-size: 22px;
+        line-height: 24px;
+      }
+    }
+    .subtitle {
+      font-size: 22px;
+      line-height: 25px;
+      color: #000;
+      font-family: 'Mona-Sans SemiBold';
+      display: block;
+      text-align: center;
+      margin-bottom: 60px;
+      @media only screen and (max-width: 767px) {
+        font-size: 18px;
+        line-height: 22px;
+      }
+    }
+    .blind-pass {
+      position: absolute;
+      right: 14px;
+      top: 6px;
+      z-index: 2;
+      cursor: pointer;
+    }
+    .social-login {
+      .scl-btn {
+        background-color: transparent;
+        border: 1px solid #7A7A7A;
+        border-radius: 5px;
+        width: calc(50% - 5px);
+        height: 48px;
+        padding: 8px 16px;
+        font-size: 14px;
+        line-height: 16px;
+        color: #7A7A7A;
+        letter-spacing: 0.56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @media only screen and (max-width: 767px) {
+          height: 44px;
+        }
+        img {
+          margin-right: 8px;
+        }
+        &.google-btn {
+          width: 100%;
+          margin-bottom: 12px;
+        }
+      }
+      .fb-apple-group {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    span.divider {
+      display: flex;
+      justify-content: center;
+      font-size: 22px;
+      line-height: 30px;
+      color: #B1A0A0;
+      letter-spacing: 2.2px;
+      margin: 35px 0 50px;
+      @media only screen and (max-width: 767px) {
+        font-size: 18px;
+        line-height: 22px;
+      }
+    }
+    .input-group {
+      margin-bottom: 20px;
+      position: relative;
+      &.password-group {
+        margin-bottom: 12px;
+      }
+      input {
+        width: 100%;
+        height: 38px;
+        background-color: transparent;
+        border: none;
+        border-bottom: 1.25px solid #9CA3AF;
+        outline: 0;
+        font-size: 18px;
+        line-height: 18px;
+        padding: 6px 0;
+        font-family: 'Mona-Sans Medium';
+        color: #000;
+        @media only screen and (max-width: 767px) {
+          font-size: 16px;
+          line-height: 16px;
+        }
+      }
+      ::-webkit-input-placeholder {
+        color: #9CA3AF;
+      }
+    }
+    .forgot-password {
+      font-size: 12px;
+      line-height: 12px;
+      color: #D60000;
+      font-family: 'Mona-Sans Medium';
+      letter-spacing: 0.6px;
+      text-align: right;
+      margin-bottom: 24px;
+      span {
+        cursor: pointer;
+      }
+    }
+    .have-account {
+      font-size: 18px;
+      line-height: 18px;
+      margin-top: 30px;
+      color: #9CA3AF;
+      font-family: "Mona-Sans Regular";
+      @media only screen and (max-width: 767px) {
+        font-size: 16px;
+        line-height: 16px;
+      }
+      span {
+        color: #C42A25;
+        font-family: "Mona-Sans Medium";
+        cursor: pointer;
+      }
+    }
+    .custom-btn {
+      padding: 13px 24px;
+      background-color: #C42A25;
+      border-radius: 10px;
+      font-size: 22px;
+      line-height: 26px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      transition: 0.2s;
+      font-family: "Mona-Sans Bold";
+      border: 1.25px solid #E4D9D9;
+      @media only screen and (max-width: 767px) {
+        padding: 10px 20px;
+        font-size: 18px;
+        line-height: 24px;
+      }
+      &:hover:not(:disabled) {
+        background-color: #b4201b;
+      }
+    }
+  }
+}

@@ -1,0 +1,42 @@
+@import url("../hotel-listing/hotel-listing.component.scss");
+
+#wishlist {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .searchbar {
+        @media only screen and (max-width: 767px) {
+            background: #C42A251A;
+        }
+    }
+    .profile-card {
+        flex: 1;
+    }
+    .pr-label {
+        font-family: 'Mona-Sans Medium';
+        font-size: 14px;
+        line-height: 14px;
+        color: #000000;
+        width: 151px;
+        height: 37px;
+        padding: 10px 25px 10px 25px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #0000001A;
+    }
+    .show699 {
+        @media only screen and (min-width: 700px) {
+          display: none !important;
+        }
+    }
+    .none699{
+        @media only screen and (max-width: 699px) {
+          display: none !important;
+        }
+    }
+    .red-x {
+        margin-left: 22px;
+    }
+}

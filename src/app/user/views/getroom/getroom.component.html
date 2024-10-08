@@ -1,0 +1,370 @@
+<app-header></app-header>
+<div class="banner-search get-search">
+    <app-hotel-search (searchQueryChange)="onSearchQueryChange($event)"></app-hotel-search>
+</div>
+<div class="hotel-detail">
+    <div class="container">
+        <div class="detail-info">
+            <div class="info-left">
+                <div class="info-title d-none d-md-block">
+                    <div class="title-head">
+                        <h2>{{hotelName}}</h2>
+                        <span class="rating">
+                            <p-rating [readonly]="true" class="star-rating" [(ngModel)]="defaultrating"
+                                [cancel]="false"></p-rating>
+                            <!-- <img src="assets/imgs/star.svg" alt=""> -->
+                            <!-- {{roomDeatils.rating}} -->
+                        </span>
+                    </div>
+                    <div class="location">
+                        <img class="location-pin" src="assets/imgs/location-pin.svg" alt="">
+                        <p>{{address}}</p>
+                        <span class="see-map-link" (click)="gotoLocation()">SEE MAP</span>
+                    </div>
+                </div>
+                <div class="rooms">
+                    <div class="room-preview">
+                        <img class="img-cover"
+                            [src]="roomDeatils?.vindex ? roomImages[roomDeatils.vindex] : roomImages[0]" alt="">
+                        <div class="see-photos">
+                            <img class="camera" src="assets/imgs/camera.svg" alt="">
+                            <span class="see-span" (click)="openModal(imgmodal, roomImages)">See All Photos</span>
+                        </div>
+                    </div>
+                    <div class="vertical-images">
+                        <div class="preview-img" *ngFor="let img of roomImages.slice(0,4); let imgindex = index"
+                            (click)="roomDeatils.vindex = imgindex">
+                            <img class="img-cover" [src]="img" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-tabs">
+                    <button type="button" class="tab-btn active" (click)="scrollToSection('chooseRoom')"><img
+                            src="assets/imgs/room.svg" alt="">Rooms</button>
+                    <button type="button" class="tab-btn" (click)="scrollToSection('hotelAmenities')"><img
+                            src="assets/imgs/facility.svg" alt="">Facilities</button>
+                    <button type="button" class="tab-btn" (click)="scrollToSection('hotelPolicies')"><img
+                            src="assets/imgs/policies.svg" alt="">Policies</button>
+                </div>
+                <div class="info-title d-block d-md-none">
+                    <div class="title-head">
+                        <h2>{{hotelName}}</h2>
+                        <span class="rating">
+                            <img src="assets/imgs/star.svg" alt="">
+                            {{roomDeatils.rating}}
+                        </span>
+                    </div>
+                    <div class="location">
+                        <img class="location-pin" src="assets/imgs/location-pin.svg" alt="">
+                        <p>{{address}}</p>
+                        <span class="see-map-link">SEE MAP</span>
+                    </div>
+                </div>
+                <div class="highlight" *ngIf="selectRoom?.roomComplementaries?.length">
+                    <h3>Highlights</h3>
+                    <div class="highlight-inner">
+                        <ng-container *ngFor="let item of highlight">
+                            <div class="fc-item" *ngIf="isComplementaries(item.name)">
+                                <img class="fc-img" src="{{item.icon}}" alt="">
+                                <label>{{ item.title }}</label>
+                            </div>
+                        </ng-container>
+                        <div class="fc-item">
+                            <img class="fc-img" src="assets/imgs/viewall.svg" alt=""
+                                (click)="scrollToSection('hotelAmenities')">
+                            <label>View All</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info-right">
+                <div class="custom-card">
+                    <div class="flex1 c-card-inner">
+                        <span class="custom-label"
+                            *ngIf="selectRoom?.roomType?.name">{{selectRoom?.roomType?.name}}</span>
+                        <div class="facility">
+                            <div class="facility-inner">
+                                <img class="facility-img" src="assets/imgs/adults.svg" alt="">
+                                <span class="fac-span">{{adults}} Adults</span>
+                            </div>
+                            <div class="facility-inner" *ngIf="childs">
+                                <img class="facility-img" src="assets/imgs/adults.svg" alt="">
+                                <span class="fac-span">{{childs}} Kids</span>
+                            </div>
+                            <div class="facility-inner">
+                                <img class="facility-img" src="assets/imgs/bed.svg" alt="">
+                                <span class="fac-span">{{room}} Room</span>
+                            </div>
+                        </div>
+                        <p class="offerP">Get {{discount}}% off on Hotel bookings. Let's enjoy your vacation... </p>
+                        <button type="button" class="custom-Btn"
+                            (click)="scrollToSection('chooseRoom')">{{roomDeatilsInner['hotelRooms']?.length > 1 ? 'View
+                            ' + roomDeatilsInner['hotelRooms'].length + ' Room Option' : 'Single Room
+                            Available'}}</button>
+                        <!-- <div class="coupon">
+                            <img class="coupon-discount" src="assets/imgs/discount-red.svg" alt="">
+                            <label class="applied-coupon">****** <span>Coupon</span> applied</label>
+                        </div> -->
+                        <ul class="prices">
+                            <li>
+                                <label class="label">Original Price</label>
+                                <div>
+                                    <label class="value">₹ <span
+                                            class="old-price">{{getCeilPrice(originalPrice)}}</span></label>
+                                    <label class="value">₹ <span
+                                            class="new-price">{{getCeilPrice(roomPrice)}}</span></label>
+                                </div>
+                            </li>
+                            <!-- <li class="price-dis">
+                                <label class="label">Coupon Discount (THYFDR)</label>
+                                <label class="value">-₹ <span>{{discount}}</span></label>
+                            </li> -->
+                            <li class="after-discount">
+                                <label class="label">Total Amount</label>
+                                <label class="value">₹ <span>{{getCeilPrice(roomPrice)}}</span></label>
+                            </li>
+                        </ul>
+                        <!-- <div class="book-this" *ngIf="selectRoomTypeId">
+                            <button (click)="submit()">BOOK THIS NOW</button>
+                        </div> -->
+                    </div>
+                    <div class="see-map">
+                        <img class="map-img" src="assets/imgs/see-map.svg" alt="" (click)="gotoLocation()">
+                        <div class="see-rating">
+                            <div class="rating-type">
+                                <span>{{ roomDeatils.rating }} </span>
+                                <span>Very good</span>
+                            </div>
+                            <p-rating [readonly]="true" class="star-rating" [(ngModel)]="roomDeatils.rating"
+                                [cancel]="false"></p-rating>
+                            <!-- <div class="star">
+                                <img src="assets/imgs/star.svg" alt="">
+                                <img src="assets/imgs/star.svg" alt="">
+                                <img src="assets/imgs/star.svg" alt="">
+                                <img src="assets/imgs/star.svg" alt="">
+                                <img src="assets/imgs/star.svg" alt="">
+                            </div> -->
+                            <label class="review-label">Excellent</label>
+                            <label class="review-num">(1199 Reviews)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="chooseRoom" class="choose-room">
+            <h3>Choose your room</h3>
+            <div class="room-list" [ngClass]="{'selected': selectRoomTypeId === item.roomId}"
+                *ngFor="let item of roomDeatilsInner['hotelRooms'];let Rindex = index">
+                <div class="greenstrip" *ngIf="selectRoomTypeId === item.roomId">Your Selected Room</div>
+                <div class="list-inner" *ngIf="!isMobileView">
+                    <div class="room-img">
+                        <div class="vert-imgs">
+                            <div class="verImg-inner"
+                                [ngClass]="{'overlay': imgindex === 4 && item.imageUrls?.length > 5}"
+                                *ngFor="let img of item.imageUrls.slice(0,5); let imgindex = index"
+                                (click)="imgindex === 4 && item.imageUrls?.length > 5 ? openModal(imgmodal, item.imageUrls) : item.vindex = imgindex">
+                                <img class="img-cover" [src]="img" alt="">
+                                <span class="s-count"
+                                    *ngIf="imgindex === 4 && item.imageUrls?.length > 5">+{{item.imageUrls?.length -
+                                    5}}</span>
+                            </div>
+                        </div>
+                        <div class="roompre-img" (click)="openModal(imgmodal, item.imageUrls)">
+                            <img class="img-cover"
+                                [src]="item?.vindex ? item.imageUrls[item.vindex] : item.imageUrls[0]" alt="">
+                        </div>
+                    </div>
+                    <div class="room-info">
+                        <div class="room-details">
+                            <div class="room-title">Room {{Rindex + 1}}</div>
+                            <div class="border177"></div>
+                            <label class="room-type">{{ item.roomType.name }}</label>
+                            <div class="room-fc">
+                                <div class="fc-inner">
+                                    <img src="assets/imgs/adults.svg" alt="">
+                                    <label>{{ item.guestCapacity }} Adults</label>
+                                </div>
+                                <div class="fc-inner">
+                                    <img src="assets/imgs/bed.svg" alt="">
+                                    <label>1 Room</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="room-option">
+                            <div class="room-title">Room Options</div>
+                            <div class="border177"></div>
+                            <label class="free-cancel">Breakfast With Free Cancellation</label>
+                            <ul>
+                                <li>Room with free cancellation</li>
+                                <li>Book with ₹ 0 payment</li>
+                                <li>No meals included</li>
+                                <li class="green">Free Cancellation before {{cancelFromDate ? (cancelFromDate | date:'d
+                                    MMM') : ''}} {{item.checkIn}}.</li>
+                                <li class="more-details">
+                                    <span>More Details </span>
+                                    <i class="fa-solid fa-angle-down"></i>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="room-price">
+                            <div class="room-title">Price</div>
+                            <div class="border177"></div>
+                            <div class="room-dis">
+                                <p class="red">₹<span class="dis-price">{{ getCeilPrice(item.hour24Price) }}</span></p>
+                                <div class="discount-ribbon">
+                                    <label>{{item.discount}}% OFF</label>
+                                </div>
+                            </div>
+
+                            <p class="actual-price">₹ <span>{{ item.newPrice }}/per night</span></p>
+                            <p class="tax">+₹ <span>{{item.tax}} taxes and fees</span></p>
+                            <p class="per-night">{{ item.guestCapacity }} Adults per night</p>
+                            <div class="btn-row">
+                                <button class="selectroom-btn "
+                                    (click)="selectRoomF(getCeilPrice(item.hour24Price), item.newPrice, item.roomType.name, item.roomId, item, item.roomType.id)">{{selectRoomTypeId
+                                    === item.roomId ? 'Selected':'Select'}}</button>
+                                <!-- <button class="selectBtn-red">Select</button> -->
+                                <div class="book-this"  *ngIf="selectRoomTypeId && selectRoomTypeId
+                                === item.roomId">
+                                    <button (click)="submit()">Book Now</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="favorite"
+                        [ngStyle]="{'background-color': item?.inWishlist ? '#C42A25' : '', 'pointer-events':  item?.isLoading ? 'none' : ''  }"
+                        (click)="postHotelData(item)">
+                        <img [src]="item?.inWishlist ? 'assets/imgs/favorite-white.svg' : 'assets/imgs/favorite.svg'"
+                            alt="">
+                    </div>
+                </div>
+                <div class="list-inner" *ngIf="isMobileView">
+                    <div class="list-res-card">
+                        <div class="room-info">
+                            <div class="room-option">
+                                <p class="freec-res">Stay With Free Cancellation</p>
+                                <ul>
+                                    <li>Room with free cancellation</li>
+                                    <li>Book with ₹ 0 payment</li>
+                                    <li>No meals included</li>
+                                </ul>
+                                <div class="d-flex align-items-center mt-3">
+                                    <div class="discount-ribbon">
+                                        <label>{{item.discount}}% OFF</label>
+                                    </div>
+                                    <label class="green-lb">Free Cancellation</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="room-res-img">
+                            <div class="roompre-img" (click)="openModal(imgmodal, item.imageUrls)">
+                                <img class="img-cover"
+                                    [src]="item?.vindex ? item.imageUrls[item.vindex] : item.imageUrls[0]" alt="">
+                                <img class="add-fav" src="assets/imgs/favorite.svg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="room-res-info room-info">
+                        <div class="room-details">
+                            <div class="room-fc">
+                                <div class="fc-inner">
+                                    <img src="assets/imgs/adults.svg" alt="">
+                                    <label>{{ item.guestCapacity }} Adults</label>
+                                </div>
+                                <div class="fc-inner">
+                                    <img src="assets/imgs/bed.svg" alt="">
+                                    <label>1 Room</label>
+                                </div>
+                            </div>
+                            <div class="room-price">
+                                <div class="room-dis">
+                                    <p class="red">₹<span class="dis-price">{{ getCeilPrice(item.hour24Price) }}</span>
+                                    </p>
+                                </div>
+                                <p class="actual-price">₹ <span>{{ item.newPrice}}</span></p>
+                                <p class="tax">+₹ <span>{{item.tax}} taxes and fees</span></p>
+                                <p class="per-night">{{ item.guestCapacity }} Adults per night</p>
+                            </div>
+                            <div class="roomtype-res">
+                                <label class="room-res-inner">{{ item.roomType.name }}</label>
+                                <div class="more-details">
+                                    <span class="me-1 text-nowrap">More Details</span>
+                                    <i class="fa-solid fa-angle-down"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-row">
+                    <button class="selectroom-btn"
+                        (click)="selectRoomF(getCeilPrice(item.hour24Price), item.newPrice, item.roomType.name, item.roomId, item, item.roomType.id)">{{selectRoomTypeId
+                        === item.roomId ? 'Selected':'Select'}}</button>
+                    <div class="book-this"  *ngIf="selectRoomTypeId && selectRoomTypeId
+                                === item.roomId">
+                        <button (click)="submit()">Book Now</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="hotelPolicies" class="hotel-policies">
+            <h3>Hotel Policies</h3>
+            <div class="policy-card">
+                <div class="policy-left">
+                    <ul>
+                        <li *ngFor="let item of policyList">
+                            <p class="list-head">{{ item.policyHead }}</p>
+                            <p class="list-disc">{{ item.policyDisc }}</p>
+                        </li>
+                        <li class="more-details"><span>More View</span><i class="fa-solid fa-angle-down"></i></li>
+                    </ul>
+                </div>
+                <div class="policy-right">
+                    <div class="check-in">
+                        <p>Check-in</p>
+                        <span>From {{selectRoom.checkIn}}</span>
+                    </div>
+                    <div class="check-out">
+                        <p>Check-Out</p>
+                        <span>From {{selectRoom.checkOut}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="hotelAmenities" class="offered-amenities">
+            <h3>Services or Amenities offered by {{hotelName}}</h3>
+            <div class="amenities-card">
+                <div class="card-row">
+                    <div class="card-inner" *ngFor="let group of selectRoom?.groupRoomComplementaries">
+                        <h4>{{ group.type }}</h4>
+                        <ul>
+                            <li *ngFor="let item of group.child">{{ item.name }}</li>
+                            <li class="reArrow" *ngIf="!group.child?.length">No Service Available</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
+<ng-template #imgmodal let-modal>
+    <button type="button" class="close-x-btn" (click)="modal.dismiss('Cross click')">
+        <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="modal-body">
+        <div class="blogimg-list">
+            <div class="main-img">
+                <img alt="" class="img-cover"
+                    [src]="blogImages?.vindex ? blogImages.list[blogImages.vindex] : blogImages.list[0]">
+            </div>
+            <div class="ver-imgs">
+                <div class="v-img" *ngFor="let img of blogImages.list; let imgindex = index"
+                    (click)="blogImages.vindex = imgindex" [ngClass]="{'activImg': blogImages?.vindex === imgindex }">
+                    <img class="img-cover" [src]="img" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

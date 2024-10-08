@@ -1,0 +1,106 @@
+@import url('../login/login.component.scss');
+
+.signup {
+    height: calc(100vh - 120px);
+    display: flex;
+    align-items: center;
+    @media only screen and (max-width: 1399px) {
+        height: calc(100vh - 100px);
+    }
+    @media only screen and (max-width: 767px) {
+        height: 100%;
+    }
+    @media only screen and (max-height: 650px) {
+        height: 100%;
+    }
+    .auth-inner {
+        width: 100%;
+        h1 {
+            margin-bottom: 18px;
+        }
+        .input-group {
+            margin-bottom: 34px;
+            position: relative;
+            &.otp-group {
+                display: flex;
+                justify-content: center;
+            }
+            input {
+                padding-left: 40px;
+            }
+            .prefix {
+                position: absolute;
+                top: 10px;
+                left: 0;
+                font-size: 16px;
+                line-height: 16px;
+                font-family: 'Mona-Sans Regular';
+                color: #6B7280;
+                z-index: 1;
+                &::after {
+                    position: absolute;
+                    content: '';
+                    top: -4px;
+                    right: -9px;
+                    background-color: #D1D1D1;
+                    width: 1px;
+                    height: 26px;
+                }
+            }
+        }
+        .have-account {
+            margin-top: 50px;
+            color: #4B5563;
+            font-family: "Mona-Sans Medium";
+            text-align: center;
+        }
+        .resend-otp {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+            font-size: 12px;
+            line-height: 12px;
+            color: #D60000;
+            font-family: 'Mona-Sans Medium';
+            .resend-text {
+                margin-right: 10px;
+                cursor: pointer;
+            }
+            .timer {
+                border: 0.2px solid #B8B8B8;
+                border-radius: 3px;
+                padding: 4px 8px;
+                font-size: 13px;
+                line-height: 14px;
+                letter-spacing: 0.4px;
+            }
+        }
+        ::ng-deep ng-otp-input {
+            .ng-otp-input-wrapper {
+                text-align: center;
+                .otp-input {
+                    font-size: 30px;
+                    line-height: 30px;
+                    padding: 5px;
+                    width: 65px;
+                    height: 65px;
+                    border-radius: 5px;
+                    border: solid 2px #CBD5E1;
+                    font-family: 'Mona-Sans SemiBold';
+                    @media only screen and (max-width: 767px) {
+                        font-size: 16px;
+                        line-height: 16px;
+                        width: 40px;
+                        height: 40px;
+                    }
+                    &:not(:last-child) {
+                        margin-right: 15px;
+                        @media only screen and (max-width: 767px) {
+                            margin-right: 6px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

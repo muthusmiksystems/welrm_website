@@ -1,0 +1,42 @@
+#terms-conditions {
+    h4 {
+        font-family: "Mona-Sans Regular";
+        font-size: 20px;
+        line-height: 20px;
+        color: #C42A25;
+        letter-spacing: 0;
+        @media only screen and (max-width: 991px) {
+            font-size: 18px;
+            line-height: 20px;
+        }
+    }
+    p, ul li {
+        font-size: 15px;
+        line-height: 22px;
+        color: #1E293B;
+        font-family: "Mona-Sans Regular";
+        margin-bottom: 10px;
+        @media only screen and (max-width: 991px) {
+            font-size: 14px;
+            line-height: 20px;
+        }
+    }
+    .block-item {
+        margin-bottom: 20px;
+        h5 {
+            font-size: 16px;
+            line-height: 16px;
+            color: #1E293B;
+            font-weight: normal;
+            font-family: 'Mona-Sans SemiBold';
+            margin-bottom: 10px;
+        }
+        ul {
+            padding-left: 22px;
+            margin-bottom: 0;
+            li {
+                margin-bottom: 5px;
+            }
+        }
+    }
+}

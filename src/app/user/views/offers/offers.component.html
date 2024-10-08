@@ -1,0 +1,79 @@
+<app-header></app-header>
+<div class="offers-page">
+    <div class="offers-head section-title">
+        <div class="container">
+            <span>Exclusive Offers for You</span>
+            <h1>“Discover the best deals tailored just for you. Enjoy special discounts and promotions on luxury hotels and more”</h1>
+        </div>
+    </div>
+    <div class="ours-deals">
+        <div class="section-title">
+            <div class="container">
+                <span>Limited Time Offers!</span>
+                <h2>Our Deals</h2>
+            </div>
+        </div>
+        <div class="container-fluid g-0">
+            <p-carousel
+                [value]="our_deals"
+                styleClass="deals-sub"
+                [numVisible]="1.5"
+                [numScroll]="1"
+                [circular]="false"
+                [responsiveOptions]="our_deals_responsive">
+                <ng-template let-our_deals pTemplate="item">
+                    <div class="limited-deals">
+                        <div class="limited-img">
+                            <img [src]="our_deals.image" class="img-cover" alt="">
+                        </div>
+                        <div class="limited-content">
+                            <div class="flex1">
+                                <h3>{{ our_deals.title }}</h3>
+                                <p>{{ our_deals.desc }}</p>
+                            </div>
+                            <button type="button" class="csprimary-btn">View Deals</button>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel>
+        </div>
+    </div>
+    <div class="giveway-deals">
+        <div class="container">
+            <div class="section-title">
+                <h2>Find more Getaway Deals</h2>
+            </div>
+        </div>
+            <div class="giveway-inner">
+                <div class="container">
+                    <p-carousel
+                    [value]="givewayDeal"
+                    styleClass="giveway-sub"
+                    [numVisible]="3"
+                    [numScroll]="1"
+                    [circular]="false"
+                    [responsiveOptions]="giveway_deal_responsive">
+                    <ng-template let-giveway pTemplate="item">
+                        <div class="giveway-card">
+                            <div class="giveway-img">
+                                <img class="img-cover" [src]="giveway.image_url" alt="">
+                            </div>
+                            <div class="more-deals">
+                                <span>{{giveway.deals}}</span>
+                            </div>
+                            <div class="giveway-content">
+                                <div class="content-inner">
+                                    <h4>{{giveway.title}}</h4>
+                                    <span class="titleSpan">{{giveway.titleSpan}}</span>
+                                </div>
+                                <button class="custom-btn">Try Now!</button>
+                            </div>
+                        </div>
+                    </ng-template>
+                    </p-carousel>
+                </div>
+            </div>
+        
+    </div>
+</div>
+<app-footer></app-footer>

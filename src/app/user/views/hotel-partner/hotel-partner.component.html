@@ -1,0 +1,56 @@
+<app-header></app-header>
+<div class="hotel-partner">
+    <div class="download-section">
+        <div class="container">
+            <div class="download-inner">
+                <div class="download-content">
+                    <h1>Simplify Property Management with WELRM</h1>
+                    <button type="button" class="download-today">Download Our App Today!</button>
+                    <label class="attention">Attention Hotel Owners!</label>
+                    <p class="streamline">Streamline your property management and enhance your visibility by registering your hotel on WELRM.</p>
+                    <button type="button" class="download-btn">
+                        <img src="assets/imgs/download-icon.svg" alt="">
+                        Download
+                    </button>
+                </div>
+                <div class="download-pltform">
+                    <div class="download-video">
+                        <iframe src="https://www.youtube.com/embed/vBzBfJhczrg?si=HEO2gUr6tHwitp-8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="choose-pltform">
+                        <p class="streamline">Our user-friendly mobile app, available on the Play Store and App Store, makes managing your hotel easier than ever</p>
+                        <div class="pltform">
+                            <button class="pltform-inner">
+                                <a href="https://apps.apple.com/ca/app/welrm/id1643890398" target="_blank">
+                                    <img src="assets/imgs/apple-icon.svg" alt="">
+                                </a>
+                            </button>
+                            <button class="pltform-inner">
+                                <a href="https://play.google.com/store/apps/details?id=com.welrm"  target="_blank">
+                                    <img src="assets/imgs/playstore-icon.svg" alt="">
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="why-register section">
+        <div class="container">
+            <div class="register-head">
+                <h2>Why Register Your Property on WELRM?</h2>
+            </div>
+            <div class="regcube-grp">
+                <div class="regcube-card bg-white" *ngFor="let item of registerCard">
+                    <div class="regcube-img">
+                        <img class="img-cover" [src]="item.img" alt="">
+                    </div>
+                    <label class="reg-lb">{{ item.title }}</label>
+                    <span class="reg-contant">{{ item.desc }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

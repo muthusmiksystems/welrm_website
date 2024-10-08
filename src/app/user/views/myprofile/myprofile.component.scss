@@ -1,0 +1,143 @@
+#myprofile {
+    .profile-detail {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 62px;
+        @media only screen and (max-width: 1199px) {
+            align-items: center;
+        }
+        @media only screen and (max-width: 991px) {
+            flex-direction: column;
+            align-items: unset;
+        }
+        @media only screen and (max-width: 767px) {
+            margin-bottom: 48px;
+        }
+        .pr-img {
+            margin-right: 56px;
+            @media only screen and (max-width: 991px) {
+                margin: 0 auto 20px;
+            }
+            .upload-lb {
+                width: 224px;
+                height: 224px;
+                border-radius: 50%;
+                border: 3px solid #E2E2E2;
+                overflow: hidden;
+                position: relative;
+                background-color: #fffafa;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                @media only screen and (max-width: 1399px) {
+                    width: 200px;
+                    height: 200px;
+                }
+                @media only screen and (max-width: 767px) {
+                    width: 150px;
+                    height: 150px;
+                }
+                #upload-dp {
+                    opacity: 0;
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: 1;
+                }
+                .over-span {
+                    position: absolute;
+                    bottom: -100%;
+                    left: 0;
+                    width: 100%;
+                    height: 50%;
+                    background-color: #0000004D;
+                    font-size: 14px;
+                    line-height: 20px;
+                    color: #fff;
+                    font-family: "Mona-Sans Bold";
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: 0.2s;
+                    padding-bottom: 16px;
+                }
+                .camara-icon {
+                    width: 40px;
+                    height: 40px;
+                }
+                &:hover:not(:disabled) {
+                    .over-span {
+                        bottom: 0;
+                    }
+                }
+            }
+        }
+        .pr-info {
+            flex: 1;
+            .info-inner {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 15px;
+                width: 378px;
+                position: relative;
+                @media only screen and (max-width: 1199px) {
+                    width: 100%;
+                }
+                &:last-child {
+                    margin-bottom: 0;
+                }
+                .info-lb {
+                    font-size: 14px;
+                    line-height: 17px;
+                    margin-bottom: 10px;
+                }
+                input {
+                    border: 1px solid #D1D5DB;
+                }
+                .verified-num {
+                    position: absolute;
+                    width: 22px;
+                    height: 22px;
+                    right: 8px;
+                    bottom: 10px;
+                }
+            }
+        }
+    }
+    .custom-btn {
+        padding: 10px 30px 10px 38px;
+        width: 165px;
+        height: 52px;
+        background: #C42A25;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Mona-Sans Bold';
+        font-size: 18px;
+        line-height: 24px;
+        color: #ffffff;
+        // margin-top: 64px;
+        margin-left: auto;
+        @media only screen and (max-width: 1399px) {
+            width: 150px;
+            height: 50px;
+            font-size: 16px;
+            line-height: 22px;
+        }
+        @media only screen and (max-width: 767px) {
+            margin: 0 auto;
+            height: 44px;
+            font-size: 14px;
+            line-height: 20px;
+        }
+        img {
+            margin-left: 7px;
+            width: 16px;
+            height: 16px;
+        }
+    }
+}

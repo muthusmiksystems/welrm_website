@@ -1,0 +1,56 @@
+#signout {
+    min-height: 250px;
+    .profile-bd {
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 250px;
+        @media only screen and (max-width: 991px) {
+            padding: 20px;
+        }
+        @media only screen and (max-width: 767px) {
+            padding: 16px;
+            min-height: 100%;
+        }
+    }
+    p {
+        font-size: 16px;
+        line-height: 20px;
+        color: #262626;
+        font-family: 'Mona-Sans Regular';
+        @media only screen and (max-width: 1199px) {
+            font-size: 14px;
+            line-height: 18px;
+        }
+        @media only screen and (max-width: 767px) {
+            font-size: 12px;
+            line-height: 16px;
+        }
+    }
+    .custom-pr-btn {
+        width: 176px;
+        margin-left: auto;
+        @media only screen and (max-width: 1199px) {
+            width: 160px;
+            height: 40px;
+            font-size: 16px;
+            line-height: 16px;
+            padding: 8px 12px;
+            text-wrap: nowrap;
+        }
+        @media only screen and (max-width: 991px) {
+            width:  140px;
+            font-size: 14px;
+            line-height: 14px;
+            padding: 8px;
+            height: 38px;
+        }
+        @media only screen and (max-width: 767px) {
+            width: 110px;
+            font-size: 12px;
+            line-height: 12px;
+            height: 36px;
+        }
+    }
+}

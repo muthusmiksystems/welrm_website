@@ -1,0 +1,39 @@
+<div id="register">
+    <form [formGroup]="userForm" class="detail-Form">
+        <div class="custom-input">
+            <label class="form-label">Full name</label>
+            <input type="text" class="input-field" formControlName="fullName" placeholder="Enter Your Full Name">
+            <span class="inline-error" *ngIf="userForm.controls.fullName.hasError('required') && userForm.controls.fullName.touched">Full name is required</span>
+        </div>
+        <div class="custom-input">
+            <label class="form-label">Email</label>
+            <input type="text" class="input-field" formControlName="email" placeholder="Enter Your E-mail">
+            <span class="inline-error" *ngIf="userForm.controls.email.hasError('required') && userForm.controls.email.touched">Email is required</span>
+            <span class="inline-error" *ngIf="userForm.controls.email.hasError('email') && userForm.controls.email.touched">Please enter a valid email</span>
+        </div>
+        <div class="sendotp">
+            <div class="custom-input flex50">
+                <label class="form-label">Phone Number</label>
+                <input type="number" maxlength="10" class="input-field hide-spin" formControlName="mobile" placeholder="Enter Your Phone Number" onKeyPress="if(this.value.length==10) return false;" (input)="onChangeNumber($event)">
+                <span class="inline-error" *ngIf="userForm.controls.mobile.hasError('required') && userForm.controls.mobile.touched">Phone Number is required</span>
+                <span class="inline-error" *ngIf="userForm.controls.mobile.hasError('pattern') && userForm.controls.mobile.touched">Please enter a valid 10-digit phone number</span>
+            </div>
+            <div class="custom-input flex50 otp-btn" *ngIf="!showOtpInput && showOtpBtn">
+                <label class="form-label"></label>
+                <button class="custom-btn green" (click)="sendOtp()">Send OTP</button>
+            </div>
+            <div class="custom-input flex50" *ngIf="showOtpInput">
+                <label class="form-label">OTP</label>
+                <div class="otp-inputfield">
+                    <input type="number" maxlength="6" class="input-field hide-spin" placeholder="Enter Your OTP" formControlName="otp" onKeyPress="if(this.value.length==6) return false;">
+                    <div class="timer">{{ display ? display : '0:00' }}</div>
+                </div>
+                <!-- <span class="inline-error" *ngIf="userForm.controls.otp.hasError('required') && userForm.controls.otp.touched">Please enter a valid 4-digit OTP</span> -->
+                <div class="resend-otp">
+                    <label class="resend-text" *ngIf="resendOtp" (click)="sendOtp()">Resend OTP Code</label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="custom-btn" (click)="confirmOtp()" *ngIf="otp?.length === 6">Verify and Continue</button>
+    </form>
+</div>

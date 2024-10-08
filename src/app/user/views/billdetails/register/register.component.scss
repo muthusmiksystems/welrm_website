@@ -1,0 +1,87 @@
+#register {
+    .detail-Form {
+        .custom-btn {
+            background-color: #C42A25;
+            color: #fff;
+            border: none;
+            border-radius: 22px;
+            padding: 9px 16px;
+            font-size: 16px;
+            line-height: 18px;
+            font-family: 'Mona-Sans SemiBold';
+            min-width: 215px;
+            height: 42px;
+            transition: 0.2s;
+            &:hover:not(:disabled) {
+                background-color: #b4201b;
+            }
+            &.green {
+                border-radius: 5px;
+                background-color: #2FCA44;
+                min-width: 180px;
+                font-family: 'Mona-Sans Bold';
+                &:hover:not(:disabled) {
+                    background-color: #2b8938;
+                }
+            }
+        }
+        .sendotp {
+            display: flex;
+            justify-content: space-between;
+            @media only screen and (max-width: 450px) {
+                flex-direction: column;
+            }
+            .custom-input {
+                @media only screen and (max-width: 767px) {
+                    margin-bottom: 15px;
+                }
+                &.otp-btn {
+                    text-align: center;
+                    // display: flex;
+                    // align-items: flex-end;
+                    // justify-content: center;
+                    .form-label {
+                        min-height: 15px;
+                        @media only screen and (max-width: 767px) {
+                            font-size: 14px;
+                            line-height: 14px;
+                        }
+                    }
+                }
+                .otp-inputfield {
+                    position: relative;
+                    .timer {
+                        position: absolute;
+                        top: 10px;
+                        right: 10px;
+                        border: 0.2px solid rgb(184 184 184 / 50%);
+                        border-radius: 6px;
+                        padding: 4px 7px;
+                        font-size: 13px;
+                        line-height: 14px;
+                        letter-spacing: 0.4px;
+                        font-size: 12px;
+                        line-height: 12px;
+                        color: #D60000;
+                        font-family: 'Mona-Sans Medium';
+                    }
+                    .input-field {
+                        padding-right: 60px;
+                    }
+                }
+                .resend-otp {
+                    display: flex;
+                    justify-content: flex-end;
+                    margin-top: 8px;
+                    font-size: 12px;
+                    line-height: 12px;
+                    color: #D60000;
+                    font-family: 'Mona-Sans Medium';
+                    .resend-text {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}

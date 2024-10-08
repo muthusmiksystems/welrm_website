@@ -1,0 +1,36 @@
+<app-header></app-header>
+<div class="auth-page signup">
+  <div class="auth-inner">
+    <ng-container *ngIf="isSignupView">
+      <h1>Sign Up</h1>
+      <span class="subtitle">Continue with Phone</span>
+      <form [formGroup]="signupForm" (ngSubmit)="sendOtp()">
+        <div class="input-group">
+          <input type="number" class="hide-spin" maxlength="10" placeholder="Enter your Phone number" formControlName="mobile" />
+          <span class="inline-error" *ngIf="signupForm.controls.mobile.hasError('required') && signupForm.controls.mobile.touched">Phone Number is required</span>
+          <span class="inline-error" *ngIf="signupForm.controls.mobile.hasError('pattern') && signupForm.controls.mobile.touched">Please enter a valid 10-digit phone number</span>
+          <span class="prefix">+91</span>
+        </div>
+        <button class="custom-btn" type="submit"> Get OTP </button>
+        <div class="have-account"> Get a verification code sent to your phone </div>
+      </form>
+    </ng-container>
+
+    <ng-container *ngIf="!isSignupView">
+      <h1>Verify OTP</h1>
+      <span class="subtitle">Continue with Phone</span>
+      <form>
+        <div class="input-group otp-group">
+          <ng-otp-input #ngOtpInput (onInputChange)="validateOtp($event)" [config]="config"></ng-otp-input>
+        </div>
+        <button class="custom-btn" (click)="confirmOtp()"> Confirm </button>
+        <div class="resend-otp">
+          <label class="resend-text" *ngIf="resendOtp" (click)="sendOtp()">Resend OTP Code</label>
+          <div class="timer" *ngIf="displayTimer">{{ display }}</div>
+        </div>
+        <div class="have-account"> Enter the 6-digit OTP code sent to your phone </div>
+      </form>
+    </ng-container>
+  </div>
+</div>
+<app-footer></app-footer>

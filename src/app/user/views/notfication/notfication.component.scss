@@ -1,0 +1,181 @@
+#notification {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    .profile-card {
+        flex: 1;
+        .profile-bd {
+            @media only screen and (max-width: 991px) {
+                padding: 20px;
+            }
+            @media only screen and (max-width: 767px) {
+                padding: 0;
+                background: #f1f1f1;
+            }
+        }
+    }
+    .time-limit-lb {
+        color: #6B7280;
+        font-family: 'Mona-Sans Regular';
+        font-size: 16px;
+        line-height: 20px;
+        margin-bottom: 10px;
+    }
+    .not-list {
+        .custom-card {
+            border: 1px solid #D6D6D6;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            position: relative;
+            background-color: #FBFBFB;
+            @media only screen and (max-width: 767px) {
+                flex-direction: column;
+                padding: 10px;
+            }
+            .card-img.icon-img ~ .new-not {
+                @media only screen and (max-width: 767px) {
+                    right: 10px;
+                    top: 10px;
+                }
+            }
+            &:last-child {
+                margin-bottom: 0;
+            }   
+            .card-img {
+                width: 156px;
+                height: 117px;
+                border-radius: 20px;
+                max-height: 100%;
+                overflow: hidden;
+                margin-right: 20px;
+                @media only screen and (max-width: 767px) {
+                    margin-right: 0;
+                    margin-bottom: 18px;
+                    width: 100%;
+                    height: 140px;
+                }
+                &.icon-img {
+                    width: 60px;
+                    height: 60px;
+                    @media only screen and (max-width: 767px) {
+                        width: 40px;
+                        height: 40px;
+                    }
+                }
+                .green-label {
+                    font-family: "Mona-Sans Medium";
+                    font-size: 12px;
+                    line-height: 14px;
+                    color: #FFFFFF;
+                    padding: 2px 6px;
+                    background-color: #1FA84E;
+                    min-width: 34px;
+                    height: 18px;
+                    border-radius: 2px;
+                    position: absolute;
+                    left: 20px;
+                    top: 35px;
+                    @media only screen and (max-width: 767px) {
+                        left: 5px;
+                        top: 25px;
+                    }
+                }
+            }
+            .card-content {
+                display: flex;
+                flex: 1;
+                align-items: center;
+                @media only screen and (max-width: 767px) {
+                    flex-direction: column;
+                    align-items: flex-end;
+                    position: relative;
+                }
+                .content-left {
+                    flex: 1;
+                    @media only screen and (max-width: 767px) {
+                        width: 100%;
+                    }
+                    h4 {
+                        font-family: 'Mona-Sans Medium';
+                        font-size: 24px;
+                        font-weight: normal;
+                        line-height: 24px;
+                        margin-bottom: 12px;
+                        @media only screen and (max-width: 1199px) {
+                            font-size: 20px;
+                            line-height: 20px;
+                        }
+                        @media only screen and (max-width: 991px) {
+                            font-size: 16px;
+                            line-height: 16px;
+                            margin-bottom: 8px;
+                        }
+                        @media only screen and (max-width: 767px) {
+                            font-size: 14px;
+                            line-height: 14px;
+                            width: calc(100% - 20px);
+                        }
+                    }
+                    .desc {
+                        color: #6B7280;
+                        font-family: 'Mona-Sans Regular';
+                        font-size: 16px;
+                        line-height: 20px;
+                        margin-bottom: 16px;
+                        @media only screen and (max-width: 1199px) {
+                            font-size: 14px;
+                            line-height: 14px;
+                        }
+                        @media only screen and (max-width: 991px) {
+                            font-size: 12px;
+                            line-height: 18px;
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+                .content-right {
+                    margin-left: 35px;
+                    @media only screen and (max-width: 767px) {
+                        margin-left: 0;
+                    }
+                    .arrow {
+                        width: 16px;
+                        height: 16px;
+                        @media only screen and (max-width: 767px) {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            width: 12px;
+                            height: 12px;
+                        }
+                    }
+                }
+            }
+            .new-not {
+                font-family: 'Mona-Sans Medium';
+                font-size: 12px;
+                line-height: 14px;
+                color: #FFFFFF;
+                padding: 2px 4px;
+                background-color: #C42A25;
+                width: 34px;
+                height: 18px;
+                border-radius: 6px;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+                @media only screen and (max-width: 767px) {
+                    right: 10px;
+                    top: 18px;
+                }
+            }
+        }
+    }
+}

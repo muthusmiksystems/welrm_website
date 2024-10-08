@@ -1,0 +1,80 @@
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="top-inner">
+        <div class="row">
+          <div class="col-lg-7">
+            <div class="left-row">
+              <div class="foot-col">
+                <h5>Company</h5>
+                <ul>
+                  <li><a href="/">Home</a></li>
+                  <li><a href="/about-us">About Us</a></li>
+                  <li><a href="/contact-us">Contact Us</a></li>
+                  <li><a href="/blog">Blog</a></li>
+                  <li><a href="/help-support">Help & Support</a></li>
+                </ul>
+              </div>
+              <div class="foot-col">
+                <h5>Legal</h5>
+                <ul>
+                  <li><a href="/terms-conditions">Terms of Services</a></li>
+                  <li><a href="/refund-policy">Refund Policy</a></li>
+                  <li><a href="/privacy-policy">Privacy Policy</a></li>
+                </ul>
+              </div>
+              <div class="foot-col">
+                <h5>Find Us</h5>
+                <ul>
+                  <!-- <li><a href="/contact-us">Contact Us</a></li> -->
+                  <!-- <li><a href="/about-us">About Us</a></li> -->
+                  <!-- <li routerLink="/">Store Locator</li> -->
+                  <li><a href="/hotel-partner">Partners</a></li>
+                  <li><a target="_blank" href="https://g.page/r/CWNyVYCeOXpnEBM/review">Write a Review</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="right-row">
+              <div class="newsletter">
+                <h5>News letter</h5>
+                <form>
+                  <div class="form-input">
+                    <input type="email" placeholder="ENTER EMAIL ADDRESS" [formControl]="email">
+                    <button class="send-nwsletter" (click)="sendNewsletter()" *ngIf="email?.valid"><i class="fa-solid fa-paper-plane"></i></button>
+                  </div>
+                </form>
+              </div>
+              <div class="followus">
+                <div>
+                  <h5>Follow us</h5>
+                  <ul>
+                    <li><a href="https://www.facebook.com/welrmapplication" target="_blank"><img src="assets/imgs/fb.svg" alt="Welrm Facebook"></a></li>
+                    <li><a href="https://x.com/WELRM2" target="_blank"><img src="assets/imgs/twitter.svg" alt="Welrm Twitter"></a></li>
+                    <li><a href="https://www.instagram.com/welrmapplication" target="_blank"><img src="assets/imgs/insta.svg" alt="Welrm Instagram"></a></li>
+                    <li><a href="https://www.youtube.com/@WELRM" target="_blank"><img src="assets/imgs/ytube.svg" alt="Welrm Youtube"></a></li>
+                  </ul>
+                </div>
+                <div class="foot-link">
+                  <h5 class="mb-lg-0">Contact Us</h5>
+                  <a href="tel:9584290842">+91-9584290842</a>
+                </div>
+                <div class="foot-link">
+                  <h5 class="mb-lg-0">Email</h5>
+                  <a href="mailto:info@welrm.com">info@welrm.com</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <div class="container">
+      <p class="copyright">© {{currentYear}} <a routerLink="/">Welrm.com</a>, Inc. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
