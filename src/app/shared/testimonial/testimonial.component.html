@@ -1,12 +1,12 @@
 <div class="testimonial-section">
-    <div class="p-relative">
+    <div class="" [ngClass]="{ 'p-relative': top_testimonial.length > 2 }">
       <div class="container">
         <div class="section-title">
           <h2>What Our Customers Say</h2>
           <p class="paragraph">Discover why guests love WELRM. Read testimonials for insights on memorable stays.</p>
         </div>
       <div class="elfsight-app-d9dc2f4e-9d51-4d7e-9f97-329aef3cd31e" data-elfsight-app-lazy></div>
-        <!-- <p-carousel
+         <p-carousel
           [value]="top_testimonial"
           styleClass="testimonial-sub"
           [numVisible]="3"
@@ -24,7 +24,7 @@
               <p class="paragraph">{{testimonial.review}}</p>
             </div>
           </ng-template>
-        </p-carousel>  -->
+        </p-carousel>  
       </div>
     </div>
 </div>

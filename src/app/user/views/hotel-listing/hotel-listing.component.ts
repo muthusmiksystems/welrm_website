@@ -21,6 +21,7 @@ export class HotelListingComponent implements OnInit {
   isScrolled = false;
   defaultrating = 3;
   currentRoute: string;
+  appliedFilters: any[] = [];
   homedata: any[] = [];
   rangeValues: any;
   results: any[] = [];
@@ -188,10 +189,10 @@ export class HotelListingComponent implements OnInit {
         } else {
           console.warn("No formdata found in localStorage.");
         }
-        console.log("Updated formdata:", localStorage.getItem("paramiterForhotelSearch"));
         this.currentPage = 1;
         this.listingService.getHotelListsByCity(this.cityQuery, this.currentPage).subscribe((response: any) => {
           if (response.success) {
+
             // this.results = response.data.result;
             // this.resultsCopy = response.data.result;
 
@@ -237,7 +238,6 @@ export class HotelListingComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    console.log("hotellisting test")
     this.getHuntHotelData()
     this.breakpointObserver
       .observe(['(max-width: 767px)'])
@@ -253,12 +253,20 @@ export class HotelListingComponent implements OnInit {
 
   handleChange(event: any) {
     this.rangeValues = event;
-    console.log('rangeValues', this.rangeValues)
     setTimeout(() => {
-      this.results = this.filterCity();
+      this.results = this.filterpriceCity();
     }, 200);
   }
+  // handlePriceFilter(event: any) {
+  //   this.rangeValues = event;
+  //   this.filterpriceCity();
+  // }
 
+  handleOtherFilters(appliedFilters: any[]) {
+    console.log('this.appliedFi111lters', this.appliedFilters)
+    this.appliedFilters = appliedFilters;
+    this.results = this.filterCity();
+  }
   checkRatingFilterValue(e: any, val: any) {
     // if (this.rangeValues == 0) {
     this.results = [];
@@ -345,7 +353,7 @@ export class HotelListingComponent implements OnInit {
     })
   }
 
-  filterCity() {
+  filterpriceCity() {
     this.results = [];
     // this.resultsCopy.forEach(e => {
     //   if (e.newPrice <= this.rangeValues) {
@@ -365,16 +373,58 @@ export class HotelListingComponent implements OnInit {
   //   const translateValue = -this.slideIndex * 100;
   //   slider.style.transform = `translateX(${translateValue}%)`;
   // }
+  filterCity() {
+    const hasThreeStarFilter = this.appliedFilters.some(filter => filter.label === '3 Star');
+
+    // If "3 Star" is in the filters, return all hotels
+    if (hasThreeStarFilter) {
+      return this.resultsCopy; // Show all results
+    }
+    this.results = [];
+    // Filtering hotels only bgotoLocationased on other filters (excluding price)
+    return this.resultsCopy.filter(hotel => {
+      // Implement other filter logic here, e.g., rating, room complementaries, etc.
+      const matchesOtherFilters = this.appliedFilters.every(filter => {
+        console.log('filter.title-', filter.title);
+
+        // Example filter for star rating
+        if (filter.title.includes('Star')) {
+          // Extract the numeric value from the filter label (e.g., '5 Star' -> 5)
+          const starRating = parseInt(filter.label); // Use filter.label instead of filter.title
+
+          // If 3 Star is present, don't return anything for that rating
+          if (starRating === 3) {
+            return this.resultsCopy;
+          } else {
+            // Only apply this condition if the star rating is not 3
+            return hotel.rating === starRating;
+          }
+        }
+
+        // Example filter for room complementaries (e.g., WiFi)
+        if (filter.title === 'Room Complementaries') {
+          return hotel.roomComplementaries.some(complementary => complementary.name === filter.label);
+        }
+
+        // Example filter for hotel name (case-insensitive search)
+        if (filter.title === 'Hotel Name') {
+          return hotel.hotelName.toLowerCase().includes(filter.label.toLowerCase());
+        }
+
+        return true; // Default case if no match is found
+      });
+
+      return matchesOtherFilters;
+    });
+  }
 
   getData(showMore?) {
-    console.log("getData");
     this.listingService.getHotelListsBySearch(this.cityOrhotelOrneighborhood, this.checkInDate, this.checkOutDate, this.adults, this.selectedFilter, this.currentPage)
       .pipe(finalize(() => {
         this.isLoading = false;
       })
       ).subscribe((response: any) => {
         if (response.success) {
-          console.log("hotelsearchlisting")
           let hotelRes = response.data;
           hotelRes?.result.forEach((element: any, index: number) => {
             element.newPrice = _.ceil(element.price - (element.price * element.discount) / 100);
@@ -482,9 +532,6 @@ export class HotelListingComponent implements OnInit {
   }
 
   onCityChange(city: string) {
-    // console.log()
-
-    console.log('city---', city)
     this.router.navigate([`list`, `hotels-in-${city}`], {
       queryParams: {
         city: city
@@ -510,11 +557,9 @@ export class HotelListingComponent implements OnInit {
       )
       .subscribe(([allCities, allTopRatedProperities]) => {
         if (allCities.success) {
-          console.log('allCities--', allCities.data)
           this.top_cities = allCities.data;
         }
         if (allTopRatedProperities.success) {
-          console.log('allTopRatedProperities--', allTopRatedProperities.data)
           this.top_Rated_Properties = allTopRatedProperities.data.result;
         }
       });
@@ -570,6 +615,7 @@ export class HotelListingComponent implements OnInit {
   }
 
   gotoLocation(result) {
+    console.log('resultlocation', result)
     if (result?.lat && result?.log) {
       let url = `http://google.com/maps/place/${result.lat},${result.log}`;
       window.open(url, '_blank');

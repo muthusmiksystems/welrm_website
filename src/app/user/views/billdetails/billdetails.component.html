@@ -344,6 +344,10 @@
                                     <label class="label">Hotel Taxes & service Fees</label>
                                     <label class="value">+₹ <span>{{getTax()}}</span></label>
                                 </li>
+                                <!-- <li class="price-dis grey">
+                                    <label class="label">Convenience Fees</label>
+                                    <label class="value">+₹ <span>{{getConvinient()}}</span></label>
+                                </li> -->
                             </ul>
                             <div class="payable-amount">
                                 <label class="label">Total Amount to be paid</label>
@@ -517,7 +521,8 @@
 <!-- Pay at Hotel Modal -->
 <ng-template #payhotelmodal let-modal>
     <div class="modal-header">
-        <h5>Are you sure you Pay At Hotel?</h5>
+        <!-- <h5>Are you sure you Pay At Hotel?</h5> -->
+         <h5>Please confirm if you are sure you want to book this hotel with the following details</h5>
     </div>
     <div class="modal-body">
         <div class="modal-body-inner">
@@ -576,7 +581,14 @@
 
 <!-- Pay now Modal -->
 <ng-template #paynowmodal id="staticBackdrop" let-modal  class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-body">
+    <!-- <div class="modal-body">
         <p>We are not storing any information and redirect to third party razorpay.</p>
-    </div>
+    </div> -->
+    <div class="modal-body text-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <!-- Optional: Add any message below the spinner -->
+        <!-- <p>Processing payment...</p> -->
+      </div>
 </ng-template>

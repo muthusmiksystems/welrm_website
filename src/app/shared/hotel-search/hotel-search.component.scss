@@ -33,6 +33,141 @@
   }
 }
 
+.hotellistsearch {
+  max-height: 350px;
+  overflow-y: auto;
+  position: absolute;
+  background-color: #fff;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  z-index: 1000;
+  padding: 0;
+  margin-top: 5px;
+  margin-left: -25px !important;
+  @media only screen and (max-width: 1600px) {
+    margin-top: 15px;
+  }
+  @media only screen and (max-width: 1400px) {
+    margin-top: 15px;
+  }
+  // width: 100%;
+  @media only screen and (max-width: 1199px) {
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: #fff;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    z-index: 1000;
+    padding: 0;
+    margin-top: 5px;
+    margin-left: -25px !important;
+    max-width: 600px;
+  }
+  @media only screen and (max-width: 991px) {
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: #fff;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    z-index: 1000;
+    padding: 0;
+    margin-top: 15px;
+    margin-left: -25px !important;
+    max-width: 600px;
+  }
+  @media only screen and (max-width: 767px) {
+    max-height: 200px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: #fff;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    z-index: 1000;
+    padding: 0;
+    margin-top: 5px;
+    margin-left: -10px !important;
+    width: 100%;
+  }
+}
+
+.wlsrc-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.wlsrc-ul li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.wlsrc-ul li:hover {
+  background-color: #f0f0f0;
+}
+
+.wlsrc-ul .hotel-info {
+  margin-left: 10px;
+}
+
+.hotel-name {
+  font-weight: bold;
+}
+
+.hotel-address {
+  color: #777;
+  font-size: 14px;
+}
+
+.search-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+
+.wlsrc-ul {
+  list-style-type: none;
+  /* Remove bullets */
+  margin: 0;
+  padding: 0;
+
+  li {
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    /* Align text and icons */
+    align-items: center;
+    border-bottom: 1px solid #eaeaea;
+    /* Light border between items */
+    transition: background-color 0.3s ease;
+    /* Smooth hover effect */
+    border-radius: 8px;
+    /* Add a slight border-radius to each list item */
+  }
+
+  li img {
+    margin-right: 10px;
+    /* Space between icon and text */
+  }
+
+  li:hover {
+    background-color: #f0f0f0;
+    /* Light background change on hover */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    /* Shadow effect on hover */
+  }
+}
+
+
 .search-card {
   background-color: #f9e9e9;
   padding: 10px 20px;
@@ -121,6 +256,8 @@
     .left-row {
       display: flex;
       justify-content: space-between;
+      // background-color: #fff;
+      //   border-radius: 20px;
 
       @media only screen and (max-width: 767px) {
         flex-wrap: wrap;
@@ -128,12 +265,13 @@
 
       .form-input {
         &.list-route {
-          padding: 5px 10px;
+          // padding: 0px 10px;
         }
+
         background-color: #fff;
         // border-radius: 20px;
         padding: 10px 10px;
-        width: calc(27% - 12px);
+        // width: calc(20% - 12px);
         position: relative;
 
         @media only screen and (max-width: 1199px) {
@@ -158,7 +296,7 @@
           width: 60%;
 
           &.list-route {
-            width: 40%;
+            // width: 40%;
 
             @media only screen and (max-width: 767px) {
               width: 100%;
@@ -244,6 +382,7 @@
             width: 50%;
             border-radius: 0;
             border: 0;
+            margin-bottom: 0;
           }
 
           &::before {
@@ -353,6 +492,7 @@
             border: 1px solid #334155;
             border-top: 0;
             border-radius: 0 0 20px 20px;
+            margin-bottom: 0;
 
           }
 
@@ -387,7 +527,12 @@
           .input-head {
             span {
               @media only screen and (max-width: 1199px) {
-                font-size: 13px;
+                font-size: 11px;
+                line-height: 16px;
+              }
+
+              @media only screen and (max-width: 991px) {
+                font-size: 10px;
                 line-height: 16px;
               }
             }
@@ -429,17 +574,17 @@
           span {
             color: #8A93A7;
             font-family: 'Mona-Sans Medium';
-            font-size: 16px;
+            font-size: 12px;
             font-weight: 500;
             line-height: 15.47px;
             letter-spacing: -0.02em;
             text-align: justify;
 
             &.list-route {
-              font-size: 14px;
+              font-size: 12px;
 
               @media only screen and (max-width: 1199px) {
-                font-size: 13px;
+                font-size: 10px;
                 line-height: 16px;
               }
 
@@ -475,11 +620,14 @@
           font-weight: 700;
           line-height: 21.27px;
           display: flex;
+          flex-wrap: wrap;
+          // border:2px solid yellow;
           text-align: justify;
 
           pre {
             font-size: 16px;
             font-weight: 400;
+            margin-bottom: 5px;
           }
 
           &.list-route {
@@ -528,6 +676,7 @@
           @media only screen and (max-width: 1199px) {
             font-size: 17px;
             line-height: 24px;
+            margin-bottom: 0px
           }
 
           @media only screen and (max-width: 991px) {
@@ -565,6 +714,7 @@
           input {
             &.list-route {
               font-size: 18px;
+
               input {
                 font-size: 18px;
                 /* Set font-size to 18px when the list-route class is applied */
@@ -616,6 +766,15 @@
           }
         }
 
+        .child {
+          display: none !important;
+
+          @media only screen and (max-width: 767px) {
+            display: block !important;
+            display: flex !important;
+          }
+        }
+
         .countryName {
           color: #8A93A7;
           font-family: 'Mona-Sans Regular';
@@ -625,9 +784,11 @@
           line-height: 13.54px;
           letter-spacing: -0.02em;
           text-align: justify;
+          margin-top: 5px;
 
           &.list-route {
             font-size: 12px;
+            margin-top: 2px;
 
             @media only screen and (max-width: 991px) {
               font-size: 12px;
@@ -646,7 +807,7 @@
           }
 
           @media only screen and (max-width: 767px) {
-            display: none;
+            display: none !important;
           }
         }
       }
@@ -701,8 +862,8 @@
             max-width: 120px;
             font-size: 14px;
             line-height: 18px;
-            background-color: #C42A2526;
-            color: #C42A25;
+            background-color: #C42A25;
+            color: #fff;
           }
 
           .search-span {
@@ -803,8 +964,8 @@
           max-width: 120px;
           font-size: 14px;
           line-height: 18px;
-          background-color: #C42A2526;
-          color: #C42A25;
+          background-color: #C42A25;
+          color: #ffff;
         }
 
         .search-span {
@@ -1267,6 +1428,8 @@
           padding: 0;
           margin: 0;
           list-style: none;
+          background-color: #FFF;
+          width: 25%;
 
           .dropdown-item.active,
           .dropdown-item:active {
@@ -1276,7 +1439,7 @@
           li {
             display: flex;
             align-items: center;
-            padding: 7px 0;
+            // padding: 7px 0;
             border-bottom: 1px solid #EFEFEF;
             font-family: 'Mona-Sans Medium';
             font-size: 16px;
@@ -1285,6 +1448,7 @@
             color: #171717;
             border-radius: 0px;
             cursor: pointer;
+            background-color: #FFF;
 
             img {
               margin-right: 6px;

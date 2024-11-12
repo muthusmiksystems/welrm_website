@@ -19,33 +19,35 @@ export class BlogComponent implements OnInit {
   blogs: any;
   allBlogs: any;
   totalPages: number = 0;
-
+  searchResults: any;
+  showSearch: boolean = false;
+  showText: boolean =true
   responsiveOptions: any[] | undefined;
 
   blog_responsive = [
     {
-        breakpoint: '1199px',
-        numVisible: 3,
-        numScroll: 1,
-        circular:  false
+      breakpoint: '1199px',
+      numVisible: 3,
+      numScroll: 1,
+      circular: false
     },
     {
-        breakpoint: '991px',
-        numVisible: 2,
-        numScroll: 1,
-        circular:  false
+      breakpoint: '991px',
+      numVisible: 2,
+      numScroll: 1,
+      circular: false
     },
     {
-        breakpoint: '767px',
-        numVisible: 1,
-        numScroll: 1,
-        circular: true
+      breakpoint: '767px',
+      numVisible: 1,
+      numScroll: 1,
+      circular: true
     },
   ];
 
   constructor(private blogservice: BlogService, private router: Router) {
     Carousel.prototype.onTouchMove = () => { };
-   }
+  }
 
   get pages(): number[] {
     return Array.from({ length: this.totalPages }, (_, index) => index + 1);
@@ -100,6 +102,26 @@ export class BlogComponent implements OnInit {
     const today = new Date();
     const differenceInMillis = today.getTime() - postDate.getTime();
     return Math.floor(differenceInMillis / (1000 * 60 * 60 * 24));
+  }
+  search(event: any) {
+    const inputValue = event.target.value; // Get the input value from the event object
+    console.log('Input Value:', this.blogs);
+    if (inputValue) {
+      // Filter blogs based on whether inputValue is present in meta_keywords
+      this.searchResults = this.blogs.filter(blog =>
+        blog.meta_keywords.toLowerCase().includes(inputValue)
+      );
+      // if (this.searchResults > 0) {
+      this.showText=false
+        this.showSearch = true;
+      // }
+    } else {
+      // Clear search results if input is empty
+      this.searchResults = [];
+      this.showText=true;
+      this.showSearch = false;
+    }
+    console.log('Filtered Results:', this.searchResults);
   }
 
 }

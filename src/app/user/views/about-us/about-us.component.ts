@@ -47,7 +47,7 @@ export class AboutUsComponent implements OnInit {
       img:'assets/imgs/no-image.png',
       name: 'Gurmukh Singh',
       post: 'Founder & Director'
-    },
+    },    
     {
       img:'assets/imgs/no-image.png',
       name: 'Arshpreet Kaur',

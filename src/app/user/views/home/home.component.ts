@@ -429,6 +429,7 @@ export class HomeComponent implements OnInit {
           this.top_cities = allCities.data;
         }
         if (allTopRatedProperities.success) {
+          console.log('rating-',allTopRatedProperities.data.result)
           this.top_Rated_Properties = allTopRatedProperities.data.result;
           this.top_Rated_Properties?.forEach(el => {
             el.newPrice = _.ceil(el.price - (el.price * el.discount) / 100);
@@ -474,6 +475,7 @@ export class HomeComponent implements OnInit {
     });
   }
   onCityChange(city: string) {
+    // alert(0)
     this.onSetSearch(city);
     this.router.navigate([`list`, `hotels-in-${city}`], {
       queryParams: {
@@ -630,6 +632,7 @@ export class HomeComponent implements OnInit {
   }
 
   postHotelData(result) {
+    console.log('result==',result)
     let payload = {
       user_id : this.userId,
       hotel_id : result.hotelId,
@@ -677,6 +680,7 @@ export class HomeComponent implements OnInit {
 
   getOfferData() {
     this.homeService.getOffers().subscribe((data: any) => {
+      console.log('off-',data.data)
       this.offers = data.data;
     });
   }

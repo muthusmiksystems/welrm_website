@@ -18,7 +18,7 @@ import { ResSidebarService } from 'src/app/res-sidebar.service';
 export class HeaderComponent implements OnInit {
   isScrolled = false;
   showHotelSearch = false;
-  currentRoute = '';
+  currentRoute = false;
   @ViewChild('ngOtpInput', { static: false }) ngOtpInput: number | undefined;
   @ViewChild('otpModal') otpModal: any;
   @ViewChild('otpConfirmModal') otpConfirmModal: any;
@@ -148,12 +148,12 @@ export class HeaderComponent implements OnInit {
       });
     this.router.events.subscribe((event: any) => {
       console.log('event-', event)
-      if (event.routerEvent.url && event.routerEvent.url.includes('list')) {
+      if (event.routerEvent.url && (event.routerEvent.url.includes('list') || event.routerEvent.url.includes('room-details/getroom'))) {
         this.showHotelSearch = false;
-        this.currentRoute = '/list';
+        this.currentRoute = true;
       } else {
         this.showHotelSearch = false;
-        this.currentRoute = '';
+        this.currentRoute = false;
       }
     });
   }
@@ -349,7 +349,8 @@ export class HeaderComponent implements OnInit {
   }
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    if (this.currentRoute === '/list') {  // Check if the current route is '/list'
+    console.log("this.currentRoute", this.currentRoute)
+    if (this.currentRoute) {  // Check if the current route is '/list'
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
 
       // Check if the user has scrolled down more than 50 pixels

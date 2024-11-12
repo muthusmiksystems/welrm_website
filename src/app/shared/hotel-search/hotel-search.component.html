@@ -12,10 +12,63 @@
               <span [ngClass]="{ 'list-route': isListRoute }">Enter City Name,Location or Specific hotel</span>
             </div>
             <div class="wl-dropdown" ngbDropdown [ngClass]="{ 'list-route': isListRoute }">
-              <input class="inputfield" [ngClass]="{ 'list-route': isListRoute }" type="text"
+              <input class="inputfield" [ngClass]="{ 'list-route': isListRoute }" type="text" (input)="searchResults()"
                 formControlName="cityOrhotelOrneighborhood" placeholder="Search...">
-              <span class="countryName" [ngClass]="{ 'list-route': isListRoute }"
-                style="margin-left: 28px;">India</span>
+              <div class="countryName mt-1" [ngClass]="{ 'list-route': isListRoute }" style="margin-left: 28px;">India
+              </div>
+              <div class="hotellistsearch row" *ngIf="showSearch">
+                <!-- City List -->
+                <ul class="col-12 wlsrc-ul border-warning" *ngIf="searchDataCities.length > 0">
+                  <li *ngFor="let city of searchDataCities" (click)="selectCity(city.cityName)" ngbDropdownItem>
+                    <img src="assets/imgs/pin.png" alt="" class="search-icon">
+                    <div class="hotel-info">
+                      <span class="hotel-name">{{city.cityName}}</span>
+                    </div>
+                  </li>
+                </ul>
+  
+                <!-- Hotel List -->
+                <ul class="col-12 wlsrc-ul bg-white" *ngIf="searchDataHotels.length > 0">
+                  <li *ngFor="let hotelAddress of searchDataHotels" (click)="selectCity(hotelAddress.hotelName)"
+                    ngbDropdownItem>
+                    <img src="assets/imgs/hotelsearch.png" alt="" class="search-icon">
+                    <div class="hotel-info">
+                      <span class="hotel-name">{{hotelAddress.hotelName}}</span>
+                      <br />
+                      <span class="hotel-address">{{hotelAddress.address}}</span>
+                    </div>
+                  </li>
+                </ul>
+  
+                <!-- Location List -->
+                <ul class="col-12 wlsrc-ul bg-white" *ngIf="searchDataLocations.length > 0">
+                  <li *ngFor="let location of searchDataLocations" (click)="selectCity(location.address)" ngbDropdownItem>
+                    <img src="assets/imgs/location-search-pin.svg" alt="" class="search-icon">
+                    <div class="hotel-info">
+                      <span class="hotel-name">{{location.address}}</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <!-- <ul class="wlsrc-ul">
+                <li *ngFor="let city of searchDataHotels" (click)="selectCity(city.hotelName)" ngbDropdownItem><img
+                    src="assets/imgs/location-search-pin.svg" alt="">{{city.hotelName}}</li>
+              </ul> -->
+
+              <!-- <div *ngIf="searchDataCities?.length > 0" ngbDropdownMenu aria-labelledby="dropdownConfig1">
+                  <div class="wl-quantity">
+                    <div class="wlqlt-head">
+                      <label>Explore Cities</label>
+                    </div>
+                    <div class="wlquantity-grp">
+                      <ul class="wlsrc-ul">
+                        <li *ngFor="let city of searchDataCities" (click)="selectCity(city.cityName)" ngbDropdownItem>
+                          <img src="assets/imgs/location-search-pin.svg" alt="">{{ city.cityName }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div> -->
               <!-- <div ngbDropdownMenu aria-labelledby="dropdownConfig1">   ngbDropdownToggle
                 <div class="wl-quantity">
                   <div class="wlqlt-head">
@@ -31,49 +84,66 @@
                     </ul>
                   </div>
                 </div>
-              </div> -->
+              </div>  -->
             </div>
+            
+
           </div>
 
           <div class="form-input checkIn" [ngClass]="{ 'list-route': isListRoute }">
             <div class="input-head">
-              <img [ngClass]="{ 'list-route': isListRoute }" src="assets/imgs/calendar.svg" alt="">
+              <img *ngIf="!showSearch" [ngClass]="{ 'list-route': isListRoute }" src="assets/imgs/calendar.svg" alt="">
               <span [ngClass]="{ 'list-route': isListRoute }">Check-in</span>
             </div>
             <p-calendar id="checkInDate" [minDate]="minimumDate" dateFormat="d M y" class="calendar-control"
-              [ngClass]="{ 'list-route': isListRoute }" formControlName="checkInDate" (onSelect)="onSelectClose($event)"
-              
-              ></p-calendar>
-            <span class="countryName" [ngClass]="{ 'list-route': isListRoute }">{{form.controls.checkInDate.value ?
+              [ngClass]="{ 'list-route': isListRoute }" formControlName="checkInDate"
+              (onSelect)="onSelectClose($event)"></p-calendar>
+            <div class="countryName" [ngClass]="{ 'list-route': isListRoute }">{{form.controls.checkInDate.value ?
               (form.controls.checkInDate.value | date :
-              'EEEE'):''}}</span>
+              'EEEE'):''}}</div>
           </div>
 
           <div class="form-input checkOut" [ngClass]="{ 'list-route': isListRoute }">
             <div class="input-head">
-              <img [ngClass]="{ 'list-route': isListRoute }" src="assets/imgs/calendar.svg" alt="">
+              <img *ngIf="!showSearch" [ngClass]="{ 'list-route': isListRoute }" src="assets/imgs/calendar.svg" alt="">
               <span [ngClass]="{ 'list-route': isListRoute }">Check-out</span>
             </div>
             <p-calendar id="checkOutDate" [ngClass]="{ 'list-route': isListRoute }" [minDate]="minimumDatecIn"
               dateFormat="d M y" class="calendar-control" formControlName="checkOutDate"></p-calendar>
-            <span class="countryName" [ngClass]="{ 'list-route': isListRoute }">{{form.controls.checkOutDate.value ?
+            <div class="countryName" [ngClass]="{ 'list-route': isListRoute }">{{form.controls.checkOutDate.value ?
               (form.controls.checkOutDate.value | date :
-              'EEEE'):''}}</span>
+              'EEEE'):''}}</div>
           </div>
 
-          <div class="form-input gRooms" [ngClass]="{ 'list-route': isListRoute }">
+          <div class="form-input gRooms">
             <div class="input-head">
-              <img [ngClass]="{ 'list-route': isListRoute }" src="assets/imgs/profile-2user.svg" alt="">
+              <img *ngIf="!showSearch" [ngClass]="{ 'list-route': isListRoute }" src="assets/imgs/profile-2user.svg"
+                alt="">
               <span [ngClass]="{ 'list-route': isListRoute }">Rooms & Guests</span>
             </div>
-            <div class="wl-dropdown" ngbDropdown #guestsRoomsDropdown="ngbDropdown">
+            <div class="wl-dropdown" ngbDropdown #guestsRoomsDropdown="ngbDropdown" [autoClose]="false">
               <button type="button" class="btn inputfield" id="dropdownConfig" ngbDropdownToggle
                 style="margin-left: 0px;" [ngClass]="{ 'list-route': isListRoute }">
-                {{room}}
-                <pre> Room </pre> {{adults}}
-                <pre> Adults</pre>
+                <div class="d-flex">
+                  {{room}}
+                  <pre class="mb-0"> Room </pre> {{adults}}
+                  <pre class="mb-0"> Adults </pre>
+                  <div *ngIf="showChild" class="child ">
+                    {{childs}}
+                    <pre class="mb-0"> Child</pre>
+                  </div>
+                </div>
+                <!-- <div class="flex-column"> -->
+                <!-- <div *ngIf="showChild" class="d-flex">{{childs}} -->
+
+                <!-- </div> -->
               </button>
+              <div *ngIf="showChild" class="countryName d-flex">
+                {{childs}}
+                Child
+              </div>
               <!-- <span class="countryName">{{room}} Rooms</span> -->
+
               <div ngbDropdownMenu aria-labelledby="dropdownConfig">
                 <div class="wl-quantity">
                   <div class="wlquantity-grp">
@@ -134,8 +204,9 @@
           </div>
         </div>
         <div class="form-input form-submit">
-          <label for="submit-btn" [ngClass]="{ 'list-route': isListRoute }">
-            <span class="search-span" [ngClass]="{ 'list-route': isListRoute }">{{ isRoomDetailsRoute ? 'Update' : 'Search' }}</span>
+          <label for="submit-btn">
+            <span class="search-span" [ngClass]="{ 'list-route': isListRoute }">{{ isRoomDetailsRoute ? 'Update' :
+              'Search' }}</span>
             <!-- <img class="search-icon" src="assets/imgs/search-normal.svg" alt=""> -->
             <input type="submit" value="">
           </label>

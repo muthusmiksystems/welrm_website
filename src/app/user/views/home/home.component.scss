@@ -186,7 +186,10 @@
     transition: 0.2s;
     font-family: "Mona-Sans Bold";
     min-height: 68px;
-
+    a{
+      text-decoration: none;
+      color: #FFFFFF;
+    }
     @media only screen and (max-width: 1399px) {
       padding: 14px 24px;
       font-size: 14px;
@@ -260,7 +263,7 @@
         // font-weight: normal;
         margin-bottom: 25px;
         // font-family: Mona-Sans;
-        font-size: 55px;
+        font-size: 50px;
         font-weight: 650;
         line-height: 55.02px;
         text-align: center;
@@ -536,7 +539,7 @@
     position: relative;
     margin: 30px 3px;
     height: 448px;
-
+    cursor: pointer;
     @media only screen and (max-width: 1366px) {
       height: 380px;
     }
@@ -678,7 +681,7 @@
     padding: 15px 13px;
     border: 1px solid #D7D7D7;
     position: relative;
-
+    cursor: pointer;
     @media only screen and (max-width: 1199px) {
       display: flex;
       flex-direction: column;
@@ -1534,7 +1537,7 @@
     position: relative;
     overflow: hidden;
     margin-bottom: 24px;
-
+    cursor: pointer;
     &::after {
       position: absolute;
       content: '';
@@ -1544,6 +1547,7 @@
       height: 100%;
       background: linear-gradient(180deg, rgba(0, 0, 0, 0) 61.95%, rgba(0, 0, 0, 0.8) 87.93%);
       z-index: 1;
+      pointer-events: none;
     }
 
     .destination-strip {
@@ -1601,7 +1605,8 @@
     .destination-img {
       width: 100%;
       height: 410px;
-
+      position: relative;
+      pointer-events: all;
       @media only screen and (max-width: 1366px) {
         height: 350px;
       }
@@ -1626,7 +1631,7 @@
       border-radius: 15px;
       background-color: rgba(255, 255, 255, 0.20);
       padding: 10px 14px;
-
+      cursor: pointer;
       // @media only screen and (max-width: 1199px) {
       //   flex-direction: column;
       //   align-items: unset;
@@ -1741,7 +1746,7 @@
       .destination-card {
         margin: 0 8px;
         box-shadow: none;
-
+        cursor: pointer;
         &::after {
           background: linear-gradient(180deg, rgba(0, 0, 0, 0) 61.95%, rgba(0, 0, 0, 0.8) 80%);
         }

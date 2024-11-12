@@ -53,7 +53,7 @@ export class MyprofileComponent implements OnInit {
         }
       });
   }
-  updateCustomerProfile( ) {
+  updateCustomerProfile() {
     const email = this.email;
     const name  = this.fullName;
     this.myprofile_service

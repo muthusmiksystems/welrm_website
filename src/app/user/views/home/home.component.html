@@ -13,19 +13,14 @@
         <app-hotel-search></app-hotel-search>
       </div>
     </div>
-    <div class="offers-section p-relative">
+    <div class="offers-section" [ngClass]="{ 'p-relative': offers.length > 2 }">
       <div class="container">
         <div class="section-title">
           <h2>Offers</h2>
         </div>
       </div>
       <div class="container-fluid g-0">
-        <p-carousel
-          [value]="offers"
-          styleClass="offers-sub"
-          [numVisible]="3.2"
-          [numScroll]="1"
-          [circular]="false"
+        <p-carousel [value]="offers" styleClass="offers-sub" [numVisible]="3.2" [numScroll]="1" [circular]="true"
           [responsiveOptions]="offers_responsive">
           <ng-template let-offer pTemplate="item">
             <div class="offer-card">
@@ -45,19 +40,14 @@
   </div>
 
   <div class="cities-section section whitebg">
-    <div class="p-relative">
+    <div class="p-relative" >
       <div class="container">
         <div class="section-title">
           <h2>Explore By Cities</h2>
         </div>
       </div>
       <div class="container-fluid g-0">
-        <p-carousel
-          [value]="top_cities"
-          styleClass="cities-sub"
-          [numVisible]="5"
-          [numScroll]="1"
-          [circular]="true"
+        <p-carousel [value]="top_cities" styleClass="cities-sub" [numVisible]="5" [numScroll]="1" [circular]="true"
           [responsiveOptions]="city_responsive">
           <ng-template let-top_city pTemplate="item">
             <div class="city-card" (click)="onCityChange(top_city.cityName)">
@@ -70,7 +60,7 @@
               </div>
             </div>
           </ng-template>
-        </p-carousel> 
+        </p-carousel>
       </div>
     </div>
   </div>
@@ -83,13 +73,8 @@
         </div>
       </div>
       <div class="container-fluid g-0">
-        <p-carousel
-          [value]="top_Rated_Properties"
-          styleClass="properties-sub"
-          [numVisible]="3.6"
-          [numScroll]="1"
-          [circular]="false"
-          [responsiveOptions]="top_Properties_responsive">
+        <p-carousel [value]="top_Rated_Properties" styleClass="properties-sub" [numVisible]="3.6" [numScroll]="1"
+          [circular]="false" [responsiveOptions]="top_Properties_responsive">
           <ng-template let-top_property pTemplate="item">
             <div class="property-card">
               <div class="property-strip">
@@ -97,23 +82,28 @@
                   <img loading="lazy" src="assets/imgs/discount.svg" alt="">
                   {{top_property.discount}}% off
                 </div>
-                <div class="favorite" [ngStyle]="{'background-color': top_property?.inWishlist ? '#C42A25' : '', 'pointer-events': top_property?.isLoading ? 'none' : '' }" (click)="postHotelData(top_property)">
-                  <img loading="lazy" [src]="top_property?.inWishlist ? 'assets/imgs/favorite-white.svg' : 'assets/imgs/favorite.svg'" alt="">
+                <div class="favorite"
+                  [ngStyle]="{'background-color': top_property?.inWishlist ? '#C42A25' : '', 'pointer-events': top_property?.isLoading ? 'none' : '' }"
+                  (click)="postHotelData(top_property)">
+                  <img loading="lazy"
+                    [src]="top_property?.inWishlist ? 'assets/imgs/favorite-white.svg' : 'assets/imgs/favorite.svg'"
+                    alt="">
                 </div>
               </div>
-              <div class="property-img">
+              <div class="property-img" (click)="booking(top_property.id, top_property.hotelName)">
                 <img loading="lazy" class="img-cover" [src]="top_property.images[0]" alt="">
               </div>
               <div class="property-content">
                 <div class="content-head">
-                  <h3>{{top_property.hotelName}}</h3>
+                  <h3 (click)="booking(top_property.id, top_property.hotelName)">{{top_property.hotelName}}</h3>
                   <span class="rating">
                     <img loading="lazy" src="assets/imgs/star.svg" alt="">
-                    {{top_property.rating}}
+                    <!-- {{top_property.rating}} -->3
                   </span>
                 </div>
-                <p class="property-desc">Get upto 50% off on Hotel bookings. Let’s enjoy your vacation</p>
-                <div class="content-foot">
+                <p class="property-desc" (click)="booking(top_property.id, top_property.hotelName)">Get upto 50% off on
+                  Hotel bookings. Let’s enjoy your vacation</p>
+                <div class="content-foot" (click)="booking(top_property.id, top_property.hotelName)">
                   <div class="prices">
                     <div class="price-old">
                       ₹<span>{{getCeilPrice(top_property.price)}}</span><small>/Night</small>
@@ -122,12 +112,13 @@
                       ₹<span>{{top_property.newPrice}}<small>/Night</small></span>
                     </div>
                   </div>
-                  <button class="booknow-btn" (click)="booking(top_property.id, top_property.hotelName)">Book Now</button>
+                  <button class="booknow-btn" (click)="booking(top_property.id, top_property.hotelName)">Book
+                    Now</button>
                 </div>
               </div>
             </div>
           </ng-template>
-        </p-carousel> 
+        </p-carousel>
       </div>
     </div>
   </div>
@@ -140,7 +131,9 @@
             <span>About Us</span>
             <h2>Discover Unforgettable Stays with WELRM</h2>
           </div>
-          <p class="about-desc">At WELRM, we connect travelers with exceptional stays. Discover top-rated hotels and unique properties, ensuring seamless booking and unparalleled service. Create unforgettable memories and explore new destinations with exclusive deals tailored to your travel needs.</p>
+          <p class="about-desc">At WELRM, we connect travelers with exceptional stays. Discover top-rated hotels and
+            unique properties, ensuring seamless booking and unparalleled service. Create unforgettable memories and
+            explore new destinations with exclusive deals tailored to your travel needs.</p>
           <div class="about-info">
             <div class="info-item">
               <span>5000+</span>
@@ -178,21 +171,28 @@
       <div class="section-title">
         <span>Our Videos</span>
         <h2>Explore WELRM Insights</h2>
-        <p class="paragraph">Dive into our videos for expert tips on booking top hotels, listing your property seamlessly, and uncovering the finest stays across India with WELRM.</p>
+        <p class="paragraph">Dive into our videos for expert tips on booking top hotels, listing your property
+          seamlessly, and uncovering the finest stays across India with WELRM.</p>
       </div>
       <div class="row">
         <div class="col-lg-7">
           <div class="full-video">
-            <iframe [src]="ourVideos.mainView" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe [src]="ourVideos.mainView" title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           </div>
         </div>
         <div class="col-lg-5 d-flex flex-lg-column justify-content-between mt-lg-0 mt-4">
           <div class="half-video">
-            <iframe [src]="ourVideos.columnView1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe [src]="ourVideos.columnView1" title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             <div class="play-overlay" (click)="onChangeVideo('columnView1')"></div>
           </div>
           <div class="half-video">
-            <iframe [src]="ourVideos.columnView2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe [src]="ourVideos.columnView2" title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             <div class="play-overlay" (click)="onChangeVideo('columnView2')"></div>
           </div>
         </div>
@@ -209,18 +209,25 @@
             <h2>Our Mission</h2>
           </div>
           <div class="btn-holder">
-            <button class="info-btn custom-btn cursor-default" (click)="scrollTop()"><img loading="lazy" src="assets/imgs/house.svg" alt=""> Luxurious Stay</button>
-            <button class="info-btn custom-btn cursor-default" (click)="scrollTop()"><img loading="lazy" src="assets/imgs/heart.svg" alt=""> Guest-Centric Care</button>
+            <button class="info-btn custom-btn cursor-default" (click)="scrollTop()"><img loading="lazy"
+                src="assets/imgs/house.svg" alt=""> Luxurious Stay</button>
+            <button class="info-btn custom-btn cursor-default" (click)="scrollTop()"><img loading="lazy"
+                src="assets/imgs/heart.svg" alt=""> Guest-Centric Care</button>
           </div>
-          <p class="paragraph">Our mission is to redefine hospitality by offering unparalleled comfort and personalized service.</p>
+          <p class="paragraph">Our mission is to redefine hospitality by offering unparalleled comfort and personalized
+            service.</p>
           <h5>Luxurious Stay</h5>
           <ul class="mb-0 p-0">
-            <li class="paragraph"><b>Redefine Hospitality:</b> WELRM is committed to setting new standards in the hospitality industry, prioritizing guest satisfaction and an exceptional overall experience.</li>
+            <li class="paragraph"><b>Redefine Hospitality:</b> WELRM is committed to setting new standards in the
+              hospitality industry, prioritizing guest satisfaction and an exceptional overall experience.</li>
           </ul>
           <h5>Guest-Centric Care</h5>
           <ul class="mb-0 p-0">
-            <li class="paragraph"><b>Unparalleled Comfort:</b> Our mission is to provide a level of comfort that exceeds expectations, with high-quality bedding, well-appointed rooms, modern amenities, and meticulous attention to detail.</li>
-            <li class="paragraph"><b>Personalized Service:</b> We are dedicated to understanding and meeting each guest's individual needs and preferences, ensuring a truly personalized and relaxing stay.</li>
+            <li class="paragraph"><b>Unparalleled Comfort:</b> Our mission is to provide a level of comfort that exceeds
+              expectations, with high-quality bedding, well-appointed rooms, modern amenities, and meticulous attention
+              to detail.</li>
+            <li class="paragraph"><b>Personalized Service:</b> We are dedicated to understanding and meeting each
+              guest's individual needs and preferences, ensuring a truly personalized and relaxing stay.</li>
           </ul>
         </div>
         <div class="col-lg-6">
@@ -272,7 +279,8 @@
           <div class="section-title">
             <span>Offer Valid Until : {{ lastDate | date:'dd-MMM-yyyy' }}</span>
             <h2>Escape to Luxury</h2>
-            <p class="paragraph">Exclusive Hotel Booking Offers Indulge in Unmatched Elegance with Our Limited-Time Offers!</p>
+            <p class="paragraph">Exclusive Hotel Booking Offers Indulge in Unmatched Elegance with Our Limited-Time
+              Offers!</p>
           </div>
           <div class="d-flex">
             <div class="barcode">
@@ -289,7 +297,7 @@
             <div class="offer-box">
               <span>Terms And condition Apply</span>
               <h3>Get 10-20% Off on First Booking</h3>
-              <button class="custom-btn small">Avail Now</button>
+              <button class="custom-btn small"><a href="/offers">Avail Now</a></button>
               <div class="offer-avatar">
                 <img loading="lazy" src="assets/imgs/offer-avatar1.png" alt="">
               </div>
@@ -297,7 +305,7 @@
             <div class="offer-box">
               <span>Terms And condition Apply</span>
               <h3>Get 10-20% Off on Second Booking</h3>
-              <button class="custom-btn small">Avail Now</button>
+              <button class="custom-btn small"><a href="/offers">Avail Now</a></button>
               <div class="offer-avatar">
                 <img loading="lazy" src="assets/imgs/offer-avatar2.png" alt="">
               </div>
@@ -305,7 +313,7 @@
             <div class="offer-box">
               <span>Terms And condition Apply</span>
               <h3>Get 10-20% Off on Third Booking</h3>
-              <button class="custom-btn small">Avail Now</button>
+              <button class="custom-btn small"><a href="/offers">Avail Now</a></button>
               <div class="offer-avatar">
                 <img loading="lazy" src="assets/imgs/offer-avatar3.png" alt="">
               </div>
@@ -321,12 +329,13 @@
       <div class="section-title">
         <span>Popular Destinations</span>
         <h2>Let’s Explore Your Dream Destination Here!</h2>
-        <p class="paragraph">We have Recommended Popular destinations every week so you don't have to worry about your destination dreams.</p>
+        <p class="paragraph">We have Recommended Popular destinations every week so you don't have to worry about your
+          destination dreams.</p>
       </div>
       <div class="row">
         <div class="col-lg-4 col-md-6" *ngFor="let destination of top_destinations">
           <div class="destination-card">
-            <div class="destination-img">
+            <div class="destination-img" (click)="onCityChange(destination.address)">
               <img loading="lazy" class="img-cover" [src]="destination.image_url" alt="">
             </div>
             <div class="destination-strip">
@@ -334,11 +343,15 @@
                 <img loading="lazy" src="assets/imgs/star.svg" alt="">
                 {{destination.rating}}
               </div>
-              <div class="favorite">
-                <img loading="lazy" src="assets/imgs/favorite.svg" alt="">
+              <div class="favorite"
+                [ngStyle]="{'background-color': destination?.inWishlist ? '#C42A25' : '', 'pointer-events': destination?.isLoading ? 'none' : '' }"
+                (click)="postHotelData(destination)">
+                <img loading="lazy"
+                  [src]="destination?.inWishlist ? 'assets/imgs/favorite-white.svg' : 'assets/imgs/favorite.svg'"
+                  alt="">
               </div>
             </div>
-            <div class="destination-content">
+            <div class="destination-content" (click)="onCityChange(destination.address)">
               <div class="left">
                 <h3>{{destination.name}}</h3>
                 <span class="address">
@@ -346,7 +359,8 @@
                   {{destination.address}}
                 </span>
               </div>
-              <button class="custom-btn small" (click)="onCityChange(destination.address)">Book Now <img loading="lazy" src="assets/imgs/right-arrow.svg" alt=""></button>
+              <button class="custom-btn small" (click)="onCityChange(destination.address)">Book Now <img loading="lazy"
+                  src="assets/imgs/right-arrow.svg" alt=""></button>
             </div>
           </div>
         </div>
@@ -362,16 +376,13 @@
       <div class="section-title">
         <span>Popular Destinations</span>
         <h2>Let’s Explore Your Dream Destination Here!</h2>
-        <p class="paragraph">We have Recommended Popular destinations every week so you don't have to worry about your destination dreams.</p>
+        <p class="paragraph">We have Recommended Popular destinations every week so you don't have to worry about your
+          destination dreams.</p>
       </div>
     </div>
     <div class="p-relative">
       <div class="container-fluid g-0">
-        <p-carousel
-          [value]="top_destinations"
-          styleClass="destination-sub"
-          [numVisible]="1.2"
-          [numScroll]="1"
+        <p-carousel [value]="top_destinations" styleClass="destination-sub" [numVisible]="1.2" [numScroll]="1"
           [circular]="false">
           <ng-template let-destination pTemplate="item">
             <div class="destination-card">
@@ -383,8 +394,12 @@
                   <img loading="lazy" src="assets/imgs/star.svg" alt="">
                   {{destination.rating}}
                 </div>
-                <div class="favorite">
-                  <img loading="lazy" src="assets/imgs/favorite.svg" alt="">
+                <div class="favorite"
+                  [ngStyle]="{'background-color': top_destinations?.inWishlist ? '#C42A25' : '', 'pointer-events': top_destinations?.isLoading ? 'none' : '' }"
+                  (click)="postHotelData(top_destinations)">
+                  <img loading="lazy"
+                    [src]="top_destinations?.inWishlist ? 'assets/imgs/favorite-white.svg' : 'assets/imgs/favorite.svg'"
+                    alt="">
                 </div>
               </div>
               <div class="destination-content">
@@ -395,11 +410,12 @@
                     {{destination.address}}
                   </span>
                 </div>
-                <button class="custom-btn small" (click)="onCityChange(destination.address)">Book Now <img loading="lazy" src="assets/imgs/right-arrow.svg" alt=""></button>
+                <button class="custom-btn small" (click)="onCityChange(destination.address)">Book Now <img
+                    loading="lazy" src="assets/imgs/right-arrow.svg" alt=""></button>
               </div>
             </div>
           </ng-template>
-        </p-carousel> 
+        </p-carousel>
       </div>
     </div>
   </div>
@@ -420,7 +436,8 @@
               <span class="tag">Coupons and deals</span>
               <h3>{{blogs[0].title}}</h3>
               <div class="d-flex justify-content-between">
-                <p class="paragraph">{{blogs[0].meta_description?.substring(0,130)}}{{blogs[0].meta_description?.length > 130 ? '...':''}}</p>
+                <p class="paragraph">{{blogs[0].meta_description?.substring(0,130)}}{{blogs[0].meta_description?.length
+                  > 130 ? '...':''}}</p>
                 <div class="right-arrow" (click)="navigateToBlogDetails(blogs[0].slug)">
                   <img loading="lazy" src="assets/imgs/right-arrow-red.svg" alt="">
                 </div>
@@ -437,7 +454,8 @@
               <span class="tag">Coupons and deals</span>
               <h3>{{blogs[1].title}}</h3>
               <div class="d-flex justify-content-between">
-                <p class="paragraph">{{blogs[1].meta_description?.substring(0,50)}}{{blogs[1].meta_description?.length > 50 ? '...':''}}</p>
+                <p class="paragraph">{{blogs[1].meta_description?.substring(0,50)}}{{blogs[1].meta_description?.length >
+                  50 ? '...':''}}</p>
                 <div class="right-arrow" (click)="navigateToBlogDetails(blogs[1].slug)">
                   <img loading="lazy" src="assets/imgs/right-arrow-red.svg" alt="">
                 </div>
@@ -452,7 +470,8 @@
               <span class="tag">Coupons and deals</span>
               <h3>{{blogs[2].title}}</h3>
               <div class="d-flex justify-content-between">
-                <p class="paragraph">{{blogs[2].meta_description?.substring(0,50)}}{{blogs[2].meta_description?.length > 50 ? '...':''}}</p>
+                <p class="paragraph">{{blogs[2].meta_description?.substring(0,50)}}{{blogs[2].meta_description?.length >
+                  50 ? '...':''}}</p>
                 <div class="right-arrow" (click)="navigateToBlogDetails(blogs[2].slug)">
                   <img loading="lazy" src="assets/imgs/right-arrow-red.svg" alt="">
                 </div>
@@ -471,7 +490,8 @@
               <span class="tag">Coupons and deals</span>
               <h3>{{blogs[3].title}}</h3>
               <div class="d-flex justify-content-between">
-                <p class="paragraph">{{blogs[3].meta_description?.substring(0,50)}}{{blogs[3].meta_description?.length > 50 ? '...':''}}</p>
+                <p class="paragraph">{{blogs[3].meta_description?.substring(0,50)}}{{blogs[3].meta_description?.length >
+                  50 ? '...':''}}</p>
                 <div class="right-arrow" (click)="navigateToBlogDetails(blogs[3].slug)">
                   <img loading="lazy" src="assets/imgs/right-arrow-red.svg" alt="">
                 </div>
@@ -488,7 +508,8 @@
               <span class="tag">Coupons and deals</span>
               <h3>{{blogs[4].title}}</h3>
               <div class="d-flex justify-content-between">
-                <p class="paragraph">{{blogs[4].meta_description?.substring(0,130)}}{{blogs[4].meta_description?.length > 130 ? '...':''}}</p>
+                <p class="paragraph">{{blogs[4].meta_description?.substring(0,130)}}{{blogs[4].meta_description?.length
+                  > 130 ? '...':''}}</p>
                 <div class="right-arrow" (click)="navigateToBlogDetails(blogs[4].slug)">
                   <img loading="lazy" src="assets/imgs/right-arrow-red.svg" alt="">
                 </div>
@@ -509,28 +530,23 @@
         <div class="section-title">
           <h2>Best Deals For You</h2>
         </div>
-        <p-carousel
-          [value]="best_deals"
-          styleClass="deals-sub"
-          [numVisible]="2"
-          [numScroll]="1"
-          [circular]="false">
+        <p-carousel [value]="best_deals" styleClass="deals-sub" [numVisible]="2" [numScroll]="1" [circular]="false">
           <ng-template let-deals pTemplate="item">
             <!-- <div class="deal-card" [style.background]="deal.color" *ngFor="let deal of deals?.slide"> -->
-              <!-- <div class="deal-content">
+            <!-- <div class="deal-content">
                 <span>{{deal.subtitle}}</span>
                 <h3>{{deal.title}}</h3>
                 <button class="custom-btn small" (click)="scrollTop()">Try Now!</button>
               </div> -->
-              <!-- <div class="deal-img">
+            <!-- <div class="deal-img">
                 <img loading="lazy" [src]="deal.img" alt="">
               </div> -->
-              <div class="readydeal-img">
-                <img loading="lazy" [src]="deals.image" alt="">
-              </div>
+            <div class="readydeal-img">
+              <img loading="lazy" [src]="deals.image" alt="">
+            </div>
             <!-- </div> -->
           </ng-template>
-        </p-carousel> 
+        </p-carousel>
       </div>
     </div>
   </div>
@@ -553,7 +569,7 @@
         </div>
       </div>
     </div>
-  </div> 
+  </div>
 
   <div class="faq-section section" *ngIf="isMobileView">
     <div class="container">
@@ -575,7 +591,7 @@
                   {{ faq.title }}
                   <span class="plus-icon">
                     <img loading="lazy" class="plus" src="assets/imgs/plus.svg" alt="">
-                    <img loading="lazy" class="minus"  src="assets/imgs/minus.svg" alt="">
+                    <img loading="lazy" class="minus" src="assets/imgs/minus.svg" alt="">
                   </span>
                 </button>
               </h2>
@@ -604,15 +620,18 @@
         <div class="col-sm-6">
           <div class="section-title">
             <h2>Download WELRM App for Exclusive Booking Features!</h2>
-            <p class="paragraph">Download the WELRM app to access exclusive features for seamless and memorable hotel booking experiences today!</p>
+            <p class="paragraph">Download the WELRM app to access exclusive features for seamless and memorable hotel
+              booking experiences today!</p>
           </div>
           <div class="download-access">
             <div class="barcode">
               <img loading="lazy" class="img-cover" src="assets/imgs/banner-Qr.png" alt="">
             </div>
             <div class="store-img">
-              <img loading="lazy" src="assets/imgs/apple-store.png" alt="" (click)="openNew('https://apps.apple.com/ca/app/welrm/id1643890398')">
-              <img loading="lazy" src="assets/imgs/google-store.png" alt="" (click)="openNew('https://play.google.com/store/apps/details?id=com.welrm')">
+              <img loading="lazy" src="assets/imgs/apple-store.png" alt=""
+                (click)="openNew('https://apps.apple.com/ca/app/welrm/id1643890398')">
+              <img loading="lazy" src="assets/imgs/google-store.png" alt=""
+                (click)="openNew('https://play.google.com/store/apps/details?id=com.welrm')">
             </div>
           </div>
         </div>
@@ -633,20 +652,27 @@
       <div class="hotel-tabs">
         <p-tabView>
           <p-tabPanel *ngFor="let tab of footerTabs" [header]="tab.title">
-              <div class="tab-body">
-                <h5>{{tab.title}}</h5>
-                <ul class="nearby-list">
-                  <ng-container *ngIf="tab.id === 'TopCities'">
-                    <li *ngFor="let top_city of top_cities" (click)="onCityChange(top_city.cityName)">Hotels in <b>{{top_city.cityName}}</b></li>
-                  </ng-container>
-                  <ng-container *ngIf="tab.id === 'TopHotels' || tab.id === 'PopularHotels'">
-                    <li *ngFor="let top_property of top_Rated_Properties" (click)="booking(top_property.id, top_property.hotelName)">Hotels in <b>{{top_property.hotelName}}</b></li>
-                  </ng-container>
-                  <ng-container *ngIf="tab.id === 'PopularDestinations'">
-                    <li *ngFor="let top_dest of top_destinations" (click)="onCityChange(top_dest.address)">Hotels in <b>{{top_dest.address}}</b></li>
-                  </ng-container>
-                </ul>
-              </div>
+            <div class="tab-body">
+              <h5>{{tab.title}}</h5>
+              <ul class="nearby-list">
+                <ng-container *ngIf="tab.id === 'TopCities'">
+                  <li *ngFor="let top_city of top_cities" (click)="onCityChange(top_city.cityName)">Hotels in
+                    <b>{{top_city.cityName}}</b>
+                  </li>
+                </ng-container>
+                <ng-container *ngIf="tab.id === 'TopHotels' || tab.id === 'PopularHotels'">
+                  <li *ngFor="let top_property of top_Rated_Properties"
+                    (click)="booking(top_property.id, top_property.hotelName)">Hotels in
+                    <b>{{top_property.hotelName}}</b>
+                  </li>
+                </ng-container>
+                <ng-container *ngIf="tab.id === 'PopularDestinations'">
+                  <li *ngFor="let top_dest of top_destinations" (click)="onCityChange(top_dest.address)">Hotels in
+                    <b>{{top_dest.address}}</b>
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
           </p-tabPanel>
         </p-tabView>
       </div>
@@ -657,7 +683,8 @@
 <app-footer></app-footer>
 <ng-template #becomeHost let-modal>
   <div class="modal-body">
-    <button type="button" class="close-x-btn" (click)="modal.dismiss('Cross click')"><i class="fa-solid fa-x"></i></button>
+    <button type="button" class="close-x-btn" (click)="modal.dismiss('Cross click')"><i
+        class="fa-solid fa-x"></i></button>
     <div class="bd-inner">
       <div class="host-mobile">
         <img loading="lazy" class="img-cover" src="assets/imgs/iphone-mockup.svg" alt="">
@@ -665,7 +692,8 @@
       <div class="host-content">
         <h2>Download</h2>
         <h3>Our App & Log In!</h3>
-        <p>Experience the convenience of managing your bookings on the go with WELRM. Download our app now to access exclusive features, enjoy seamless login, and stay updated with the latest deals anytime, anywhere.</p>
+        <p>Experience the convenience of managing your bookings on the go with WELRM. Download our app now to access
+          exclusive features, enjoy seamless login, and stay updated with the latest deals anytime, anywhere.</p>
         <div class="host-dl">
           <div class="barcode">
             <img loading="lazy" class="img-cover" src="assets/imgs/banner-Qr.png" alt="">
@@ -677,7 +705,7 @@
               </a>
             </div>
             <div class="platform-inner">
-              <a href="https://play.google.com/store/apps/details?id=com.welrm"  target="_blank">
+              <a href="https://play.google.com/store/apps/details?id=com.welrm" target="_blank">
                 <img loading="lazy" src="assets/imgs/google-dl.svg" alt="">
               </a>
             </div>

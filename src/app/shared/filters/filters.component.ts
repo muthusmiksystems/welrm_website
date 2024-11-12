@@ -112,6 +112,7 @@ export class FiltersComponent implements OnInit {
   ];
 
   @Output() changeRangeSlider: EventEmitter<any> = new EventEmitter<any>();
+  @Output() changeOtherFilters: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { }
 
@@ -124,25 +125,34 @@ export class FiltersComponent implements OnInit {
   }
 
   toggleFilter(itemTitle: string, filter: FilterItem) {
-    console.log('itemTitle', itemTitle)
-    console.log('filter', filter)
-    // Toggle the checked state
-    filter.checked = !filter.checked;
 
-    if (!filter.checked) {
-      // Add to applied filters only if it was unchecked before
+    console.log('itemTitle', itemTitle);
+    console.log('filter', filter);
+
+    if (filter.checked) {
+      // Add to applied filters if checked
       this.appliedFilters.push({ title: itemTitle, label: filter.label });
     } else {
-      // Remove from applied filters only if it was checked before
+      // Remove from applied filters if unchecked
       this.appliedFilters = this.appliedFilters.filter(f => f.label !== filter.label);
     }
-
+    this.filterList.forEach(group => {
+      group.child.forEach(childFilter => {
+        if (childFilter.label === filter.label) {
+          childFilter.checked = false;
+        }
+      });
+    });
+    this.changeOtherFilters.emit(this.appliedFilters);
+    console.log('this.changeOtherFilters',this.appliedFilters)
     // Optionally, emit the change to parent component
     // this.changeRangeSlider.emit(this.appliedFilters);
   }
 
 
+
   togglePriceFilter(minValue: number, maxValue: number, itemTitle: string, isChecked: boolean) {
+    console.log('isChecked',isChecked)
     if (isChecked) {
       // Emit selected price range
       this.changeRangeSlider.emit({ value: minValue, highValue: maxValue });
@@ -171,13 +181,14 @@ export class FiltersComponent implements OnInit {
     // Reset slider values
     this.minValue = 500;
     this.maxValue = 25000;
+    this.changeOtherFilters.emit(this.appliedFilters);
     this.changeRangeSlider.emit({ value: this.minValue, highValue: this.maxValue });
   }
 
   removeFilter(filter: AppliedFilter): void {
     // Remove the filter from appliedFilters array
     this.appliedFilters = this.appliedFilters.filter(f => f.label !== filter.label);
-
+  
     // Loop through the filterList to find the corresponding filter and uncheck it
     this.filterList.forEach(group => {
       group.child.forEach(childFilter => {
@@ -186,7 +197,7 @@ export class FiltersComponent implements OnInit {
         }
       });
     });
-
+  
     // Additionally, handle price filters
     this.priceFilters.forEach(price => {
       if (`₹ ${price.min} - ₹ ${price.max}` === filter.label || price.label === filter.label) {
@@ -196,4 +207,5 @@ export class FiltersComponent implements OnInit {
       }
     });
   }
+  
 }

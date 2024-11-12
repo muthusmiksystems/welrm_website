@@ -33,7 +33,7 @@
       <div class="tb-inner" *ngIf="activeTab === 1">
         <div class="not-cat" *ngFor="let list of allOffers">
           <label class="time-limit-lb">{{list.label}}</label>
-          <div class="not-list">
+          <div class="not-list" (click)="offer()">
             <div class="custom-card" *ngFor="let item of list.child">
               <div class="card-img">
                 <img class="img-cover" [src]="item.img" alt="">

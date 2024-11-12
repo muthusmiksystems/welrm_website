@@ -3,7 +3,7 @@
   <div class="auth-inner">
     <h1>Login</h1>
     <div class="social-login">
-      <button class="scl-btn google-btn">
+      <button class="scl-btn google-btn" (click)="GoogleAuth()">
         <img src="assets/imgs/google-icon.svg" alt="">
         <span>Google</span>
       </button>
@@ -21,22 +21,33 @@
     <span class="divider">-OR-</span>
     <form [formGroup]="loginForm" (ngSubmit)="login()">
       <div class="input-group">
-        <input type="text" maxlength="10" placeholder="Email or Phone number" formControlName="username"/>
-        <span class="inline-error" *ngIf="loginForm.controls.username.hasError('required') && loginForm.controls.username.touched">Phone number is required</span>
+        <input type="text" [attr.maxlength]="max" placeholder="Email or Phone number" formControlName="username"
+          (input)="onInputChange()" />
+        <span class="inline-error" *ngIf="
+            loginForm.controls.username.hasError('required') &&
+            loginForm.controls.username.touched
+          ">Email or Phone number is required</span>
       </div>
       <div class="input-group password-group">
-        <input [type]="newPass ? 'text':'password'" placeholder="Password" formControlName="password"/>
-        <img class="blind-pass" [src]="newPass ? 'assets/imgs/visibility_off.svg':'assets/imgs/visibility.svg'" alt="" (click)="newPass = !newPass">
-        <span class="inline-error" *ngIf="loginForm.controls.password.hasError('required') && loginForm.controls.password.touched">Password is required</span>
+        <input [type]="newPass ? 'text' : 'password'" placeholder="Password" formControlName="password" />
+        <img class="blind-pass" [src]="newPass
+            ? 'assets/imgs/visibility_off.svg'
+            : 'assets/imgs/visibility.svg'" alt="" (click)="newPass = !newPass" />
+        <span class="inline-error" *ngIf="
+            loginForm.controls.password.hasError('required') &&
+            loginForm.controls.password.touched
+          ">Password is required</span>
       </div>
       <div class="forgot-password">
         <span (click)="gotoNext('forgotpassword')">Forgot Password</span>
       </div>
       <button class="custom-btn" type="submit"> Sign In </button>
       <div class="have-account">
-        Don’t have an account? <span (click)="gotoNext('signup')">Sign Up</span>
+        Don’t have an account?
+        <span (click)="gotoNext('signup')">Sign Up</span>
       </div>
     </form>
+
   </div>
 </div>
 <app-footer></app-footer>

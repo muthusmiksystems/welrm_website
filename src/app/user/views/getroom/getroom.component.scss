@@ -8,6 +8,305 @@
     }
 }
 
+.feedback-section {
+    background: #FBFBFB;
+
+    .modal-header {
+        padding: 24px 42px;
+        border-bottom: 1px solid #CBD5E1;
+
+        @media only screen and (max-width: 1199px) {
+            padding: 24px;
+        }
+
+        @media only screen and (max-width: 991px) {
+            padding: 20px;
+        }
+
+        @media only screen and (max-width: 767px) {
+            padding: 16px;
+        }
+
+        h3 {
+            font-family: 'Mona-Sans SemiBold';
+            font-weight: normal;
+            font-size: 28px;
+            line-height: 28px;
+            color: #121010;
+            margin-bottom: 0;
+
+            @media only screen and (max-width: 1399px) {
+                font-size: 24px;
+                line-height: 26px;
+            }
+
+            @media only screen and (max-width: 1199px) {
+                font-size: 20px;
+                line-height: 22px;
+            }
+
+            @media only screen and (max-width: 991px) {
+                font-size: 16px;
+                line-height: 18px;
+            }
+
+            @media only screen and (max-width: 767px) {
+                font-size: 14px;
+                line-height: 16px;
+            }
+        }
+    }
+
+    .modal-body {
+
+        padding: 20px 40px;
+
+        @media only screen and (max-width: 1199px) {
+            padding: 24px;
+        }
+
+        @media only screen and (max-width: 991px) {
+            padding: 20px;
+        }
+
+        @media only screen and (max-width: 767px) {
+            padding: 16px;
+        }
+
+        .rating-center {
+            display: flex;
+            /* Use flexbox to align items */
+            justify-content: center;
+            /* Horizontally center the content */
+            align-items: center;
+            /* Vertically center the content */
+            flex: 1;
+        }
+
+        ::ng-deep .star-rating .p-rating {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            /* Ensure the stars are centered within the rating component */
+
+            @media only screen and (max-width: 767px) {
+                margin-bottom: 6px;
+            }
+        }
+
+        ::ng-deep .star-rating .p-icon-wrapper {
+            width: 50px;
+            height: 50px;
+            @media only screen and (max-width: 767px) {
+                width: 25px;
+                height: 25px;
+            }
+        }
+
+        ::ng-deep .star-rating .p-icon-wrapper svg {
+            width: 100%;
+            height: 100%;
+            color: #FBBE21;
+            /* Color for the stars */
+        }
+
+
+        .radio-span {
+            font-family: 'Mona-Sans Regular';
+            font-size: 18px;
+            line-height: 22px;
+            color: #000000;
+            margin-bottom: 20px;
+
+            @media only screen and (max-width: 1199px) {
+                font-size: 16px;
+                line-height: 20px;
+                margin-bottom: 16px;
+            }
+
+            @media only screen and (max-width: 991px) {
+                font-size: 14px;
+                line-height: 18px;
+                margin-bottom: 14px;
+            }
+
+            @media only screen and (max-width: 767px) {
+                font-size: 12px;
+                line-height: 16px;
+                margin-bottom: 12px;
+            }
+        }
+
+        .r-reason {
+            margin-bottom: 20px;
+
+            @media only screen and (max-width: 767px) {
+                margin-bottom: 10px;
+            }
+
+            .field-checkbox {
+                margin-bottom: 10px;
+
+                @media only screen and (max-width: 1199px) {
+                    margin-bottom: 8px;
+                }
+
+                @media only screen and (max-width: 767px) {
+                    margin-bottom: 6px;
+                    display: flex;
+                }
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                .p-radiobutton {
+                    margin-right: 15px;
+
+                    @media only screen and (max-width: 991px) {
+                        margin-right: 10px;
+                    }
+
+                    @media only screen and (max-width: 767px) {
+                        margin-right: 0;
+                    }
+
+                    .p-radiobutton-box .p-radiobutton-icon {
+                        background-color: #C42A25;
+                        width: 10px;
+                        height: 10px;
+
+                        @media only screen and (max-width: 991px) {
+                            width: 6px;
+                            height: 6px;
+                        }
+                    }
+
+                    .p-radiobutton-box {
+                        border: 2px solid #CBCBCB;
+                        background: #ffffff;
+                        width: 18px;
+                        height: 18px;
+                        box-shadow: none;
+
+                        @media only screen and (max-width: 991px) {
+                            width: 14px;
+                            height: 14px;
+                        }
+                    }
+
+                    .p-radiobutton-box.p-highlight {
+                        border: 2px solid #CBCBCB;
+                        background: #FFFFFF;
+                        outline: 0;
+                    }
+                }
+
+                .radio-lb {
+                    font-family: 'Mona-Sans Regular';
+                    font-size: 16px;
+                    line-height: 20px;
+                    color: #000000;
+
+                    @media only screen and (max-width: 1199px) {
+                        font-size: 14px;
+                        line-height: 18px;
+                    }
+
+                    @media only screen and (max-width: 767px) {
+                        font-size: 12px;
+                        line-height: 16px;
+                    }
+                }
+            }
+        }
+        .textarea{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        .other-text {
+            // margin-left: 32px;
+            margin-top: 20px;
+            border-radius: 15px;
+            width: calc(100% - 32px);
+            height: 155px;
+            border: 1px solid #C42A25;
+            padding: 14px 10px;
+            outline: 0;
+            color: #000000;
+            background-color: transparent;
+            font-size: 14px;
+            line-height: 17px;
+            font-family: 'Mona-Sans Regular';
+
+            @media only screen and (max-width: 767px) {
+                // margin-left: 24px;
+                width: calc(100% - 24px);
+                height: 100px;
+            }
+
+            &::placeholder {
+                color: #B4B4B4;
+            }
+        }
+    }
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        padding: 0 40px 40px 40px;
+        border: 0;
+
+        @media only screen and (max-width: 1199px) {
+            padding: 0 24px 24px 24px;
+        }
+
+        @media only screen and (max-width: 991px) {
+            padding: 0 20px 20px 20px;
+        }
+
+        @media only screen and (max-width: 767px) {
+            padding: 0 16px 16px 16px;
+            justify-content: center;
+        }
+
+        .custom-btn {
+            background-color: #C42A25;
+            color: #FFFFFF;
+            border-radius: 10px;
+            min-width: 114px;
+            height: 44px;
+            font-size: 16px;
+            line-height: 18px;
+            font-family: "Mona-Sans SemiBold";
+            border: 0;
+            margin: 0;
+            transition: 0.2s;
+
+            @media only screen and (max-width: 767px) {
+                min-width: 98px;
+                height: 38px;
+            }
+
+            &:hover:not(:disabled) {
+                background-color: #b4201b;
+            }
+
+            &.cancel {
+                background-color: #FFFFFF;
+                border: 1px solid #000000;
+                color: #151515;
+                margin-left: 36px;
+
+                &:hover:not(:disabled) {
+                    background-color: #FBFBFB;
+                }
+            }
+        }
+    }
+}
+
 .hotel-detail {
     h3 {
         font-family: 'Mona-Sans SemiBold';
@@ -1528,40 +1827,42 @@
 
                 .btn-row {
                     display: flex;
-                    flex-direction: column;
+                    flex-direction: row;
                     justify-content: center;
                     align-items: center;
+                    gap: 10px;
 
                     @media only screen and (max-width: 768px) {
                         // Adjust based on your desired breakpoint
                         flex-direction: row; // Hide the button row on medium screens and larger
                         gap: 10px;
                     }
-                    
+
                     .selectroom-btn {
                         display: flex;
                         flex-direction: row;
                         justify-content: center;
                         align-items: center;
-                        padding: 13px 35px;
-                        width: 100%;
-                        height: 48px;
+                        // padding: 13px 35px;
+                        width: 60%;
+                        height: 40px;
                         border-radius: 54px;
                         font-family: 'Mona-Sans Medium';
                         font-weight: normal;
-                        font-size: 22px;
+                        font-size: 17px;
                         line-height: 22px;
                         letter-spacing: -0.02em;
                         color: #C42A25;
                         border: none;
                         background: rgba(196, 42, 37, 0.1);
                         border: 0;
+                        gap: 10px;
+                        // @media only screen and (max-width: 1399px) {
+                        //     // font-size: 20px; 
+                        //     line-height: 20px;
+                        //     // height: 46px;
 
-                        @media only screen and (max-width: 1399px) {
-                            font-size: 20px;
-                            line-height: 20px;
-                            height: 46px;
-                        }
+                        // }
 
                         @media only screen and (max-width: 767px) {
                             // margin-top: 12px;
@@ -1578,26 +1879,29 @@
                         display: flex;
                         justify-content: center;
                         // margin-bottom: 24px;
-                         margin-top:10px;
+                        font-size: 18px;
+                        height: 30px;
+                        width: 50%;
+                        margin-top: 10px;
 
                         @media only screen and (max-width: 1199px) {
                             justify-content: center;
                         }
 
                         @media only screen and (max-width: 767px) {
-                            margin-top:15px;
+                            margin-top: 15px;
                         }
 
                         button {
 
-                            padding: 13px 35px;
-                            width: 200px;
-                            height: 48px;
+                            // padding: 13px 35px;
+                            width: 100%;
+                            height: 30px;
                             background: rgba(47, 202, 68, 0.1);
                             border: 1px solid #2FCA44;
                             border-radius: 90px;
                             font-family: 'Mona-Sans Medium';
-                            font-size: 19px;
+                            font-size: 18px;
                             line-height: 14px;
                             color: #2FCA44;
                             // text-wrap: nowrap;
@@ -1692,7 +1996,7 @@
                         border-radius: 20px;
                         font-size: 14px;
                         line-height: 16px;
-                        height: 36px;
+                        height: 40px;
                         width: 170px;
                         // margin-left: auto;
                         border: 0;
@@ -1717,7 +2021,7 @@
                         // flex-direction: row;
                         // justify-content: center;
                         align-items: center;
-                        padding: 13px 35px;
+                        // padding: 13px 35px;
                         width: 182px;
                         height: 40px;
                         background: rgba(47, 202, 68, 0.1);

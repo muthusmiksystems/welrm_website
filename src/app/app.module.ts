@@ -31,10 +31,10 @@ import { PrivacyPolicyComponent } from './user/views/privacy-policy/privacy-poli
 import { HelpAndSupportComponent } from './user/views/help-and-support/help-and-support.component';
 import { TermsConditionsComponent } from './user/views/terms-conditions/terms-conditions.component';
 import { ContactUsComponent } from './user/views/contact-us/contact-us.component';
-import { SocialLoginModule, SocialAuthServiceConfig,GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
+import { SocialLoginModule, SocialAuthServiceConfig, GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { GalleriaModule } from 'primeng/galleria';
-import {CarouselModule} from 'primeng/carousel';
+import { CarouselModule } from 'primeng/carousel';
 import { CalendarModule } from 'primeng/calendar';
 import { SliderModule } from 'primeng/slider';
 import { RatingModule } from 'primeng/rating';
@@ -48,10 +48,10 @@ import { HotelListingComponent } from './user/views/hotel-listing/hotel-listing.
 import { DataMessageService } from 'src/app/message.service';
 import { ImageSliderComponent } from './shared/image-slider/image-slider.component'
 import { NgImageSliderModule } from 'ng-image-slider';
-import {ImageModule} from 'primeng/image';
-import { RippleModule } from 'primeng/ripple'; 
-import {CheckboxModule} from 'primeng/checkbox';
-import {RadioButtonModule} from 'primeng/radiobutton';
+import { ImageModule } from 'primeng/image';
+import { RippleModule } from 'primeng/ripple';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { RefundPolicyComponent } from './user/views/refund-policy/refund-policy.component';
@@ -80,6 +80,9 @@ import { OffersComponent } from './user/views/offers/offers.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ResSidebarService } from './res-sidebar.service';
 import { NgxSliderModule } from '@angular-slider/ngx-slider';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { environment } from '../environment/environment';
 
 @NgModule({
   declarations: [
@@ -111,7 +114,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     BlogComponent,
     BolgDetailsComponent,
     NotFoundComponent,
-    SignupComponent, 
+    SignupComponent,
     SetPasswordComponent,
     FiltersComponent,
     ProfileComponent,
@@ -158,6 +161,9 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     TooltipModule,
     DragDropModule,
     NgxSliderModule,
+
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
   ],
   providers: [
     {
@@ -189,7 +195,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     MessageService,
     ResSidebarService
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   bootstrap: [AppComponent],
 })

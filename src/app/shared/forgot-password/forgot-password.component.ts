@@ -8,8 +8,8 @@ import { AuthService } from 'src/app/auth.service';
   styleUrls: ['./forgot-password.component.scss']
 })
 export class ForgotPasswordComponent implements OnInit {
-  email = new FormControl('', [Validators.required, Validators.email])
-
+  email = new FormControl()
+  // loginForm!: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
     private auth_service: AuthService,
@@ -19,6 +19,13 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   submit() {
-    
+    console.log("data-", this.email.value)
+    this.auth_service
+        .forgotpassword(this.email.value)
+        .subscribe((data) => {
+          console.log("data-", data)
+
+         
+        });
   }
 }

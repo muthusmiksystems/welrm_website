@@ -1,15 +1,24 @@
-<app-header></app-header>
+<div [ngClass]="{'mb-3':isScrolled}"  class="absolute zind">
+  <app-header></app-header>
+</div>
+
 <div *ngIf="!isScrolled" class="banner-search">
   <app-hotel-search (searchChange)="onSearchChange($event)"></app-hotel-search>
 </div>
-<div class="hotel-listing">
+<div *ngIf="isScrolled" class="fixed-top  overlay-hidden posfix ">
+</div>
+<div class="hotel-listing" [ngClass]="{'mt-5':isScrolled}">
   <div class="container-lg container-fluid">
     <div class="hotel-listing-inner">
       <div class="listing-left">
-        <app-filters (changeRangeSlider)="handleChange($event)"></app-filters>
+        <!-- <app-filters (changeRangeSlider)="handleChange($event)"  (changeOtherFilters)="handleOtherFilters($event)"></app-filters>></app-filters> -->
+        <app-filters 
+        (changeRangeSlider)="handleChange($event)" 
+        (changeOtherFilters)="handleOtherFilters($event)">
+      </app-filters>
       </div>
-      <div class="listing-right">
-        <div>
+      <div class="listing-right" [ngClass]="{'mt-5':isScrolled}">
+        <div class="right-scroll">
           <div class="d-flex justify-content-between align-content-center d-lg-none mb-3">
             <button type="button" class=" filterModal-btn" (click)="open(filterModal)"><i class="fa-solid fa-sliders"></i> Filter</button>
             <ng-container *ngIf="isMobileView">
@@ -35,7 +44,7 @@
               {{option.name}}
           </div>
         </div>
-        <div class="listing-head">
+        <div class="listing-head" >
           <h1>Showing Hotels for Booking in {{cityOrhotelOrneighborhood}}</h1>
           <ng-container *ngIf="!isMobileView">
             <div class="sort-dropdown" *ngIf="results.length>0">
@@ -82,7 +91,7 @@
               </div>
               <div class="address">
                 <p class="addressPara">{{ result.address | titlecase }} <span class="span-link" (click)="gotoLocation(result)">Show on maps</span></p>
-                <p-rating [readonly]="true" class="star-rating" [(ngModel)]="defaultrating" [cancel]="false"></p-rating>
+                <p-rating [readonly]="true"  class="star-rating" [(ngModel)]="defaultrating" [cancel]="false"></p-rating>
               </div>
               <div class="content-inner">
                 <div class="content-left">

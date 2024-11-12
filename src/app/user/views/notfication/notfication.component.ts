@@ -3,6 +3,7 @@ import { NotficationService } from './notfication.service';
 import { catchError, finalize } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -59,18 +60,19 @@ export class NotficationComponent implements OnInit {
   ];
   isLoading = false;
   userData: any;
- 
+
   constructor(
-      private notificaton_service: NotficationService,
-      private messageService1: MessageService,
-      private auth_service: AuthService,
-    ) {}
+    private notificaton_service: NotficationService,
+    private messageService1: MessageService,
+    private auth_service: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.userData = this.auth_service.getUserData();
     this.getNotifications();
   }
-  
+
   getNotifications() {
     this.isLoading = true;
     this.notificaton_service
@@ -108,12 +110,14 @@ export class NotficationComponent implements OnInit {
             }
           });
         }
-       else{
-        this.messageService1.add({ severity: 'error', summary: 'Error', detail: 'Notification Response Error' });
-       }
+        else {
+          this.messageService1.add({ severity: 'error', summary: 'Error', detail: 'Notification Response Error' });
+        }
       });
   }
-
+  offer() {
+    this.router.navigateByUrl('offers');
+  }
   toggleTab(tabIndex: number) {
     this.activeTab = tabIndex;
   }

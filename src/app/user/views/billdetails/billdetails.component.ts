@@ -176,7 +176,8 @@ export class BilldetailsComponent implements OnInit {
     if (this.isCouponAplied) {
       price -= this.getDiscount();
     }
-    price += this.getTax();
+    // price += this.getTax() +this.getConvinient();
+    price += this.getTax() ;
     this.totalPrice = price;
     return _.ceil(price);
   }
@@ -189,7 +190,12 @@ export class BilldetailsComponent implements OnInit {
     let tax = (price / 100) * 12;
     return _.ceil(tax);
   }
-
+  getConvinient() {
+    let price = 0;
+    price += this.roomPrice * this.roomQuantity * this.numberOfDays;
+    let tax = (price / 100) * 15;
+    return _.ceil(tax);
+  }
   checkCoupon() {
     this.couponValue = this.myInput.nativeElement.value;
     if (this.couponValue.length === 6) {

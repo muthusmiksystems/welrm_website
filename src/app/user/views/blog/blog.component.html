@@ -4,13 +4,18 @@
         <div class="bg-banner-inner">
             <div class="searchbar">
                 <img class="search-red" src="assets/imgs/search-red.svg" alt="">
-                <input type="text" name="searchbar" placeholder="Search.....">
+                <input type="text" name="searchbar" placeholder="Search....." (input)="search($event)">
             </div>
-            <h1>Welcome to Welrm, We have Trending & Latest Blogs For You</h1>
+            <ul class="wlsrc-ul rounded" *ngIf="showSearch">
+                <li *ngFor="let city of searchResults" ngbDropdownItem (click)="navigateToBlogDetails(city.slug)">
+                    <img src="assets/imgs/location-search-pin.svg" alt="">{{city.meta_title}}
+                </li>
+            </ul>
+            <h1 *ngIf="showText">Welcome to Welrm, We have Trending & Latest Blogs For You</h1>
         </div>
     </div>
     <div class="top-blogs">
-       <!-- <div class="container">
+        <!-- <div class="container">
              <div class="top-bg-inner">
                 <div class="tp-item" *ngFor="let item of blogs?.slice(0,3)" (click)="navigateToBlogDetails(item.slug)">
                     <div class="tp-img">
@@ -31,32 +36,27 @@
         </div> -->
 
         <div class="container-md container-fluid g-0">
-            <p-carousel
-            [value]="blogs?.slice(0,3)"
-            styleClass="blogs-sub"
-            [numVisible]="3"
-            [numScroll]="1"
-            [circular]="blog_responsive"
-            [responsiveOptions]="blog_responsive">
-              <ng-template let-blogs pTemplate="item">
-                <div class="top-bg-inner">
-                    <div class="tp-item" (click)="navigateToBlogDetails(blogs.slug)">
-                        <div class="tp-img">
-                            <img [src]="blogs.banner_photo" alt="" class="img-cover">
-                        </div>
-                        <div class="tp-content">
-                            <div class="tp-head">
-                                <span class="tp-span">{{ blogs.post_date | date:'MMM d, y' }}</span>
-                                <h4>{{ blogs.title }}</h4>
+            <p-carousel [value]="blogs?.slice(0,3)" styleClass="blogs-sub" [numVisible]="3" [numScroll]="1"
+                [circular]="blog_responsive" [responsiveOptions]="blog_responsive">
+                <ng-template let-blogs pTemplate="item">
+                    <div class="top-bg-inner">
+                        <div class="tp-item" (click)="navigateToBlogDetails(blogs.slug)">
+                            <div class="tp-img">
+                                <img [src]="blogs.banner_photo" alt="" class="img-cover">
                             </div>
-                            <div class="address">
-                                <img src="assets/imgs/location-pin.svg" alt="">
-                                <span class="tp-span">India</span>
+                            <div class="tp-content">
+                                <div class="tp-head">
+                                    <span class="tp-span">{{ blogs.post_date | date:'MMM d, y' }}</span>
+                                    <h4>{{ blogs.title }}</h4>
+                                </div>
+                                <div class="address">
+                                    <img src="assets/imgs/location-pin.svg" alt="">
+                                    <span class="tp-span">India</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-              </ng-template>
+                </ng-template>
             </p-carousel>
         </div>
 
@@ -115,11 +115,13 @@
                                 <h3>{{item.title}}</h3>
                                 <img src="assets/imgs/arrow-up-right.svg" alt="" class="up-right-arrow">
                             </div>
-                            <p class="cont-disc">{{ item.meta_description?.substring(0,150) }}{{item.meta_description?.length > 150 ? '...':''}}</p>
+                            <p class="cont-disc">{{ item.meta_description?.substring(0,150)
+                                }}{{item.meta_description?.length > 150 ? '...':''}}</p>
                         </div>
                     </div>
                 </div>
-                <button type="button" class="status-btn" *ngIf="currentPage < totalPages && blogs.length !== 0" (click)="showMore(currentPage + 1)">View More</button>
+                <button type="button" class="status-btn" *ngIf="currentPage < totalPages && blogs.length !== 0"
+                    (click)="showMore(currentPage + 1)">View More</button>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 export class Url {
     //public static BASE_URL= 'https://stage-api.welrm.com/api/';
-    public static BASE_URL= 'https://api.welrm.com/api/';
-    //public static BASE_URL = 'http://localhost:5001/api/'
+    // public static BASE_URL= 'https://api.welrm.com/api/';
+    public static BASE_URL = 'http://localhost:5001/api/'
     public static COUNT= 'user/count';
     public static SEND_OTP= 'user/send-otp/owner';
     public static OWNER_SEND_OTP= 'user/send-otp/owner';
@@ -73,6 +73,7 @@ export class Url {
     public static GET_TO_WISHLIST = 'other/get_to_cart';
     public static GET_OFFER = 'admin/list_offer';
     public static GET_DEAL = 'admin/list_deal';
+    public static SEARCH_REASULTS = 'hotel/search';
 }
 
 

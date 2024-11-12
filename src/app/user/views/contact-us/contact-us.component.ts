@@ -42,7 +42,7 @@ export class ContactUsComponent implements OnInit {
       this.contactUsService.contactUs(payload).subscribe((response: any) => {
         if (response.success) {
           this.contactForm.reset();
-          this.messageService1.add({ severity: 'success', summary: 'Success', detail: response.message });
+          this.messageService1.add({ severity: 'success', summary: 'Success', detail: 'Thank You' });
         }
       });
     }

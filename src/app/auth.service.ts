@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { ApiCallerService } from './utlis/api-caller.service';
 import { Url } from './utlis/url';
 import { MessageService } from 'primeng/api';
+import * as auth from 'firebase/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 
 @Injectable({
@@ -21,7 +23,9 @@ export class AuthService {
   sendOtpUrl = 'https://api.welrm.com/api/user/send-otp';
   valOtpUrl = 'https://api.welrm.com/api/user/verify-otp';
 
-  constructor(private messageService1: MessageService, private http: HttpClient, private router: Router, private apiService: ApiCallerService) { }
+  constructor(private messageService1: MessageService, private http: HttpClient, private router: Router, private apiService: ApiCallerService,
+    public afAuth: AngularFireAuth
+  ) { }
 
 
   sendOtp(countryCode: any, mobile: any, email: any, fullName: any, userType: any): Observable<any> {
@@ -62,7 +66,11 @@ export class AuthService {
     password: string,
     expirationTime: number
   ): Observable<any> {
-    const body = { mobile: username, password: password };
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(username);
+    // const body = { mobile: username, password: password };
+    const body = isEmail
+      ? { email: username, password: password }  // Send email and password
+      : { mobile: username, password: password };  // Send mobile and passwor
     return this.apiService.callApi('POST', Url.LOGIN, body, false, false).pipe(
       tap((response) => {
         if (response.success) {
@@ -71,9 +79,9 @@ export class AuthService {
             const user = response.data.user;
             this.storeUserData(response);
             this.setToken(token, 6 * 60 * 60 * 1000); // Set token with expiration time 6 hours
-            this.messageService1.add({ severity: 'success', summary: 'Success', detail: response.message});
+            this.messageService1.add({ severity: 'success', summary: 'Success', detail: response.message });
           } else {
-            this.messageService1.add({ severity: 'error', summary: 'Error', detail: 'Please Login With Hotel Owner Portal'});
+            this.messageService1.add({ severity: 'error', summary: 'Error', detail: 'Please Login With Hotel Owner Portal' });
           }
         } else {
           this.messageService1.add({ severity: 'error', summary: 'Error', detail: response.message });
@@ -155,5 +163,64 @@ export class AuthService {
   storeUserData(response: any) {
     localStorage.setItem(this.userKey, JSON.stringify(response));
     this.loggedInSubject.next(true);
+  }
+  GoogleAuth() {
+    return this.AuthLogin(new auth.GoogleAuthProvider())
+      .then((res: any) => {
+        console.log('Login successful:', res); // Log success
+        // Here you might want to perform additional actions like navigating to a different page
+        return res;
+      })
+      .catch((error) => {
+        console.error('Error during Google login:', error); // Log error
+        // You can display a message to the user if needed
+        this.messageService1.add({ severity: 'error', summary: 'Login Error', detail: error.message });
+      });
+  }
+
+  // Common Auth Login logic
+  AuthLogin(provider: any) {
+    return this.afAuth
+      .signInWithPopup(provider)
+      .then((result) => {
+        console.log('Authentication result:', result); // Log result object
+        return result;
+      })
+      .catch((error) => {
+        console.error('Error during login:', error); // Log error
+        throw error; // Rethrow the error if needed
+      });
+  }
+
+  socialLogin(payload: any) {
+    return this.apiService.callApi('POST', Url.SOCIAL_AUTH, payload, false, false);
+  }
+  googleSignOut(): Promise<void> {
+    return this.afAuth.signOut(); // Firebase auth example
+  }
+  forgotpassword(
+    username: any
+  ): Observable<any> {
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(username);
+    // const body = { mobile: username, password: password };
+    const body = { mobile: username, type: 'customer' };  // Send mobile and passwor
+    return this.apiService.callApi('POST', Url.FORGOT_PASSWORD, body, false, false).pipe(
+      tap((response) => {
+        console.log('res', response)
+        if (response.success) {
+          // if (response.data.user.userType == 'customer') {
+          //   const token = response.data.accesstoken;
+          //   const user = response.data.user;
+          //   this.storeUserData(response);
+          //   this.setToken(token, 6 * 60 * 60 * 1000); // Set token with expiration time 6 hours
+          //   this.messageService1.add({ severity: 'success', summary: 'Success', detail: response.message });
+          // } else {
+          //   this.messageService1.add({ severity: 'error', summary: 'Error', detail: 'Please Login With Hotel Owner Portal' });
+          // }
+        } else {
+          this.messageService1.add({ severity: 'error', summary: 'Error', detail: response.message });
+        }
+      })
+    );
   }
 }

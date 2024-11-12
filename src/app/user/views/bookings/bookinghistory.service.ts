@@ -27,13 +27,27 @@ export class BookinghistoryService {
   }
 
   rateHotel(
-    bookingId: number,
+    bookingId: any,
     userRating: number,
     recommendProduct: boolean,
     productReview: string
   ) {
     const body = {
-      bookingId: bookingId,
+      hotelId: bookingId,
+      rating: userRating,
+      recommend: recommendProduct ? 1 : 0,
+      review: productReview,
+    };
+    return this.apiService.callApi('POST', Url.CUSTOMER_RATING, body, true, false);
+  }
+  rateHotels(
+    hotelId: any,
+    userRating: number,
+    recommendProduct: boolean,
+    productReview: string
+  ) {
+    const body = {
+      bookingId: hotelId,
       rating: userRating,
       recommend: recommendProduct ? 1 : 0,
       review: productReview,

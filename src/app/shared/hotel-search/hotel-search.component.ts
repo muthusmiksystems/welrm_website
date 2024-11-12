@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { SearchService } from './search.service';
 import { CookieService } from 'ngx-cookie-service';
@@ -33,6 +33,7 @@ export class HotelSearchComponent implements OnInit {
 	mindate = new Date();
 	startDate!: any;
 	endDate!: any;
+	lastSelectedCheckInDate: any;
 	dates!: Date[];
 	rangeDates!: Date[];
 	invalidDates!: Array<Date>;
@@ -43,6 +44,8 @@ export class HotelSearchComponent implements OnInit {
 	personCountV: boolean = false;
 	adults = 2;
 	childs = 0;
+	childlastvalue = 0;
+	childages = 0;
 	room: number = 1;
 	minimumDate = new Date();
 	minimumDatecIn = new Date();
@@ -55,6 +58,11 @@ export class HotelSearchComponent implements OnInit {
 	isRoomDetailsRoute: boolean;
 	isListRoute: boolean = false;
 	currentRoute: any;
+	showChild: boolean = false;
+	searchDataCities: any;
+	searchDataHotels: any;
+	searchDataLocations: any;
+	showSearch: boolean = false;
 	form = new FormGroup({
 		cityOrhotelOrneighborhood: new FormControl("", [Validators.required]),
 		checkInDate: new FormControl("", [Validators.required]),
@@ -100,6 +108,7 @@ export class HotelSearchComponent implements OnInit {
 	constructor(
 		private datePipe: DatePipe,
 		private searchService: SearchService,
+		private eRef: ElementRef,
 		private router: Router,
 		private route: ActivatedRoute,
 		private messageService: DataMessageService,
@@ -110,7 +119,7 @@ export class HotelSearchComponent implements OnInit {
 				this.slugUrl = event.url;
 
 				// Check if the URL is exactly '/list'
-				this.isListRoute = this.slugUrl === '/list' ? true : false;
+				this.isListRoute = this.slugUrl === '/list' || this.slugUrl.includes('room-details/getroom') ? true : false;
 				console.log("scroll event", this.isListRoute);
 				this.currentRoute = this.slugUrl;
 				if (this.slugUrl === '/') {
@@ -122,6 +131,8 @@ export class HotelSearchComponent implements OnInit {
 
 		this.router.events.subscribe(() => {
 			this.isRoomDetailsRoute = this.router.url.includes('room-details/getroom');
+			localStorage.setItem('isRoomDetailsRoute', JSON.stringify(this.isRoomDetailsRoute)); // Store as a string
+
 		});
 		this.browserName = this.detectBrowserName();
 		this.browserVersion = this.detectBrowserVersion();
@@ -188,6 +199,7 @@ export class HotelSearchComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.isRoomDetailsRoute = localStorage.getItem('isRoomDetailsRoute') === 'true' ? true : false
 		this.route.url.subscribe(url => {
 			const currentRoute = url.join('/');
 			console.log('Current route name:', currentRoute);
@@ -196,11 +208,11 @@ export class HotelSearchComponent implements OnInit {
 			this.isListRoute = currentRoute === 'list' || currentRoute.startsWith('list/');
 		});
 		this.messageService.getMessage().subscribe(message => {
-			console.log("messageservice",message)
+			console.log("messageservice", message)
 
 			if (message.event == 'paramiterForhotelSearch') {
 				this.paramiterForhotelSearch = message.data;
-				console.log("messagedata",message.data)
+				console.log("messagedata", message.data)
 				localStorage.setItem('paramiterForhotelSearch', message.data);
 
 				const paramiterForhotelSearchArray = this.paramiterForhotelSearch.split("@#$&");
@@ -210,12 +222,12 @@ export class HotelSearchComponent implements OnInit {
 				this.adults = paramiterForhotelSearchArray[3]
 				this.childs = paramiterForhotelSearchArray[4]
 				this.room = paramiterForhotelSearchArray[5]
-
 				this.form.patchValue({
 					cityOrhotelOrneighborhood: this.cityOrhotelOrneighborhood,
 					checkInDate: this.checkInDate,
 					checkOutDate: this.checkOutDate
 				});
+				this.childlastvalue = this.childs;
 			}
 		});
 
@@ -245,7 +257,8 @@ export class HotelSearchComponent implements OnInit {
 				checkOutDate: this.checkOutDate
 			});
 		}
-		this.setTodayDate(100)
+		this.showChild = this.childs > 0 ? true : false
+		this.setTodayDate(100);
 
 		this.handleChild();
 
@@ -307,14 +320,24 @@ export class HotelSearchComponent implements OnInit {
 	childIncreseF() {
 		this.childs = this.childs * 1 + 1;
 		this.childArr.push({ id: this.childs, selected: '' });
+		this.showChild = true;
 	}
 
 	childDeceaseF() {
+		console.log("this.childs", this.childs)
+		if (this.childs === 1) {
+			// 	this.childs = this.childs - 1;
+			// 	this.childages = 0
+			this.showChild = false;
+		}
 		if (this.childs > 0) {
 			this.childArr.pop();
 			this.childs = this.childs - 1;
+			this.childages = 0
 		} else {
+			this.showChild = false;
 			this.childs = 0;
+			this.childages = 0
 		}
 	}
 
@@ -426,6 +449,7 @@ export class HotelSearchComponent implements OnInit {
 	selectCity(city) {
 		this.form.get("cityOrhotelOrneighborhood")?.setValue(city);
 		this.cityOrhotelOrneighborhood = city;
+		this.showSearch = false;
 	}
 
 	setTodayDate(time?: any) {
@@ -441,11 +465,13 @@ export class HotelSearchComponent implements OnInit {
 			if (!formatDate2?.value) {
 				formatDate2.value = this.form.value.checkOutDate;
 			}
+			console.log(this.form)
 		}, time);
 	}
 
 
 	onSelectClose(event?: any) {
+		const checkInDateControl = this.form.controls.checkInDate;
 		console.log("kkkk")
 		this.minimumDatecIn = event;
 		this.setTodayDate(0);
@@ -474,5 +500,43 @@ export class HotelSearchComponent implements OnInit {
 			this.childArr?.forEach(el => { el.msg = ''; });
 			isTrue.close();
 		}
+		console.log(this.childArr[0]?.selected ? this.childArr[0]?.selected : 0)
+		this.childages = this.childArr[0]?.selected ? this.childArr[0]?.selected : 0;
 	}
+	searchResults() {
+		const searchTerm = this.form.get('cityOrhotelOrneighborhood')?.value?.trim();
+
+		if (!searchTerm) {
+			this.showSearch = false;
+			return;
+		}
+
+		const data = { query: searchTerm };
+
+		if (searchTerm.length > 2) {
+			this.searchService.searchResults(data).subscribe(
+				(response: any) => {
+					this.searchDataCities = response.results.cities || [];
+					this.searchDataHotels = response.results.hotels || [];
+					this.searchDataLocations = response.results.location || [];
+					this.showSearch = this.searchDataCities.length > 0 || this.searchDataHotels.length > 0 || this.searchDataLocations.length > 0;
+				},
+				(error) => {
+					console.error("Error fetching search results:", error);
+					this.showSearch = false;
+				}
+			);
+		} else {
+			this.showSearch = false;
+		}
+	}
+
+	@HostListener('document:click', ['$event'])
+	handleClickOutside(event: Event) {
+		if (!this.eRef.nativeElement.contains(event.target)) {
+			this.showSearch = false; // Hide search list when clicking outside
+		}
+	}
+
+
 }

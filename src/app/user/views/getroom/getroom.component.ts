@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GetroomService } from './getroom.service';
 import { AuthService } from 'src/app/auth.service';
@@ -20,6 +20,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { WishlistServiceService } from '../wishlist/wishlist.service';
 import { finalize } from 'rxjs';
+import { BookinghistoryService } from '../bookings/bookinghistory.service';
 
 
 @Component({
@@ -36,9 +37,11 @@ export class GetroomComponent implements OnInit {
   roomDeatils: any = [];
   defaultrating = 3;
   roomDeatilsInner: any = [];
-
+  isScrolled = false;
   sroomImages: Array<Object> = [];
-
+  userRating: number = 0;
+  productReview: string = '';
+  recommendProduct: boolean = false;
   roomComplementarities: any[] = [];
   Amenities: boolean = false;
 
@@ -123,15 +126,15 @@ export class GetroomComponent implements OnInit {
 
   originalPrice = 0;
 
-  roomAvailability: boolean= false;
+  roomAvailability: boolean = false;
 
   highlight = [
     { icon: 'assets/imgs/freewifi.svg', title: 'Free Wifi', name: 'WiFi' },
-    { icon: 'assets/imgs/hygieneplus.svg', title: 'Hygiene Plus', name:  'Sanitizer' },
+    { icon: 'assets/imgs/hygieneplus.svg', title: 'Hygiene Plus', name: 'Sanitizer' },
     { icon: 'assets/imgs/housekeeping.svg', title: 'Daily housekeeping', name: 'HouseKeeping' },
-    { icon: 'assets/imgs/breakfast.svg', title: 'Breakfast', name: 'In-room Dining'},
-    { icon: 'assets/imgs/ac.svg', title: 'AC', name: 'AC'},
-    { icon: 'assets/imgs/powerbackup.svg', title: 'Power Backup',name: 'Power Backup'},
+    { icon: 'assets/imgs/breakfast.svg', title: 'Breakfast', name: 'In-room Dining' },
+    { icon: 'assets/imgs/ac.svg', title: 'AC', name: 'AC' },
+    { icon: 'assets/imgs/powerbackup.svg', title: 'Power Backup', name: 'Power Backup' },
   ]
   policyList = [
     { policyHead: 'Welcome to Welrm', policyDisc: 'Couples are not only welcome but encouraged to indulge in romantic getaways at our stunning retreat.' },
@@ -158,6 +161,7 @@ export class GetroomComponent implements OnInit {
     private modalService: NgbModal,
     private breakpointObserver: BreakpointObserver,
     private wishlistService: WishlistServiceService,
+    private book_history: BookinghistoryService,
   ) {
 
     this.paramiterForhotelSearch = localStorage.getItem('paramiterForhotelSearch');
@@ -205,7 +209,7 @@ export class GetroomComponent implements OnInit {
     }
   }
 
- 
+
 
   selectCheckIndate(v: any) {
     this.minimumDatecIn = v;
@@ -260,7 +264,7 @@ export class GetroomComponent implements OnInit {
       //alert("Please select Room type")
       this.messageService1.add({ severity: 'error', summary: 'Error', detail: 'Please select Room type' });
 
-    } 
+    }
     else if (this.form.controls.checkInDate.status == 'INVALID') {
       //alert('Check In field is required')
       this.messageService1.add({ severity: 'error', summary: 'Error', detail: 'Check In field is required' });
@@ -275,50 +279,48 @@ export class GetroomComponent implements OnInit {
 
     } else {
 
-      if(this.roomAvailability)
-      {
+      if (this.roomAvailability) {
         this.goToSecondPage()
-      }else {
+      } else {
         //alert(this.roomDeatilsInner.hotelName+" Room is not available")
-        this.messageService1.add({ severity: 'error', summary: 'Error', detail: this.roomDeatilsInner.hotelName+" Room is not available" });
+        this.messageService1.add({ severity: 'error', summary: 'Error', detail: this.roomDeatilsInner.hotelName + " Room is not available" });
 
 
       }
-      
+
     }
   }
 
   selectRoomF(originalPrice: any, includeDiscountroomPrice: any, name: any, id: any, roomComplementarities: any, PProomTypeId: any) {
-    this.roomAvailability= false;
+    this.roomAvailability = false;
     this.roomDeatilsInner.hotelName = name;
 
     this.onGethotelFilter(this.hotelId, this.PProomTypeId);
     setTimeout(() => {
 
-      if(this.roomAvailability)
-      {   
+      if (this.roomAvailability) {
         this.roomComplementarities = [];
-        this.PProomTypeId= PProomTypeId;
+        this.PProomTypeId = PProomTypeId;
         this.selectRoomTypeId = id;
-        this.roomId =  id;
+        this.roomId = id;
         this.roomDeatilsInner.hotelName = name;
         this.roomPrice = includeDiscountroomPrice;
         this.originalPrice = originalPrice;
         this.discountValue = originalPrice - includeDiscountroomPrice;
-    
+
         this.roomComplementarities = roomComplementarities.roomComplementaries;
         if (this.roomComplementarities.length == 0) {
           this.Amenities = false;
         } else if (this.roomComplementarities.length > 0)
           this.Amenities = true;
 
-      }else {
+      } else {
         //alert(this.roomDeatilsInner.hotelName+" Room is not available")
-        this.messageService1.add({ severity: 'error', summary: 'Error', detail: this.roomDeatilsInner.hotelName+" Room is not available" });
+        this.messageService1.add({ severity: 'error', summary: 'Error', detail: this.roomDeatilsInner.hotelName + " Room is not available" });
 
       }
-     
-      }, 2000);
+
+    }, 2000);
 
 
   }
@@ -346,16 +348,16 @@ export class GetroomComponent implements OnInit {
 
   ngOnInit(): void {
     this.breakpointObserver
-    .observe(['(max-width: 767px)'])
-    .subscribe((state: BreakpointState) => {
-      if (state.matches) {
-        this.isMobileView = true;
+      .observe(['(max-width: 767px)'])
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.isMobileView = true;
 
-      } else {
-        this.isMobileView = false;
-      }
-    });
-    let user  = this.getUserData();
+        } else {
+          this.isMobileView = false;
+        }
+      });
+    let user = this.getUserData();
     if (user) {
       this.userId = user.data?.user?.id;
       this.userFullName = user.data?.user?.fullName;
@@ -363,7 +365,7 @@ export class GetroomComponent implements OnInit {
       this.userEmail = user.data?.user?.email;
       this.commision_percent = user.data?.commission_percentage;
     }
-    
+
     this.primengConfig.ripple = true;
     this.route.queryParams.subscribe(qParams => {
       const hotelId = qParams['hotelId'];
@@ -382,7 +384,7 @@ export class GetroomComponent implements OnInit {
     });
     let checkin: any = this.form.value.checkInDate;
     if (checkin) {
-      this.cancelFromDate = new Date(new Date(checkin).getTime() - (24*60*60*1000));
+      this.cancelFromDate = new Date(new Date(checkin).getTime() - (24 * 60 * 60 * 1000));
     }
   }
 
@@ -415,50 +417,48 @@ export class GetroomComponent implements OnInit {
 
 
   roomIncreseF() {
-   
-    this.roomAvailability= false;
+
+    this.roomAvailability = false;
     this.room = this.room * 1 + 1;
 
     this.onGethotelFilter(this.hotelId, this.PProomTypeId);
 
     setTimeout(() => {
 
-      if(this.roomAvailability)
-      {   
-       
-      }else {
+      if (this.roomAvailability) {
+
+      } else {
         //alert(this.roomDeatilsInner.hotelName+" Room is not available")
-        this.messageService1.add({ severity: 'error', summary: 'Error', detail: this.roomDeatilsInner.hotelName+" Room is not available" });
+        this.messageService1.add({ severity: 'error', summary: 'Error', detail: this.roomDeatilsInner.hotelName + " Room is not available" });
 
       }
-     
-      }, 1000);
+
+    }, 1000);
 
   }
 
   roomDeceaseF() {
-    
+
     if (this.room > 1) {
       this.room = this.room - 1;
     } else {
       this.room = 1
     }
 
-    this.roomAvailability= false;
+    this.roomAvailability = false;
     this.onGethotelFilter(this.hotelId, this.PProomTypeId);
 
     setTimeout(() => {
 
-      if(this.roomAvailability)
-      {   
-       
-      }else {
+      if (this.roomAvailability) {
+
+      } else {
         //alert(this.roomDeatilsInner.hotelName+" Room is not available")
-        this.messageService1.add({ severity: 'error', summary: 'Error', detail: this.roomDeatilsInner.hotelName+" Room is not available" });
+        this.messageService1.add({ severity: 'error', summary: 'Error', detail: this.roomDeatilsInner.hotelName + " Room is not available" });
 
       }
-     
-      }, 1000);
+
+    }, 1000);
 
 
   }
@@ -487,30 +487,36 @@ export class GetroomComponent implements OnInit {
           this.roomDeatilsInner.hotelRooms.forEach((ele: any, ind: any) => {
             if (min == ele.hour24Price) {
 
-              this.PProomTypeId= ele.roomType.id
+              this.PProomTypeId = ele.roomType.id
               this.onGethotelFilter(this.hotelId, this.PProomTypeId);
 
 
               setTimeout(() => {
 
-              if(this.roomAvailability)
-              {   
-                this.originalPrice = min
-                this.roomPrice = min - (min * ele.discount) / 100;
-                this.discount = ele.discount;
-                this.selectRoomTypeId = ele.roomId
-                this.roomId = ele.roomId;
-                this.selectRoom = ele;
-                this.selectRoom.groupRoomComplementaries = this.groupByType();
-                this.roomComplementarities = ele.roomComplementaries;
-                if (this.roomComplementarities.length == 0) {
-                  this.Amenities = false;
-                } else if (this.roomComplementarities.length > 0)
-                  this.Amenities = true;
-              }else {
-                //alert(ele.roomType.name+" Room is not available")
-                this.messageService1.add({ severity: 'error', summary: 'Error', detail: ele.roomType.name+" Room is not available" });
-              }
+                if (this.roomAvailability) {
+                  this.originalPrice = min
+                  this.roomPrice = min - (min * ele.discount) / 100;
+                  this.discount = ele.discount;
+                  this.selectRoomTypeId = ele.roomId
+                  this.roomId = ele.roomId;
+                  this.selectRoom = ele;
+                  // this.selectRoom = {
+                  //   ...ele,
+                  //   checkIn: this.formatTime(ele.checkIn)
+                  // };
+                  console.log('ele', ele)
+                  this.selectRoom.checkIn = this.formatTime(this.selectRoom.checkIn)
+                  this.selectRoom.checkOut = this.formatTime(this.selectRoom.checkOut)
+                  this.selectRoom.groupRoomComplementaries = this.groupByType();
+                  this.roomComplementarities = ele.roomComplementaries;
+                  if (this.roomComplementarities.length == 0) {
+                    this.Amenities = false;
+                  } else if (this.roomComplementarities.length > 0)
+                    this.Amenities = true;
+                } else {
+                  //alert(ele.roomType.name+" Room is not available")
+                  this.messageService1.add({ severity: 'error', summary: 'Error', detail: ele.roomType.name + " Room is not available" });
+                }
               }, 1000);
             }
           });
@@ -525,6 +531,25 @@ export class GetroomComponent implements OnInit {
     }
   }
 
+  formatTime(timeString: any): string {
+    if (typeof timeString === 'string' && timeString.includes(':')) {
+      // If timeString is just a time (e.g., "12:00:00")
+      const [hours, minutes] = timeString.split(':');
+      return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+    }
+
+    // Otherwise, if it's a full date string or timestamp
+    const date = new Date(timeString);
+    if (isNaN(date.getTime())) {
+      // If date is invalid, handle the error
+      console.error('Invalid date:', timeString);
+      return 'Invalid Time';
+    }
+
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  }
 
   getUserData() {
     const response = localStorage.getItem(this.userKey);
@@ -563,14 +588,13 @@ export class GetroomComponent implements OnInit {
         .getHotelFilter(hotelId, roomTypeId)
         .subscribe((data: any) => {
 
-          let numOfBookedRooms= data.data.result[0].numOfBookedRooms;
-          let totalNumOfRooms= data.data.result[0].totalNumOfRooms;
-          let availableRoom = totalNumOfRooms*1 -  numOfBookedRooms*1;
-          if(availableRoom>=this.room)
-          {
-              this.roomAvailability= true;
-          }else {
-            this.roomAvailability= false;
+          let numOfBookedRooms = data.data.result[0].numOfBookedRooms;
+          let totalNumOfRooms = data.data.result[0].totalNumOfRooms;
+          let availableRoom = totalNumOfRooms * 1 - numOfBookedRooms * 1;
+          if (availableRoom >= this.room) {
+            this.roomAvailability = true;
+          } else {
+            this.roomAvailability = false;
           }
 
 
@@ -617,25 +641,25 @@ export class GetroomComponent implements OnInit {
       bookingFromDate: this.form.value.checkInDate,
       bookingToDate: this.form.value.checkOutDate,
       breakFastPrice: this.breakFastPrice,
-      daily:  null,
-      holdingHour:  null,
+      daily: null,
+      holdingHour: null,
       hotelId: this.hotelId,
-      hotelName: this.hotelName ,
+      hotelName: this.hotelName,
       isBreakfastIncludes: this.form.value.isCheckedB,
-      is_paid:  null ,
+      is_paid: null,
       numberOfDays: this.numberOfDays,
       roomId: this.roomId,
-      roomPrice: this.roomPrice ,
+      roomPrice: this.roomPrice,
       roomQuantity: this.room,
       // roomType: this.roomDeatilsInner.hotelName,
-      discountValue: this.discountValue, 
+      discountValue: this.discountValue,
       userId: this.userId,
       userFullName: this.userFullName,
       userEmail: this.userEmail,
       userType: this.userType,
       confirmation_code: this.confirmation_code,
       commision_percent: this.commision_percent,
-      bookingStatus:  "0",
+      bookingStatus: "0",
       price: this.price,
 
 
@@ -686,8 +710,8 @@ export class GetroomComponent implements OnInit {
     if (this.roomQuantity < this.numOfAvailableRooms) {
       this.roomQuantity++;
     } else {
-     // alert('Only' +' ' +this.roomQuantity +' ' +'Rooms Available For This Hotel');
-     this.messageService1.add({ severity: 'error', summary: 'Error', detail: 'Only' +' ' +this.roomQuantity +' ' +'Rooms Available For This Hotel' });
+      // alert('Only' +' ' +this.roomQuantity +' ' +'Rooms Available For This Hotel');
+      this.messageService1.add({ severity: 'error', summary: 'Error', detail: 'Only' + ' ' + this.roomQuantity + ' ' + 'Rooms Available For This Hotel' });
 
     }
   }
@@ -715,14 +739,14 @@ export class GetroomComponent implements OnInit {
     this.blogImages.vindex = 0;
     this.blogImages.list = imgs;
     this.modalService.open(content, { windowClass: 'blogimage-modal' })
-    .result.then(
-      (result: any) => {
-        this.closeResult = `Closed with: ${result}`;
-      },
-      (reason: any) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      }
-    );
+      .result.then(
+        (result: any) => {
+          this.closeResult = `Closed with: ${result}`;
+        },
+        (reason: any) => {
+          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
   }
 
   private getDismissReason(reason: any): string {
@@ -741,7 +765,7 @@ export class GetroomComponent implements OnInit {
       const headerOffset = this.isMobileView ? 54 : 120;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-  
+
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth",
@@ -755,8 +779,8 @@ export class GetroomComponent implements OnInit {
 
   onSearchQueryChange(event) {
     setTimeout(() => {
-      this.router.navigateByUrl('/list', {skipLocationChange: true}).then(() => {
-        this.router.navigate(['/room-details/getroom'], { queryParams: { hotelId: this.hotelId, hotelName: this.hotelName }});
+      this.router.navigateByUrl('/list', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/room-details/getroom'], { queryParams: { hotelId: this.hotelId, hotelName: this.hotelName } });
       })
     }, 1200);
   }
@@ -782,9 +806,9 @@ export class GetroomComponent implements OnInit {
 
   postHotelData(result) {
     let payload = {
-      user_id : this.userId,
-      hotel_id : this.hotelId,
-      room_id : result.roomId
+      user_id: this.userId,
+      hotel_id: this.hotelId,
+      room_id: result.roomId
     };
     if (!this.userId) {
       // this.messageService1.add({ severity: 'error', summary: 'Error', detail: 'Please login'});
@@ -793,35 +817,35 @@ export class GetroomComponent implements OnInit {
     if (result?.inWishlist) {
       result.isLoading = true;
       this.wishlistService.removeToWishlist(payload)
-      .pipe(
-        finalize(() => {
-          result.isLoading = false;
-        })
-      )
-      .subscribe((response: any) => {
-        if (response?.success) {
-          result.inWishlist = false;
-          this.messageService1.add({ severity: 'error', summary: 'Success', detail: response?.message});
-        } else {
-          this.messageService1.add({ severity: 'error', summary: 'Error', detail: response?.message});
-        }
-      });
+        .pipe(
+          finalize(() => {
+            result.isLoading = false;
+          })
+        )
+        .subscribe((response: any) => {
+          if (response?.success) {
+            result.inWishlist = false;
+            this.messageService1.add({ severity: 'error', summary: 'Success', detail: response?.message });
+          } else {
+            this.messageService1.add({ severity: 'error', summary: 'Error', detail: response?.message });
+          }
+        });
     } else {
       result.isLoading = true;
       this.wishlistService.addToWishlist(payload)
-      .pipe(
-        finalize(() => {
-          result.isLoading = false;
-        })
-      )
-      .subscribe((response: any) => {
-        if (response?.success) {
-          result.inWishlist = true;
-          this.messageService1.add({ severity: 'success', summary: 'Success', detail: response?.message});
-        } else {
-          this.messageService1.add({ severity: 'error', summary: 'Error', detail: response?.message});
-        }
-      });
+        .pipe(
+          finalize(() => {
+            result.isLoading = false;
+          })
+        )
+        .subscribe((response: any) => {
+          if (response?.success) {
+            result.inWishlist = true;
+            this.messageService1.add({ severity: 'success', summary: 'Success', detail: response?.message });
+          } else {
+            this.messageService1.add({ severity: 'error', summary: 'Error', detail: response?.message });
+          }
+        });
     }
   }
 
@@ -830,5 +854,51 @@ export class GetroomComponent implements OnInit {
       let url = `http://google.com/maps/place/${this.roomDeatilsInner.lat},${this.roomDeatilsInner.log}`;
       window.open(url, '_blank');
     }
+  }
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    // Update isScrolled based on scroll position
+    this.isScrolled = scrollTop >= 10 ? true : false;
+  }
+  submitReview() {
+    const review = document.getElementById("productReview")
+    this.book_history
+      .rateHotel(
+        this.hotelId,
+        this.userRating,
+        this.recommendProduct,
+        this.productReview
+      )
+      // .pipe(
+      //   catchError((error) => {
+      //     // Handle errors if any of the API calls fail
+      //     console.error('Rate Hotel API Error:', error);
+      //     // You can return a fallback value or re-throw the error as needed
+      //     // return [];
+      //     throw error;
+      //   }),
+      //   finalize(() => {
+      //     // This block will run after both API calls complete (success or error)
+      //     // You can add finalization logic here
+      //   })
+      // )
+      .subscribe((response: any) => {
+        // Handle the data from all three APIs
+        if (response.success) {
+          this.modalService.dismissAll();
+          this.messageService1.add({ severity: 'success', summary: 'Success', detail: response.message });
+        } else {
+          console.log('review submitted error ', response);
+        }
+      });
+  }
+  rating(event:any){
+    console.log('event----',event)
+    this.userRating=event.value
+  }
+  onReviewChange(event: any) {
+    console.log('Review on change:', event.target.value); // Logs the final value after the change event
+    this.productReview = event.target.value; // Optionally update the value manually
   }
 }

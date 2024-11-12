@@ -1,8 +1,10 @@
-<app-header></app-header>
-<div class="banner-search get-search">
-    <app-hotel-search (searchQueryChange)="onSearchQueryChange($event)"></app-hotel-search>
+<div [ngClass]="{'mb-5':isScrolled}">
+    <app-header></app-header>
 </div>
-<div class="hotel-detail">
+<div *ngIf="!isScrolled" class="banner-search">
+    <app-hotel-search (searchChange)="onSearchQueryChange($event)"></app-hotel-search>
+</div>
+<div class="hotel-detail" [ngClass]="{'mt-5':isScrolled}">
     <div class="container">
         <div class="detail-info">
             <div class="info-left">
@@ -46,6 +48,8 @@
                             src="assets/imgs/facility.svg" alt="">Facilities</button>
                     <button type="button" class="tab-btn" (click)="scrollToSection('hotelPolicies')"><img
                             src="assets/imgs/policies.svg" alt="">Policies</button>
+                    <button *ngIf="userId !== null" type="button" class="tab-btn" (click)="scrollToSection('rating')"><img
+                            src="assets/imgs/policies.svg" alt="">Ratings</button>
                 </div>
                 <div class="info-title d-block d-md-none">
                     <div class="title-head">
@@ -120,6 +124,7 @@
                                 <label class="label">Coupon Discount (THYFDR)</label>
                                 <label class="value">-₹ <span>{{discount}}</span></label>
                             </li> -->
+                            
                             <li class="after-discount">
                                 <label class="label">Total Amount</label>
                                 <label class="value">₹ <span>{{getCeilPrice(roomPrice)}}</span></label>
@@ -133,10 +138,11 @@
                         <img class="map-img" src="assets/imgs/see-map.svg" alt="" (click)="gotoLocation()">
                         <div class="see-rating">
                             <div class="rating-type">
-                                <span>{{ roomDeatils.rating }} </span>
-                                <span>Very good</span>
+                                <!-- <span>{{ roomDeatils.rating }} </span> -->
+                                <span>3</span>
+                                <span> Very Good</span>
                             </div>
-                            <p-rating [readonly]="true" class="star-rating" [(ngModel)]="roomDeatils.rating"
+                            <p-rating [readonly]="true" class="star-rating" [(ngModel)]="defaultrating"
                                 [cancel]="false"></p-rating>
                             <!-- <div class="star">
                                 <img src="assets/imgs/star.svg" alt="">
@@ -201,10 +207,10 @@
                                 <li>No meals included</li>
                                 <li class="green">Free Cancellation before {{cancelFromDate ? (cancelFromDate | date:'d
                                     MMM') : ''}} {{item.checkIn}}.</li>
-                                <li class="more-details">
+                                <!-- <li class="more-details">
                                     <span>More Details </span>
                                     <i class="fa-solid fa-angle-down"></i>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                         <div class="room-price">
@@ -225,10 +231,11 @@
                                     (click)="selectRoomF(getCeilPrice(item.hour24Price), item.newPrice, item.roomType.name, item.roomId, item, item.roomType.id)">{{selectRoomTypeId
                                     === item.roomId ? 'Selected':'Select'}}</button>
                                 <!-- <button class="selectBtn-red">Select</button> -->
-                                <div class="book-this"  *ngIf="selectRoomTypeId && selectRoomTypeId
+                                <button class="selectroom-btn" (click)="submit()">Book Now</button>
+                                <!-- <div class="book-this" *ngIf="selectRoomTypeId && selectRoomTypeId
                                 === item.roomId">
-                                    <button (click)="submit()">Book Now</button>
-                                </div>
+                                    <button (click)="submit()">Book Now</button> 
+                                </div>-->
                             </div>
 
                         </div>
@@ -289,21 +296,22 @@
                             </div>
                             <div class="roomtype-res">
                                 <label class="room-res-inner">{{ item.roomType.name }}</label>
-                                <div class="more-details">
+                                <!-- <div class="more-details">
                                     <span class="me-1 text-nowrap">More Details</span>
                                     <i class="fa-solid fa-angle-down"></i>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
                     <div class="btn-row">
-                    <button class="selectroom-btn"
-                        (click)="selectRoomF(getCeilPrice(item.hour24Price), item.newPrice, item.roomType.name, item.roomId, item, item.roomType.id)">{{selectRoomTypeId
-                        === item.roomId ? 'Selected':'Select'}}</button>
-                    <div class="book-this"  *ngIf="selectRoomTypeId && selectRoomTypeId
+                        <button class="selectroom-btn"
+                            (click)="selectRoomF(getCeilPrice(item.hour24Price), item.newPrice, item.roomType.name, item.roomId, item, item.roomType.id)">{{selectRoomTypeId
+                            === item.roomId ? 'Selected':'Select'}}</button>
+                        <button class="selectroom-btn" (click)="submit()">Book Now</button>
+                        <!-- <div class="book-this"  *ngIf="selectRoomTypeId && selectRoomTypeId
                                 === item.roomId">
                         <button (click)="submit()">Book Now</button>
-                    </div>
+                    </div> -->
                     </div>
                 </div>
             </div>
@@ -317,13 +325,14 @@
                             <p class="list-head">{{ item.policyHead }}</p>
                             <p class="list-disc">{{ item.policyDisc }}</p>
                         </li>
-                        <li class="more-details"><span>More View</span><i class="fa-solid fa-angle-down"></i></li>
+                        <!-- <li class="more-details"><span>More View</span><i class="fa-solid fa-angle-down"></i></li> -->
                     </ul>
                 </div>
                 <div class="policy-right">
                     <div class="check-in">
                         <p>Check-in</p>
-                        <span>From {{selectRoom.checkIn}}</span>
+                        <span>From {{ selectRoom.checkIn}}</span>
+
                     </div>
                     <div class="check-out">
                         <p>Check-Out</p>
@@ -331,6 +340,35 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div *ngIf="userId !== null" id="rating" class="feedback-section">
+            <!-- <h3>Rating</h3> -->
+            <div class="feedback-section">
+                <div class="modal-header">
+                    <div class="rate-head">
+                        <h3>Rating</h3>
+                        <!-- <p>How Satisfied are you With Your Experience With Us....</p> -->
+                    </div>
+                    <button class="close-x-btn">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="rating-center">
+                        <p-rating class="star-rating" [cancel]="false" [(ngModel)]="userRating" (onRate)="rating($event)"></p-rating>
+                    </div>
+                    <div class="textarea">
+                        <!-- <label>Do you have any thoughts you'd like to share?</label> -->
+                        <textarea rows="4" cols="50" class="other-text" id="productReview" [(ngModel)]="productReview"
+                            placeholder="Give your reason here if other than the above" (change)="onReviewChange($event)"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="custom-btn" (click)="submitReview()">Send</button>
+                    <button class="custom-btn cancel">Cancel</button>
+                </div>
+            </div>
+
         </div>
         <div id="hotelAmenities" class="offered-amenities">
             <h3>Services or Amenities offered by {{hotelName}}</h3>

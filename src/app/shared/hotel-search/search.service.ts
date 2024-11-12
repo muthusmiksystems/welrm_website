@@ -27,5 +27,10 @@ export class SearchService {
     const url = `${Url.CUSTOMER_GET_HOTELS}?search=${query}&userId=${this.userId}&searchFromDate=${fromDate}&searchToDate=${toDate}&guestCapacity=${guestCapacity}`;
     return this.apiService.callApi('GET', url, null, false, false);
   }
+  searchResults(query: any): Observable<any[]> {
+    const url = `${Url.SEARCH_REASULTS}`; // Assuming this is your API endpoint
+    return this.apiService.callApi('POST', url, query); // Change to POST
+}
+
 
 }
