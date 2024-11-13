@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Mona-sans;
+
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+    border: 1px solid #FFFFFF;
+    border-radius: 8px !important;
+
+}
+
+.css-10yf2i8-MuiInputBase-root-MuiInput-root::before {
+    border: none !important;
+}
+
+.MuiInputAdornment-root.MuiInputAdornment-positionStart.MuiInputAdornment-outlined.MuiInputAdornment-sizeMedium.css-6ga8lj-MuiInputAdornment-root {
+    width: 100px !important;
+}
+
+.css-b62m3t-container {
+    width: 200px !important;
+}
+
+.css-1ecvrk3-MuiFormControl-root-MuiTextField-root {
+    width: 90% !important;
+}
+
+.basi_logo {
+    width: 90px;
+    height: 30px;
+    margin-right: 20px;
+}
+
+.css-5iifl-MuiPaper-root-MuiAppBar-root {
+    background-color: #eddddd !important;
+}
+
+.my-input .css-1jk99ih-MuiInputBase-input-MuiOutlinedInput-input {
+    padding: 5px 10px !important;
+
+}
+
+.MuiStack-root.css-10o2lyd-MuiStack-root {
+    width: 200px;
+}
+
+.room_input .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+    border: none !important;
+}
+
+.refund_input .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+    border: none !important;
+}
+
+.refund2_input .css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+    border: none !important;
+}
+
+.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12 .MuiGrid-grid-sm-4 .MuiGrid-grid-md-3 .css-6w982j-MuiGrid-root {
+    background-color: red !important;
+    color: red;
+}
+
+.homeContainer {
+    background-color: #F5F5F5 !important;
+}
+
+@media (min-width: 1200px) {
+    .css-5c1adp-MuiContainer-root {
+        max-width: 100%;
+    }
+}
+
