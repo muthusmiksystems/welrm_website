@@ -37,7 +37,7 @@ import Hero from "./component/Hero";
 import Availability from "./component/Room Manage/Availability";
 import HotelBooking from "./component/Booking/HotelProfile";
 import UpdateRoom from "./component/Room Manage/UpdateRoom";
-
+import DashboardSubscription from "./component/Subscription/index"
 function App() {
   const dispatch = useDispatch();
   // const bookingDetails = {
@@ -109,6 +109,7 @@ function App() {
             <Route path="BookingAlert" element={<BookingAlert />} />
             <Route path="GuestMessage" element={<GuestMessage />} />
             <Route path="Poilices" element={<Poilices />} />
+            <Route path="subscription" element={<DashboardSubscription />} />
 
             <Route path="DeletAccount" element={<DeletAccount />} />
             <Route path="Faq" element={<Faq />} />

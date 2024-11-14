@@ -6,26 +6,35 @@ import { getBookingHistory } from "../../API/Booking";
 import { formatDate } from "../../Shared/dateformate";
 import CancelIcon from "@mui/icons-material/Cancel";
 import PersonIcon from "@mui/icons-material/Person";
+import { useLoader } from "../../Reducers/LoaderProvider";
 const ActiveBooking = () => {
+  const { setLoading } = useLoader();
   const dispatch = useDispatch();
   const booked = useSelector((state) => state.Booking?.bookingHistory);
   console.log("booked", booked?.data?.hotels?.rows)
 
-  const [filter, setFilter] = useState("confirmed");
-  const [tabValue, setTabValue] = useState("confirmed"); // State for tab selection
+  const [filter, setFilter] = useState("checkout");
+  const [tabValue, setTabValue] = useState("checkout"); // State for tab selection
 
 
   useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      fetchData();
+
+    }, 1000); // 1 second delay
     // Check if the token is available in localStorage
+  }, [dispatch]);
+
+  const fetchData = async () => {
     const token = localStorage.getItem("token");
 
     if (token) {
       // Dispatch the action to fetch booking history
-      dispatch(getBookingHistory()); // Pass the token as payload for the API call
+      await dispatch(getBookingHistory()); // Pass the token as payload for the API call
     }
-  }, [dispatch]);
-
-
+  }
   // Handle filter change
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -69,7 +78,7 @@ const ActiveBooking = () => {
             },
           }}
         >
-          <Tab label="Confirmed Bookings" value="confirmed" />
+          <Tab label="Confirmed Bookings" value="checkout" />
           <Tab label="Cancelled Bookings" value="cancelled" />
         </Tabs>
 
@@ -88,8 +97,7 @@ const ActiveBooking = () => {
               <>
                 {filteredBookings.map((item, index) => {
                   if (
-                    (item?.is_paid === "yes" &&
-                    item?.status === "confirmed") || (item?.status === "cancelled")
+                      item?.status === "checkout" || item?.status === "cancelled"
                   ) {
                     return (
                       <Box
@@ -166,7 +174,7 @@ const ActiveBooking = () => {
                                 </Typography>
                               </Box>
                             </Box>
-                            {(item?.is_paid && item?.is_paid === "yes") && (item?.status && item?.status === "confirmed") ? (
+                            {(item?.status && item?.status === "checkout")  ? (
                               <Box
                                 sx={{
                                   display: "flex",
@@ -208,7 +216,7 @@ const ActiveBooking = () => {
                                       color: "#C42A25"
                                       //color: item?.is_paid === "yes" ? "#4B5563" : "#C42A25",
                                     }}>
-                                    {item?.is_paid === "yes" ? "paid" : "unpaid"}
+                                    {item?.status === "checkout" ? "paid" : "unpaid"}
                                   </Typography>
                                 </Box>
                               </Box>)
@@ -220,10 +228,10 @@ const ActiveBooking = () => {
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
-                                bgcolor: item?.status === "confirmed" ? "#0095331A" : "#0000002B",
+                                bgcolor: item?.status === "checkout" ? "#0095331A" : "#0000002B",
                                 // bgcolor: "#0095331A",
                                 // border: "1px solid #0095334D",
-                                border: item?.status === "confirmed" ? "1px solid #0095334D" : "1px solid ##0000002B",
+                                border: item?.status === "checkout" ? "1px solid #0095334D" : "1px solid ##0000002B",
                                 borderRadius: "40px",
                               }}>
 
@@ -234,7 +242,7 @@ const ActiveBooking = () => {
                                 <Typography
                                   sx={{
                                     // color: "#4B5563",
-                                    color: item?.status === "confirmed" ? "#4B5563" : "#4B5563",
+                                    color: item?.status === "checkout" ? "#4B5563" : "#4B5563",
                                     fontSize: "18px",
                                     fontWeight: "500",
                                   }}>
@@ -245,7 +253,7 @@ const ActiveBooking = () => {
                                 sx={{
                                   marginLeft: "20px",
                                   // bgcolor: "#0095330D",
-                                  bgcolor: item?.status === "confirmed" ? "#0095330D" : "gray",
+                                  bgcolor: item?.status === "checkout" ? "#0095330D" : "gray",
                                   borderRadius: "40px",
                                   padding: "10px 30px",
                                 }}>
@@ -253,9 +261,9 @@ const ActiveBooking = () => {
                                   sx={{
                                     fontSize: "18px",
                                     fontWeight: "500",
-                                    color: item?.status === "confirmed" ? "#4B5563" : "#000",
+                                    color: item?.status === "checkout" ? "#4B5563" : "#000",
                                   }}>
-                                  {item?.status === "confirmed" ? "completed" : "cancelled"}
+                                  {item?.status === "checkout" ? "completed" : "cancelled"}
                                 </Typography>
                               </Box>
                             </Box>
@@ -600,7 +608,7 @@ const ActiveBooking = () => {
                                               fontSize: "18px",
                                               fontWeight: "500",
                                             }}>
-                                            {item?.checkin_date}
+                                            {formatDate(item?.bookingFromDate)}
                                           </Typography>
                                         </Box>
                                         <Box
@@ -633,7 +641,7 @@ const ActiveBooking = () => {
                                               fontWeight: "500",
                                               color: '#C42A25'
                                             }}>
-                                            {item?.checkout_date}
+                                            {formatDate(item?.bookingToDate)}
                                           </Typography>
                                         </Box>
                                       </Box>
@@ -646,7 +654,7 @@ const ActiveBooking = () => {
                               sx={{
                                 marginLeft: "10px",
                               }}>
-                              {item?.status && item?.status === "confirmed" ?
+                              {item?.status && item?.status === "checkout" ?
                                 (
                                   <>
                                     <Typography
@@ -736,8 +744,23 @@ const ActiveBooking = () => {
                                   padding: "20px",
                                   paddingLeft: "0px !important",
                                 }}>
-                                {item?.status && item?.status === "confirmed" ?
-                                  ("") :
+                                {item?.status && item?.status === "checkout" ?
+                                  (
+                                    // <Button
+                                    //   // onClick={() => item?.status === "active" ? handleConfirmOpen(item) : null}
+                                    //   sx={{
+                                    //     bgcolor: "#CBD5E1",
+                                    //     color: "#4B5563",
+                                    //     padding: "10px 40px",
+                                    //     borderRadius: "5px",
+                                    //     fontSize: "14px",
+                                    //     fontWeight: "500",
+                                    //   }}
+                                    // >
+                                    //   {item?.status === "checkout" ? 'CheckOut' : 'Confirm'}
+                                    // </Button>
+                                    null
+                                  ) :
                                   (
                                     <Box>
                                       <Typography
@@ -763,16 +786,17 @@ const ActiveBooking = () => {
                       </Box>
                     );
                   }
+
                   return (
                     <span className="p-5 text-center" style={{ color: "black", fontWeight: "bold", fontSize: "16px" }}>
-                      Booking is confirmed, but payment is still pending
+                      No confirmed bookings founds.
                     </span>
                   );
-                  })}
+                })}
               </>
             ) : (
               <>
-                {filter==="confirmed" ? <h1 className="p-5 text-center font-bold">No confirmed bookings found.</h1>:<h1 className="p-5 text-center font-bold">No cancelled bookings found.</h1>}
+                {filter === "checkout" ? <h1 className="p-5 text-center font-bold">No confirmed bookings found.</h1> : <h1 className="p-5 text-center font-bold">No cancelled bookings found.</h1>}
               </>
             )}
           </Box>

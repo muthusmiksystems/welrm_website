@@ -12,6 +12,7 @@ import { Image } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import edit from '../../Assests/edit.png';
 import { useNavigate } from 'react-router-dom';
+import { useLoader } from "../../Reducers/LoaderProvider";
 // import RestaurantIcon from '@mui/icons-material/Restaurant';
 // import WifiIcon from '@mui/icons-material/Wifi';
 // import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
@@ -22,6 +23,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 const RoomListing = () => {
+  const { setLoading } = useLoader();
   const [list, setList] = useState();
   const navigate = useNavigate()
   const [openDialog, setOpenDialog] = useState(false);
@@ -52,9 +54,12 @@ const RoomListing = () => {
     setRoomDialog(false);
   }
   useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      fetchData();
 
-
-    fetchData();
+    }, 1000); // 1 second delay
   }, []);
   const fetchData = async () => {
     try {
@@ -80,6 +85,7 @@ const RoomListing = () => {
   };
   const handleAccept = async () => {
     try {
+      setLoading(true);
       const token = localStorage.getItem("token");
 
       if (!token) {
@@ -96,10 +102,12 @@ const RoomListing = () => {
       const response = await axios.delete(`${apiUrl}/hotel/room/${selectItem?.id}`, config);
 
       toast.success(response.data.message)
+      setLoading(false);
       setOpenDialog(false)
       fetchData()
 
     } catch (error) {
+      setLoading(false);
       console.log(error.response?.data || error.message);
       toast.error('Room deletion failed')
     }

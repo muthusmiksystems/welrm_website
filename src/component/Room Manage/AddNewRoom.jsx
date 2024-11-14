@@ -126,6 +126,13 @@ function RoomDetails() {
 
     },
   });
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+
+    }, 1000); // 1 second delay
+  }, []);
   const roomPrice = watch('roomPrice')
   const selectedDiscount = watch('discount')
   const handleOther = () => {
@@ -526,7 +533,6 @@ function RoomDetails() {
 
                         // Find the name corresponding to the selected id
                         const selectedRoom = option.find((type) => type.name === otherroomvalue);
-                        console.log("selectedRoom", selectedRoom)
                         return selectedRoom ? selectedRoom.name : "";
                       }}
                     >

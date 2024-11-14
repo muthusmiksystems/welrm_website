@@ -70,6 +70,7 @@ export const newBookingList = () => (dispatch) => {
       // toast.success("New Bookings  fetched successfully!", {
       //   id: loadingToastId,
       // });
+      return ;
     })
     .catch((err) => {
       console.error(err);
@@ -92,47 +93,33 @@ export const newBookingList = () => (dispatch) => {
     });
 };
 
-export const acceptBooking = (data,setOpenDialog,status) => (dispatch) => {
-
-  // Display a loading toast
-  // const loadingToastId = toast.loading("Fetching bookings...");
+export const acceptBooking = (data, setOpenDialog, status) => (dispatch) => {
   const token = localStorage.getItem("token");
   const config = {
     headers: {
       "oauth-token": token, // Send the token with the oauth-token key
     },
   };
-  const payload={
+  const payload = {
     ...data,
-    status:status
-  }
-  axios
+    status: status,
+  };
+
+  // Return the axios promise so that it can be awaited or chained with `.then()`
+  return axios
     .put(`${apiUrl}/booking/confirm/${data.roomId}/${data.id}`, payload, config)
-    // Replace with your actual endpoint
     .then((res) => {
-
-      // Dispatch success action with booking data
-      dispatch(actions.getNewBookingLists(res.data)); // Make sure to define this action
-
-      // Update the loading toast to success
-      toast.success("Booking Confirmed Successfully");
-      setOpenDialog(false)
+      dispatch(actions.getNewBookingLists(res.data)); // Dispatch success action
+      toast.success(`Booking ${status} Successfully`);
+      setOpenDialog(false); // Close the dialog
       dispatch(newBookingList());
     })
     .catch((err) => {
       console.error(err);
-
-      // Dispatch failure action if an error occurs
+      setOpenDialog(false); // Close dialog on error
       if (err.response) {
-        setOpenDialog(false)
-        dispatch(actions.getBookingFailed(err.response.data.message)); // Make sure to define this action
-
-        // Update the loading toast to an error message
-        // toast.error(err.response.data.message || "Failed to fetch bookings!", {
-        //   id: loadingToastId,
-        // });
+        dispatch(actions.getBookingFailed(err.response.data.message)); // Dispatch failure action
       } else {
-        // If no response from server, show a generic error
         toast.error("Failed to fetch bookings! Please try again.");
       }
     })

@@ -41,3 +41,25 @@ const subscription = (payload,setFrom) => async (dispatch) => {
   }
 };
 export default subscription;
+
+export const getSubscription =(user,setData)=> async (dispatch) =>{
+  try{
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.log("No token, authorization denied.");
+      return;
+    }
+
+    const config = {
+      headers: {
+        "oauth-token": token,
+      },
+    };
+    const response = await axios.get(`${apiUrl}/user/getUserSubscription`, config);
+    setData(response?.data?.data)
+  }
+  catch(error){
+    console.error("Error in payment verification:", error);
+  }
+} 

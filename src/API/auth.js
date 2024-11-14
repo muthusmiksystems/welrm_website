@@ -33,6 +33,7 @@ export const LoginUser = (payload, navigate) => async (dispatch) => {
           },
         };
         const user = await axios.get(`${apiUrl}/owner/profile`, config);
+        dispatch(AuthDataStore(user.data.data))
         // localStorage.setItem("user", JSON.stringify(user.data.data));
         if (user?.data?.data?.subscriptionId === 0 || user.data.data.hasSubscribed === false) {
           // alert(1)

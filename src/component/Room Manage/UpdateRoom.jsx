@@ -43,11 +43,13 @@ import { TimePicker } from "@mui/x-date-pickers";
 import moment from "moment";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import CachedIcon from '@mui/icons-material/Cached';
-const propertyTypes = ["Hotel", "Guest House", "Resort", "Motel"];
+const propertyTypes = ["Deluxe Double Room", "Family Suit Room", "Superior King Room", "Standard Room"];
 const discount = ["10", "20", "30", "40", "50"];
 const maxImages = 10;
 const validationSchema = yup.object().shape({
-  roomName: yup.object().required("Room Name is required"),
+  roomName: yup
+    .string()
+    .required("Please select a valid room name"),
   roomDescription: yup.string().required("Room Description is required")
     .min(1, "At least 1 character must be available")
     .max(255, "Description only upto 255 characters allowed"),
@@ -87,10 +89,12 @@ const reorder = (list, startIndex, endIndex) => {
 };
 function UpdateRoom() {
   const { setLoading } = useLoader();
+  const [roomName, setroomName] = useState('')
   const location = useLocation()
   const navigate = useNavigate()
   const selectItem = location?.state?.selectItem
   const [images, setImages] = useState([]);
+  const [refund, setRefund] = useState('oneDay')
   const [uploadeimages, setUploadeimages] = useState([]);
   const [deleteimages, setDeleteimages] = useState([]);
   const hotelId = useSelector((state) => state?.HotelData?.hotelData?.data?.hotel?.id ? state?.HotelData?.hotelData?.data?.hotel?.id : state?.Auth?.user?.user?.hotel?.id);
@@ -110,6 +114,11 @@ function UpdateRoom() {
   const selectedDiscount = watch('discount')
   const handleOther = () => {
     setOtherRoomNameVisible(true)
+    setOtherroomvalue('')
+  }
+  const handleRoomselection = (data) => {
+    setOtherroomvalue(data)
+    handleOtherRoomNameSubmit(data)
   }
   useEffect(() => {
     if (roomPrice && selectedDiscount) {
@@ -125,9 +134,9 @@ function UpdateRoom() {
     // Reset form values with fetched data
     const parsedCheckInTime = dayjs(selectItem?.checkIn, "hh:mm:ss A");
 
-
+    console.log("selectItem",selectItem)
     reset({
-      roomName: selectItem?.roomType,
+      roomName: selectItem?.roomType?.name,
       discount: selectItem?.discount,
       guestCapacity: selectItem?.guestCapacity,
       checkIn: parsedCheckInTime.isValid() ? parsedCheckInTime : dayjs(),
@@ -135,22 +144,23 @@ function UpdateRoom() {
       availableRooms: selectItem?.totalNumOfRooms,
       startDate: dayjs(selectItem?.roomAvailabiltyStart),
       endDate: dayjs(selectItem?.roomAvailabiltyEnd),
-      ThreeDay: selectItem?.cancellationPolicy === "3 day",
+      // ThreeDay: selectItem?.cancellationPolicy === "3 day",
       breakfastAvailable: selectItem?.breakfast_available,
       breakfastPrice: selectItem?.breakfast_price,
       roomPrice: selectItem?.hourPrice,
       roomDescription: selectItem?.roomDescription,
-      oneDay: selectItem?.cancellationPolicy === "1 day",
+      // oneDay: selectItem?.cancellationPolicy === "1 day",
       breakFastPrice: selectItem?.breakfast_available == 1 ? selectItem?.breakfast_price : 0
 
     });
+    setRefund(selectItem?.cancellationPolicy)
     setSelectedOption(selectItem?.breakfast_available == 1 ? "breakfastOn" : "breakfastOff")
     const coverImage = selectItem?.images.find(image => image.type === 'cover');
     const otherImages = selectItem?.images.filter(image => image.type !== 'cover');
-
+    setroomName(selectItem?.roomType?.id)
     // Reassemble the array with the cover image at the start, followed by the other images
     const updatedImages = coverImage ? [coverImage, ...otherImages] : otherImages;
-
+    setOtherroomvalue(selectItem?.roomType?.name)
     setImages(updatedImages);
     // Extract the image URLs
     // setSelectedAmenities(selectItem?.roomComplementarities)
@@ -166,7 +176,28 @@ function UpdateRoom() {
   const handleroomtypeselect = (data) => {
     // setRoomTypeData()
   }
-  const handleOtherRoomNameSubmit = async () => {
+  const getSelectedAmenitiesLength = () => {
+    let count = 0;
+
+    // Loop through each category in the object
+    for (const category in selectedAmenities) {
+      // Loop through each amenity in the category
+      for (const amenity in selectedAmenities[category]) {
+        // Check if the amenity is selected (true)
+        if (selectedAmenities[category][amenity]) {
+          count++;
+        }
+      }
+    }
+
+    return count;
+  };
+  const handleOtherRoomNameSubmit = async (data) => {
+    if (otherroomvalue === '') {
+      toast.error("Please enter room name")
+      return;
+    }
+    console.log('data', data)
     const token = localStorage.getItem("token");
     if (!token) {
       toast.error("Authentication token not found. Please log in again.");
@@ -300,7 +331,10 @@ function UpdateRoom() {
       toast.error('Please select  amenity');
       isValid = false;
     }
-
+    else if (!validateSelection()) {
+      toast.error('Please select only up to 5 amenities');
+      isValid = false; // Make sure isValid is set to false
+    }
     // Validate images
     if (images.length === 0) {
       toast.error('Please upload at least one image');
@@ -372,7 +406,7 @@ function UpdateRoom() {
         const payload = {
           // rooms: [{
           hotelId: hotelId,
-          roomTypeId: parseInt(data?.roomName?.id), // Assuming this is an integer ID
+          roomTypeId: parseInt(roomName), // Assuming this is an integer ID
           discount: parseFloat(data.discount),
           applyDiscount: 0, // This might be a boolean flag; adjust accordingly
           guestCapacity: parseInt(data.guestCapacity),
@@ -382,7 +416,7 @@ function UpdateRoom() {
           roomDescription: data.roomDescription,
           roomAvailabiltyStart: data.startDate, // Ensure these are formatted correctly (e.g., "YYYY-MM-DD")
           roomAvailabiltyEnd: data.endDate,
-          cancellationPolicy: data.ThreeDay ? '3 day' : data.oneDay ? '1 day' : '', // You might want to collect this data from your form
+          cancellationPolicy: refund,  // You might want to collect this data from your form
           breakfast_available: selectedOption ==='breakfastOn' ? true : false, // Adjust if you have a form input for this
           breakfast_price:selectedOption ==='breakfastOn'? parseFloat(data.breakFastPrice) : 0, // Adjust if needed
           rates: [
@@ -534,20 +568,42 @@ function UpdateRoom() {
                       {...register("roomName")}
                       error={!!errors.roomName}
                       displayEmpty
-                      defaultValue={selectItem?.roomType}
+                      onChange={(event) => {
+                        const selectedRoom = option.find((type) => type.id === event.target.value);
+                        setroomName(selectedRoom ? selectedRoom.id : ""); // Set the roomName to the id
+                      }}
+                      defaultValue={selectItem?.roomType?.name}
                       renderValue={(selected) => {
                         if (!selected) {
                           return <Typography sx={{ color: "#9CA3AF", fontSize: { xs: "12px", sm: "14px", md: "16px" }, }}>Choose your room name</Typography>;
                         }
-                        return selected.name;
+                        const selectedRoom = option.find((type) => type.name === otherroomvalue);
+                        return selectedRoom ? selectedRoom.name : "";;
                       }}
 
                     >
-                      {option.map((type, index) => (
-                        <MenuItem key={type} value={type} sx={{ color: "#000", }} >
+                     {option?.map((type, index) => (
+                        <MenuItem key={type.id} value={type.id} sx={{ color: "#000" }} onClick={() => setOtherroomvalue(type.name)}>
                           {type.name}
                         </MenuItem>
                       ))}
+                      {propertyTypes.map((type, index) => {
+                        const data = option?.every((item) => item.name !== type);
+
+                        if (data) {
+                          return (
+                            <MenuItem
+                              key={index}
+                              value={type}
+                              sx={{ color: "#000" }}
+                              onClick={() => handleRoomselection(type)}
+                            >
+                              {type}
+                            </MenuItem>
+                          );
+                        }
+                        return null;
+                      })}
                       <MenuItem value="" onClick={handleOther}>
                         <em>Other</em>
                       </MenuItem>
@@ -842,7 +898,7 @@ function UpdateRoom() {
                                 },
                               }}
                               placeholder="₹ Add Rate"
-                              defaultValue={1}
+                              defaultValue={0}
                               {...register("roomPrice")}
                               error={!!errors.roomPrice}
                               helperText={errors.roomPrice?.message}
@@ -995,64 +1051,43 @@ function UpdateRoom() {
                         Please select the start & end dates{" "}
                       </Typography>
                     </Box>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        justifyContent: "space-around",
-                        alignItems: "center",
-                        gap: 1,
-                        flexDirection: { xs: "column", sm: "row" },
-                        marginTop: "20px",
-                      }}
-                    >
+                    <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-start", gap: 2 }}>
                       {/* Start Date Box */}
-                      <Box
-                        sx={{
-                          flex: 1,
-                          flexBasis: { xs: "100%", sm: "45%" }, // Set basis for responsiveness
-                          maxWidth: { xs: "100%", sm: "200px" }, // Optional: control max width
-                        }}
-                      >
-                        <Typography
-                          sx={{ fontSize: { xs: "12px", sm: "14px", md: "16px" }, fontWeight: "500" }}
-                        >
-                          Start Date *
-                        </Typography>
-                        <LocalizationProvider dateAdapter={AdapterDayjs} >
+                      <Box sx={{ flex: 1, flexBasis: { xs: "100%", sm: "45%" }, maxWidth: { xs: "100%", sm: "400px" } }}>
+                        <Typography sx={{ fontSize: { xs: "12px", sm: "14px", md: "16px" }, fontWeight: "500" }}>Start Date *</Typography>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]} sx={{ width: "100%" }}>
                             <Controller
                               name="startDate"
                               control={control}
                               defaultValue={dayjs()}
                               render={({ field }) => (
-                                <DatePicker
-                                  {...field}
-                                  minDate={dayjs()}
-                                  renderInput={(params) => <TextField {...params} fullWidth />}
-                                />
+                                <Box>
+                                  <DatePicker
+                                    {...field}
+                                    minDate={dayjs()}
+                                    renderInput={(params) => (
+                                      <TextField
+                                        {...params}
+                                        variant="outlined"
+                                        fullWidth
+                                        error={!!errors.startDate}
+                                      />
+                                    )}
+                                  />
+                                  <Typography color="error" variant="body2" sx={{ marginTop: "5px" }}>
+                                    {errors.startDate?.message}
+                                  </Typography>
+                                </Box>
                               )}
                             />
-                            <Typography color="error" variant="body2" sx={{ marginTop: "5px" }}>
-                              {errors.startDate?.message}
-                            </Typography>
                           </DemoContainer>
                         </LocalizationProvider>
                       </Box>
 
                       {/* End Date Box */}
-                      <Box
-                        sx={{
-                          flex: 1,
-                          flexBasis: { xs: "100%", sm: "45%" }, // Set basis for responsiveness
-                          maxWidth: { xs: "100%", sm: "200px" }, // Optional: control max width
-                        }}
-                      >
-                        <Typography
-                          sx={{ fontSize: { xs: "12px", sm: "14px", md: "16px" }, fontWeight: "500" }}
-                        >
-                          End Date *
-                        </Typography>
+                      <Box sx={{ flex: 1, flexBasis: { xs: "100%", sm: "45%" }, maxWidth: { xs: "100%", sm: "400px" } }}>
+                        <Typography sx={{ fontSize: { xs: "12px", sm: "14px", md: "16px" }, fontWeight: "500" }}>End Date *</Typography>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["DatePicker"]} sx={{ width: "100%" }}>
                             <Controller
@@ -1060,65 +1095,62 @@ function UpdateRoom() {
                               control={control}
                               defaultValue={watch("startDate") ? dayjs(watch("startDate")).add(1, 'day') : dayjs()}
                               render={({ field }) => (
-                                <DatePicker
-                                  {...field}
-                                  minDate={watch("startDate") ? dayjs(watch("startDate")).add(1, 'day') : dayjs()}
-                                  renderInput={(params) => <TextField {...params} fullWidth />}
-                                />
+                                <Box>
+                                  <DatePicker
+                                    {...field}
+                                    minDate={watch("startDate") ? dayjs(watch("startDate")).add(1, 'day') : dayjs()}
+                                    renderInput={(params) => (
+                                      <TextField
+                                        {...params}
+                                        fullWidth
+                                        error={!!errors.endDate}
+                                      />
+                                    )}
+                                  />
+                                  <Typography color="error" variant="body2" sx={{ marginTop: "5px" }}>
+                                    {errors.endDate?.message}
+                                  </Typography>
+                                </Box>
                               )}
                             />
-                            <Typography color="error" variant="body2" sx={{ marginTop: "5px" }}>
-                              {errors.endDate?.message}
-                            </Typography>
                           </DemoContainer>
                         </LocalizationProvider>
                       </Box>
-                      <Box
-                        sx={{
-                          flex: 1,
-                          flexBasis: { xs: "100%", sm: "20%" }, // Set basis for responsiveness
-                          maxWidth: { xs: "100%", sm: "200px" }, // Optional: control max width
-                        }}
-                      >
-                        <Typography
-                          sx={{ fontSize: { xs: "12px", sm: "14px", md: "16px" }, fontWeight: "500" }}
-                        >
-                          Check-In *
-                        </Typography>
-                        <LocalizationProvider dateAdapter={AdapterDayjs} >
+
+                      {/* Check-In */}
+                      <Box sx={{ flex: 1, flexBasis: { xs: "100%", sm: "45%" }, maxWidth: { xs: "100%", sm: "400px" } }}>
+                        <Typography sx={{ fontSize: { xs: "12px", sm: "14px", md: "16px" }, fontWeight: "500" }}>Check-In *</Typography>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["TimePicker"]} sx={{ width: "100%" }}>
                             <Controller
                               name="checkIn"
                               control={control}
                               defaultValue={dayjs(selectItem?.checkIn, "hh:mm:ss A").isValid() ? dayjs(selectItem?.checkIn, "hh:mm:ss A") : dayjs()}
                               render={({ field }) => (
-                                <TimePicker
-                                  {...field}
-                                  // label="Check-in Time"
-                                  renderInput={(params) => <TextField {...params} error={!!errors.checkIn} helperText={errors.checkIn?.message} />}
-                                />
+                                <Box>
+                                  <TimePicker
+                                    {...field}
+                                    value={moment("12:00 AM", "hh:mm A")}
+                                    renderInput={(params) => (
+                                      <TextField
+                                        {...params}
+                                        error={!!errors.checkIn}
+                                      />
+                                    )}
+                                  />
+                                  <Typography color="error" variant="body2" sx={{ marginTop: "5px" }}>
+                                    {errors.checkIn?.message}
+                                  </Typography>
+                                </Box>
                               )}
                             />
-                            <Typography color="error" variant="body2" sx={{ marginTop: "5px" }}>
-                              {errors.checkIn?.message}
-                            </Typography>
                           </DemoContainer>
                         </LocalizationProvider>
                       </Box>
 
-                      {/* End Date Box */}
-                      <Box
-                        sx={{
-                          flex: 1,
-                          flexBasis: { xs: "100%", sm: "45%" }, // Set basis for responsiveness
-                          maxWidth: { xs: "100%", sm: "200px" }, // Optional: control max width
-                        }}
-                      >
-                        <Typography
-                          sx={{ fontSize: { xs: "12px", sm: "14px", md: "16px" }, fontWeight: "500" }}
-                        >
-                          Check-Out *
-                        </Typography>
+                      {/* Check-Out */}
+                      <Box sx={{ flex: 1, flexBasis: { xs: "100%", sm: "45%" }, maxWidth: { xs: "100%", sm: "400px" } }}>
+                        <Typography sx={{ fontSize: { xs: "12px", sm: "14px", md: "16px" }, fontWeight: "500" }}>Check-Out *</Typography>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DemoContainer components={["TimePicker"]} sx={{ width: "100%" }}>
                             <Controller
@@ -1126,16 +1158,22 @@ function UpdateRoom() {
                               control={control}
                               defaultValue={dayjs(selectItem?.checkOut, "hh:mm:ss A").isValid() ? dayjs(selectItem?.checkOut, "hh:mm:ss A") : dayjs()}
                               render={({ field }) => (
-                                <TimePicker
-                                  {...field}
-                                  // label="Check-out Time"
-                                  renderInput={(params) => <TextField {...params} error={!!errors.checkOut} helperText={errors.checkOut?.message} />}
-                                />
+                                <Box>
+                                  <TimePicker
+                                    {...field}
+                                    renderInput={(params) => (
+                                      <TextField
+                                        {...params}
+                                        error={!!errors.checkOut}
+                                      />
+                                    )}
+                                  />
+                                  <Typography color="error" variant="body2" sx={{ marginTop: "5px" }}>
+                                    {errors.checkOut?.message}
+                                  </Typography>
+                                </Box>
                               )}
                             />
-                            <Typography color="error" variant="body2" sx={{ marginTop: "5px" }}>
-                              {errors.checkOut?.message}
-                            </Typography>
                           </DemoContainer>
                         </LocalizationProvider>
                       </Box>
@@ -1280,7 +1318,7 @@ function UpdateRoom() {
                               alignItems: "center",
                             }}>
                             <Box className="refund_input">
-                              <TextField type="checkbox"    {...register("oneDay")} />
+                              <input type="checkbox"  onClick={() => setRefund('oneDay')} checked={refund === 'oneDay' ? true : false} {...register("oneDay")} />
                             </Box>
                             <Typography
                               sx={{
@@ -1318,7 +1356,7 @@ function UpdateRoom() {
                               alignItems: "center",
                             }}>
                             <Box className="refund2_input">
-                              <TextField type="checkbox"  {...register("ThreeDay")} />
+                              <input type="checkbox" onClick={() => setRefund('ThreeDay')} checked={refund === 'ThreeDay' ? true : false} {...register("ThreeDay")} />
                             </Box>
                             <Typography
                               sx={{
@@ -1546,6 +1584,9 @@ function UpdateRoom() {
                           <Typography sx={{ fontSize: { xs: "18px", sm: "20px", md: "22px" }, fontWeight: "500" }}>
                             Include Amenities
                           </Typography>
+                          <Typography sx={{ marginLeft: 1, fontSize: { xs: "16px", sm: "18px", md: "20px" } }}>
+                            {getSelectedAmenitiesLength() > 0 && `(${getSelectedAmenitiesLength()})`}
+                          </Typography>
                         </Button>
 
                         {/* Buttons */}
@@ -1640,7 +1681,7 @@ function UpdateRoom() {
                 <Button variant="outlined"
                   color="secondary" onClick={() => setOpen(false)} sx={{ fontWeight: '500' }}>Cancel</Button>
                 <Button onClick={handleSubmitamenities} variant="contained" sx={{ bgcolor: '#C42A25', color: '#FFFFFF' }}>
-                  {Object.values(selectedAmenities).flat().length} Add Amenities
+                {getSelectedAmenitiesLength() > 0 && `(${getSelectedAmenitiesLength()})`} Add Amenities
                 </Button>
               </DialogActions>
             </Dialog>

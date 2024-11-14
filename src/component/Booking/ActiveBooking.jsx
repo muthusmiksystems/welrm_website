@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Dialog,
   DialogActions,
@@ -23,10 +23,12 @@ import dayjs from "dayjs";
 import toast from "react-hot-toast";
 import { acceptBooking } from "../../API/Booking";
 import { useDispatch } from "react-redux";
-
+import { useLoader } from "../../Reducers/LoaderProvider";
 
 const ActiveBooking = () => {
+  const { setLoading } = useLoader();
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const [checkin_datenew, setcheckin_datenew] = useState();
   const [checkout_datenew, setcheckout_datenew] = useState();
   const [openDialog, setOpenDialog] = useState(false);
@@ -34,24 +36,28 @@ const ActiveBooking = () => {
   const [data, setData] = useState(null);
   const [bookingDetails, setBookingDetails] = useState({});
   const [cancellationReason, setCancellationReason] = useState(""); // State for cancellation reason
-  const [confirmOpen, setConfirmOpen] = useState(false)
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+
   const { control, handleSubmit, reset } = useForm(); // Set up useForm
   const handleClickOpen = (item) => {
     setBookingDetails(item);
-    reset({ // Reset form with current booking detail 
+    reset({
       fullName: item.user.fullName,
       roomName: item.roomDetail.roomType.name,
       checkinTime: item.checkinTime ? item.checkinTime.trim() : "00:00",
       mobile: item.user.mobile,
-      confirmation_code:item.confirmation_code=== null ? 0 : item.confirmation_code,
+      confirmation_code: item.confirmation_code === null ? 0 : item.confirmation_code,
       total_guest: item.total_guest === null ? 0 : item.total_guest,
       roomQuantity: item.roomQuantity,
       roomPrice: item.roomPrice,
       numberOfDays: item.numberOfDays,
-      checkin_date: moment(item.checkin_date, 'MM/DD/YYYY'),
-      checkout_date: moment(item.checkout_date, 'MM/DD/YYYYY'),
+      checkin_date: dayjs(item.bookingFromDate, 'YYYY-MM-DD'), // Changed to dayjs
+      checkout_date: dayjs(item.bookingToDate, 'YYYY-MM-DD'), // Changed to dayjs
       status: item.status,
     });
+    setcheckin_datenew(dayjs(item.bookingFromDate, 'YYYY-MM-DD').toDate());
+    setcheckout_datenew(dayjs(item.bookingToDate, 'YYYY-MM-DD').toDate());
     setOpenDialog(true);
   };
 
@@ -69,6 +75,14 @@ const ActiveBooking = () => {
   }
   const handleConfirmClose = () => {
     setConfirmOpen(false)
+    setCheckoutOpen(false)
+  }
+  const handleCheckoutOpen = (item) => {
+    setCheckoutOpen(true)
+    setBookingDetails(item);
+  }
+  const handleCheckoutClose = () => {
+    setCheckoutOpen(false)
   }
   const handleCancelClose = () => {
     setCancelDialog(false);
@@ -76,6 +90,7 @@ const ActiveBooking = () => {
   const onSubmit = async (data) => {
 
     try {
+      setLoading(true);
       const token = localStorage.getItem("token");
       const hotel = JSON.parse(localStorage.getItem("user"));
       if (!token) return;
@@ -86,21 +101,21 @@ const ActiveBooking = () => {
         },
       };
       // Ensure checkin_datenew and checkout_datenew are formatted as 'YYYY-MM-DD' strings
-      const formattedCheckinDate = moment(checkin_datenew, 'MM/DD/YYYY');
-      const formattedCheckoutDate = moment(checkout_datenew, 'MM/DD/YYYY');
-
+      const formattedCheckinDate = dayjs(checkin_datenew).format('YYYY-MM-DD');
+      const formattedCheckoutDate = dayjs(checkout_datenew).format('YYYY-MM-DD');
+      console.log("data--", data)
       // Ensure bookingIds is an array even if it's a single value
       const bookingIdArray = Array.isArray(bookingDetails?.id) ? bookingDetails.id : [bookingDetails?.id];
       // Construct the payload
       const payload = {
         "bookingIds": bookingDetails.id,
-        "old_checkin_date": moment(bookingDetails?.checkin_date, 'MM/DD/YYYY'),
-        "old_checkout_date": moment(bookingDetails?.checkout_date, 'MM/DD/YYYY'),
+        "old_checkin_date": dayjs(bookingDetails?.bookingFromDate).format('YYYY-MM-DD'),
+        "old_checkout_date": dayjs(bookingDetails?.bookingToDate).format('YYYY-MM-DD'),
         "checkin_date": formattedCheckinDate,
         "checkout_date": formattedCheckoutDate,
-        "confirmation_code":bookingDetails?.confirmation_code,
-        "total_guest":bookingDetails?.total_guest,
-        "roomQuantity":bookingDetails?.roomQuantity
+        "confirmation_code": data?.confirmation_code,
+        "total_guest": data?.total_guest,
+        "roomQuantity": data?.roomQuantity
       };
       console.log("formattedCheckoutDate", formattedCheckoutDate)
       console.log("bookingDetails.checkout_date", bookingDetails.checkout_date)
@@ -116,17 +131,46 @@ const ActiveBooking = () => {
         toast.error(response.data.message || 'Updated failed')
         console.error("Failed to update booking:", response.data.message);
       }
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       toast.error(error || 'Updated failed')
       console.error("Error updating booking:", error);
     }
   };
-  const handleAccept = () => {
-    const status = "confirmed"
-    dispatch(acceptBooking(bookingDetails, setConfirmOpen, status))
-    setConfirmOpen(false);
-    fetchData()
-  }
+  const handleAccept = async () => {
+    try {
+      setLoading(true);
+      const status = "confirmed";
+      await dispatch(acceptBooking(bookingDetails, setConfirmOpen, status)); // Wait for the booking to be confirmed
+      setLoading(false);
+      fetchData(); // Call fetchData after confirmation
+
+    } catch (error) {
+      setLoading(false);
+      console.error("Error confirming booking:", error);
+    } finally {
+      setLoading(false);
+      setConfirmOpen(false); // Close confirmation dialog
+    }
+  };
+
+  const handleCheckout = async () => {
+    try {
+      setLoading(true);
+      const status = "checkout";
+      await dispatch(acceptBooking(bookingDetails, setCheckoutOpen, status)); // Wait for the booking to be confirmed
+      setLoading(false);
+      fetchData(); // Call fetchData after checkout
+
+    } catch (error) {
+      setLoading(false);
+      console.error("Error checkout:", error);
+    } finally {
+      setLoading(false);
+      setCheckoutOpen(false); // Close confirmation dialog
+    }
+  };
   // const onCancelSubmit = async () => {
   //   try {
   //     const token = localStorage.getItem("token");
@@ -152,6 +196,7 @@ const ActiveBooking = () => {
 
   const onCancelSubmit = async () => {
     try {
+      setLoading(true);
       const token = localStorage.getItem("token");
       const hotel = JSON.parse(localStorage.getItem("user"));
       if (!token || !bookingDetails?.id || !bookingDetails?.roomDetail?.id) return;
@@ -163,27 +208,39 @@ const ActiveBooking = () => {
         { cancelation_reason: cancellationReason },
         config);
       setCancellationReason('')
+      setLoading(false);
       if (response.data.success) {
         handleCancelClose();
         toast.success(response.data.message)
-        fetchData();
+        // fetchData();
+        navigate('/dashboard/BookingHistory')
       } else {
         console.error("Failed to cancel booking:", response.data.message);
         toast.error(response.data.message)
       }
+
     } catch (error) {
+      setLoading(false);
+
       toast.error(error)
       console.error("Error canceling booking:", error);
     }
   };
 
   useEffect(() => {
-    fetchData();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      fetchData();
+
+    }, 1000); // 1 second delay
   }, []);
 
   // Fetch data from the API
   const fetchData = async () => {
     try {
+      setLoading(true);
+
       const token = localStorage.getItem("token");
       const hotel = JSON.parse(localStorage.getItem("user"));
       if (!token) return;
@@ -196,15 +253,19 @@ const ActiveBooking = () => {
 
       const response = await axios.get(`${apiUrl}/hotel/active-book/${hotel.hotel.id}`, config);
       console.log('data', response.data)
+      setLoading(false);
+
       setData(response.data);
     } catch (error) {
+      setLoading(false);
+
       console.error(error.response?.data || error.message);
     }
   };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "20px" }}>
-      {data?.data?.bookingsDetails ? (
+      {data?.data?.bookingsDetails?.length > 0 ? (
         data.data.bookingsDetails.map((item, index) => (
           item?.status === "active" || item?.status === "confirmed" ? (
             <Box key={index} sx={{ margin: "30px 0px", backgroundColor: "white", width: "100%", borderRadius: "10px" }}>
@@ -241,7 +302,7 @@ const ActiveBooking = () => {
                 </Box>
               </Box>
 
-              <Box gap={4} sx={{ display: {xs:"block",sm:"block",md:"flex",lg:"flex"}, padding: "20px 0px 20px 30px" }}>
+              <Box gap={4} sx={{ display: { xs: "block", sm: "block", md: "flex", lg: "flex" }, padding: "20px 0px 20px 30px" }}>
                 <Box sx={{ margin: "10px", marginTop: "0px !important", borderRight: '1px solid #EEE', padding: '0px 20px 0px 0px', width: { xs: "100%", sm: "100%", md: "30%", lg: "30%" } }}>
                   <Box>
                     <Typography sx={{ fontSize: "18px", fontWeight: "500", color: "#4B5563", marginBottom: "15px" }}>Basic details:</Typography>
@@ -456,7 +517,7 @@ const ActiveBooking = () => {
                       Cancel
                     </Button>
                     <Button
-                      onClick={() => item?.status === "active" ? handleConfirmOpen(item) : null}
+                      onClick={() => item?.status === "active" ? handleConfirmOpen(item) : item?.status === "confirmed" ? handleCheckoutOpen(item) : null}
                       sx={{
                         bgcolor: "#CBD5E1",
                         color: "#4B5563",
@@ -475,7 +536,7 @@ const ActiveBooking = () => {
           ) : (<h1 className="p-5 text-center font-bold">No Bookings are available</h1>)
         ))
       ) : (
-        <p>Loading...</p>
+        <h1 className="p-5 text-center font-bold">No Bookings are available</h1>
       )}
 
       <Dialog open={openDialog} onClose={handleClose} fullWidth maxWidth="md">
@@ -679,6 +740,36 @@ const ActiveBooking = () => {
           {/* </Link> */}
         </DialogActions>
       </Dialog>
+
+      <Dialog
+        open={checkoutOpen}
+        onClose={handleCheckoutClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">
+          {"Confirm Checkout"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to proceed with the checkout? Once confirmed, the booking will be finalized, and a notification will be sent to the guest with all relevant details. Please review all information carefully before proceeding.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCheckoutClose} color="secondary">
+            Cancel
+          </Button>
+          {/* <Link to="/dashboard/ActiveBooking"> */}
+          <Button
+            onClick={() => handleCheckout()}
+            color="primary"
+            autoFocus>
+            Confirm
+          </Button>
+          {/* </Link> */}
+        </DialogActions>
+      </Dialog>
+
+
       <Dialog open={cancelDialog} onClose={handleCancelClose} fullWidth>
         <DialogTitle>
           <Typography variant="h6">Cancel Booking</Typography>

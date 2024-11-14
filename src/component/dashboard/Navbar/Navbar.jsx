@@ -23,17 +23,18 @@ const settings = ['Logout'];
 
 const Navbar = ({ toggleSidebar, isSidebarOpen }) => {
   const bookingId = useSelector((state) => state?.Booking?.booking?.data?.hotels?.rows || []);
+  useEffect(() => {
+    const pendingCount = bookingId.filter(item => item.status === "pending").length;
+    setNotificationCount(pendingCount); // Update notification count
+  }, [bookingId]);
 
-  const pendingCount = bookingId.filter(item => item.status === "pending").length;
-
-  console.log("Pending Count:", pendingCount);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [process, setProcess] = useState(false);
   const { activeTab } = useContext(TabContext);
-  const [notificationCount, setNotificationCount] = useState(pendingCount); // Dynamic notification count
+  const [notificationCount, setNotificationCount] = useState(0); // Dynamic notification count
   const [anchorElUser, setAnchorElUser] = useState(null); // State for menu anchor
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768); // State for mobile view
   const user = useSelector((state) => state.Auth);

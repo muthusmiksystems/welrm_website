@@ -130,7 +130,7 @@ const BasicInfo = ({ setFrom }) => {
     control,
     handleSubmit,
     formState: { errors },
-    setValue, clearErrors
+    setValue, clearErrors,
   } = useForm({
     resolver: yupResolver(schema),
   });

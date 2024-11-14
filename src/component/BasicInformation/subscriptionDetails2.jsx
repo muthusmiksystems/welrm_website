@@ -238,7 +238,7 @@ function SubscriptionDetails2({ setFrom }) {
                         color: "#C42A25",
                       }}
                     >
-                      {data?.subscriptionStartedDate ? moment(data?.data?.subscriptionStartedDate).format("DD/MM/YYYY") :moment( new Date(new Date().setMonth(new Date().getMonth() + 1)).toLocaleDateString()).format("DD/MM/YYYY")}
+                      {data?.subscriptionEndDate ? moment(data?.subscriptionEndDate).format("DD/MM/YYYY") :moment( new Date(new Date().setMonth(new Date().getMonth() + 1)).toLocaleDateString()).format("DD/MM/YYYY")}
                     </Typography>
                   </Box>
 

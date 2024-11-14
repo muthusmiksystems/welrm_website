@@ -122,8 +122,8 @@ function SubscriptionDetails({ setFrom }) {
       currency: CONSTANT.currency,
       name: CONSTANT.appName,
       description: hoteldata?.hotelName,
-      // order_id: orderid,
-      orderid: orderid,
+      // order_id: orderid,       // local
+      orderid: orderid,    // site
       image: CONSTANT.logoUrl,
       handler: function (response) {
         const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;

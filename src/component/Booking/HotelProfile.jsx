@@ -32,6 +32,7 @@ import QrScanner from "qr-scanner";
 import { useLoader } from "../../Reducers/LoaderProvider";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useNavigate } from "react-router-dom";
+import { AuthDataStore } from "../../API/auth";
 
 const propertyTypes = ["Choose your property type", "Hotel", "Guest House", "Resort", "Motel"];
 const hotelRates = ["3 star", "1 star", "2 star", "4 star", "5 star"];
@@ -332,8 +333,13 @@ const HotelProfile = () => {
         }
     }
     useEffect(() => {
+        setLoading(true);
 
-        getMainData();
+        setTimeout(() => {
+            setLoading(false);
+            getMainData();
+
+        }, 1000); // 1 second delay
 
     }, [reset]);
 
@@ -406,6 +412,8 @@ const HotelProfile = () => {
             // Log the API response
             getMainData();
             setLoading(false);
+            const user = await axios.get(`${apiUrl}/owner/profile`, config);
+            dispatch(AuthDataStore(user.data.data))
             // Show success toast notification
             toast.success("Hotel information submitted successfully!");
 

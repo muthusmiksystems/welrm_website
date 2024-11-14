@@ -18,8 +18,10 @@ import { Badge } from "@mui/material";
 import { useSelector } from "react-redux";
 const Sidebar = ({ toggleSidebar }) => {
   const bookingId = useSelector((state) => state?.Booking?.booking?.data?.hotels?.rows || []);
-  const pendingCount = bookingId.filter(item => item.status === "pending").length;
-  console.log("Pending Count:", pendingCount);
+  useEffect(() => {
+    const pendingCount = bookingId.filter(item => item.status === "pending").length;
+    setNotificationCount(pendingCount); // Update notification count
+  }, [bookingId]);
   const { setActiveTab } = useContext(TabContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,7 +36,7 @@ const Sidebar = ({ toggleSidebar }) => {
   const [isSupportOpen, setSupportOpen] = useState(false);
   const [isAbove768, setIsAbove768] = useState(window.innerWidth > 768);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
-  const [notificationCount, setNotificationCount] = useState(pendingCount); // Dynamic notification count
+  const [notificationCount, setNotificationCount] = useState(0); // Dynamic notification count
 
   const activeStyle = {
     backgroundColor: '#FFF1E7',
@@ -231,7 +233,7 @@ const Sidebar = ({ toggleSidebar }) => {
             <ul className="sub-menu">
               <li onClick={() => setActiveSubMenu("HotelProfile")}>
                 <Link to="/dashboard/HotelProfile" style={{ textDecoration: "none" }} onClick={() => handlesubmenu('HotelProfile')}>
-                  <span className={activeSubMenu === "HotelProfile" ? 'active' : ''}> -- HotelProfile</span>
+                  <span className={activeSubMenu === "HotelProfile" ? 'active' : ''}> -- Hotel Profile</span>
                 </Link>
               </li>
               {/* <li onClick={() => setActiveSubMenu("NewBookingRequests")}>
@@ -243,14 +245,15 @@ const Sidebar = ({ toggleSidebar }) => {
                 <Link to="/dashboard/NewBooking" style={{ textDecoration: "none" }} onClick={() => handlesubmenu('New Booking Requests')}>
                   <span className={activeSubMenu === "NewBookingRequests" ? 'active' : ''}>
                     -- New Booking Requests
-                    {notificationCount > 0 && (
+                    {notificationCount >= 0 && (
                       <Badge
                         badgeContent={notificationCount}
                         color="error"
                         sx={{
                           paddingLeft: '2px',
+                          color: 'white',
                           '& .MuiBadge-badge': {
-                            color: 'white', 
+                            color: 'white',
                           },
                         }}
                       ></Badge>
@@ -326,29 +329,18 @@ const Sidebar = ({ toggleSidebar }) => {
           )}
 
           {/* Subscription Section */}
-          <li
-            onClick={() => toggleSection("subscription")}
-            style={isSubscriptionOpen ? activeStyle : {}}
-          >
-            <InsertChartIcon style={isSubscriptionOpen ? activeStyle : {}} />
-            <span style={isSubscriptionOpen ? activeStyle : {}}>Subscription</span>
-            {!isSubscriptionOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </li>
-          {isSubscriptionOpen && (
-            <ul className="sub-menu">
-              <li onClick={() => setActiveSubMenu("todaysub")}>
-                <Link to="/dashboard/BookingAlert" style={{ textDecoration: "none" }} onClick={() => handlesubmenu('Today')}>
-                  <span className={activeSubMenu === "todaysub" ? 'active' : ''}> -- Today</span>
-                </Link>
-              </li>
-              <li onClick={() => setActiveSubMenu("Yesterdaysub")}>
-                <Link to="/dashboard/GuestMessage" style={{ textDecoration: "none" }} onClick={() => handlesubmenu('Yesterday')}>
-                  <span className={activeSubMenu === "Yesterdaysub" ? 'active' : ''}> -- Yesterday</span>
-                </Link>
-              </li>
-            </ul>
-          )}
+          <Link to="/dashboard/subscription" style={{ textDecoration: "none" }} onClick={() => handlesubmenu('Guest Messages')}>
+            <li
+              onClick={() => toggleSection("subscription")}
+              style={isSubscriptionOpen ? activeStyle : {}}
+            >
 
+              <InsertChartIcon style={isSubscriptionOpen ? activeStyle : {}} />
+              <span style={isSubscriptionOpen ? activeStyle : {}}>Subscription</span>
+              {!isSubscriptionOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+
+            </li>
+          </Link>
           {/* Setting Section */}
           <li
             onClick={() => toggleSection("setting")}
