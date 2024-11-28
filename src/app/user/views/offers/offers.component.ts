@@ -1,36 +1,37 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { Carousel } from 'primeng/carousel';
-
+import {IMAGES} from '../../../shared/constants/images.constant';
 @Component({
   selector: 'app-offers',
   templateUrl: './offers.component.html',
   styleUrls: ['./offers.component.scss']
 })
 export class OffersComponent implements OnInit {
+  public images=IMAGES;
   our_deals = [
     {
-      image: 'assets/imgs/aboutus1.jpeg',
+      image: this.images.ABOUTUS1,
       title: 'Limited-Time Hotel Deals!',
       desc: 'Save on your stay with our exclusive offers. Book now and enjoy premium accommodations at unbeatable prices. Hurry......',
     },
     {
-      image: 'assets/imgs/aboutus3.jpeg',
+      image: this.images.ABOUTUS3,
       title: 'Limited-Time Hotel Deals!',
       desc: 'Enjoy up to 50% off select hotels! Limited-time discounts available - book now!',
     },
     {
-      image: 'assets/imgs/aboutus1.jpeg',
+      image: this.images.ABOUTUS1,
       title: 'Limited-Time Hotel Deals!',
       desc: 'Save on your stay with our exclusive offers. Book now and enjoy premium accommodations at unbeatable prices. Hurry......',
     },
     {
-      image: 'assets/imgs/aboutus3.jpeg',
+      image: this.images.ABOUTUS3,
       title: 'Limited-Time Hotel Deals!',
       desc: 'Enjoy up to 50% off select hotels! Limited-time discounts available - book now!',
     },
     {
-      image: 'assets/imgs/aboutus1.jpeg',
+      image: this.images.ABOUTUS1,
       title: 'Limited-Time Hotel Deals!',
       desc: 'Save on your stay with our exclusive offers. Book now and enjoy premium accommodations at unbeatable prices. Hurry......',
     },

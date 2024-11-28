@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BlogDetailsService } from './blog-details.service';
+import {IMAGES} from '../../../shared/constants/images.constant'
 
 interface Category {
   id:string;
@@ -15,7 +16,7 @@ interface Category {
   styleUrls: ['./blog-details.component.scss']
 })
 export class BolgDetailsComponent implements OnInit {
-
+  public images=IMAGES;
   value: any;
   blogDetails: any;
   categories: Category[] = [
@@ -30,35 +31,45 @@ export class BolgDetailsComponent implements OnInit {
   ]
   ads = [
     {
-      img: 'assets/imgs/blog4.jpeg',
+      img: this.images.BLOG4,
       title: '5 famous Places to travel this Summer Recommended by Ads',
       disc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci. Lorem ipsum dolor',
     },
     {
-      img: 'assets/imgs/blog4.jpeg',
+      img: this.images.BLOG4,
       title: '5 famous Places to travel this Summer Recommended by Ads',
       disc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci. Lorem ipsum dolor',
     },
     {
-      img: 'assets/imgs/blog4.jpeg',
+      img: this.images.BLOG4,
       title: '5 famous Places to travel this Summer Recommended by Ads',
       disc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci. Lorem ipsum dolor',
     },
     {
-      img: 'assets/imgs/blog4.jpeg',
+      img: this.images.BLOG4,
       title: '5 famous Places to travel this Summer Recommended by Ads',
       disc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci. Lorem ipsum dolor',
     },
   ]
+  // blogImages: any = {
+  //   list: [
+  //     'assets/imgs/destination1.jpeg',
+  //     'assets/imgs/destination2.jpeg',
+  //     'assets/imgs/destination3.jpeg',
+  //     'assets/imgs/destination4.jpeg',
+  //     'assets/imgs/destination5.jpeg',
+  //   ]
+  // };
   blogImages: any = {
     list: [
-      'assets/imgs/destination1.jpeg',
-      'assets/imgs/destination2.jpeg',
-      'assets/imgs/destination3.jpeg',
-      'assets/imgs/destination4.jpeg',
-      'assets/imgs/destination5.jpeg',
+      this.images.DESTINATION1,
+      this.images.DESTINATION2,
+      this.images.DESTINATION3,
+      this.images.DESTINATION4,
+      this.images.DESTINATION5,
     ]
   };
+ 
   explore_responsive = [
     {
         breakpoint: '1199px',

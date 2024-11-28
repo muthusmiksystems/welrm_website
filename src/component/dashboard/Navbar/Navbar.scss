@@ -1,0 +1,145 @@
+.navbar {
+  height: 100px;
+  border-bottom: 0.5px solid rgb(231, 228, 228);
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  background-color: #C42A2533;
+
+  .wrapper {
+    width: 100%;
+    padding: 0px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .left {
+      display: flex;
+      align-items: center;
+
+      h1 {
+        margin-left: 20px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      .registration-container {
+        display: flex;
+        /* Use flexbox for alignment */
+        align-items: center;
+        /* Vertically center the items */
+      }
+
+      .buttonroun {
+        border: 1px solid #C42A25;
+        padding-left: 10px;
+        /* Add padding for better spacing */
+        border-radius: 40px;
+        // background-color: white;
+        /* Optional: Add background color for better visibility */
+        // margin-right: 10px;
+        /* Add margin to separate from the button */
+      }
+
+      .status-btn {
+        background-color: #C42A25;
+        color: #fff;
+        font-size: 12px;
+        text-transform: none;
+        padding: 2px 12px;
+        /* Adjust padding for better sizing */
+        border-radius: 40px;
+        /* Optional: Rounded corners for the button */
+        transition: background-color 0.3s;
+        /* Optional: Smooth transition for hover effect */
+      }
+
+      .status-btn:hover {
+        background-color: #b81f1f;
+        /* Darken the button color on hover */
+      }
+
+
+      .menu-icon {
+        display: none;
+        cursor: pointer;
+      }
+    }
+
+    .items {
+      display: flex;
+      align-items: center;
+
+      .item {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        color: #b81f1f;
+
+        .setting {
+          background-color:transparent;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .icon {
+            font-size: 20px;
+            color: #C42A25
+          }
+        }
+
+        .avatar {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .wrapper {
+      .left {
+        .menu-icon {
+          display: block;
+          margin: 0px 5px;
+          /* Show menu icon on md screens */
+        }
+
+        h1 {
+          font-size: 18px;
+        }
+
+        .status-btn {
+          font-size: 10px;
+        }
+      }
+
+      .items {
+        .item {
+
+          .setting,
+          .avatar {
+            width: 30px;
+            height: 30px;
+          }
+
+          .icon {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+
+  .fontnav {
+    font-Weight: 540;
+    font-size: 15px;
+    line-height: 12.57px;
+    margin-bottom: 0px;
+    margin-right: 5px;
+  }
+}

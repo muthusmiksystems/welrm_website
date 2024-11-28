@@ -6,13 +6,14 @@ import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
 import _ from 'lodash';
 import { Router } from '@angular/router';
-
+import {IMAGES} from '../../../shared/constants/images.constant';
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',
   styleUrls: ['./wishlist.component.scss']
 })
 export class WishlistComponent implements OnInit {
+  public images=IMAGES;
   results: any = [];
   blogImages: any = {
     list: []

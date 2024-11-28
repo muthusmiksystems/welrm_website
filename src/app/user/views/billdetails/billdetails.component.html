@@ -24,7 +24,7 @@
                                 <div class="head-right" *ngIf="!isLoggedIn">
                                     <label class="right-label">Already Registered?</label>
                                     <button class="login-btn" (click)="openLogin()">
-                                        <img src="assets/imgs/login-avtar-red.svg" alt="" />
+                                        <img src="images.LOGIN_AVTAR_RED" alt="" />
                                         Login
                                     </button>
                                 </div>
@@ -40,7 +40,7 @@
                                         <label class="form-label">Full name</label>
                                         <div class="position-relative">
                                             <input type="text" class="input-field" formControlName="fullName" placeholder="Enter Your Full Name" [readonly]="userData?.data?.user?.fullName" >
-                                            <img src="assets/imgs/checkmark-green.svg" alt="" class="green-checkmark">
+                                            <img [src]="images.CHECKMARK_GREEN" alt="" class="green-checkmark">
                                         </div>
                                         <span class="inline-error" *ngIf="userForm.controls.fullName.hasError('required') && userForm.controls.fullName.touched">Full name is required</span>
                                     </div>
@@ -82,7 +82,7 @@
                             <span class="dis-addon">Discounted add-ons for your trip</span>
                             <div class="risk-free">
                                 <div class="red-card">
-                                    <img class="red-calendar" src="assets/imgs/red-calendar.svg" alt="">
+                                    <img class="red-calendar" [src]="images.RED_CALENDAR" alt="">
                                     <div class="free-refundable">
                                         <h5 class="refundable-h5">Risk-free and fully refundable <span class="Included">Included</span></h5>
                                             <span class="cancel">Cancel before {{ this.receivedData.cancelFromDate | date: 'd MMM y' }} and you'll pay nothing.</span>
@@ -108,10 +108,10 @@
                                 <label for="creditdebit" class="radio-lb">
                                     <span>CREDIT/DEBIT CARD</span>
                                     <div class="crd-img">
-                                        <img src="assets/imgs/visa.svg" alt="">
-                                        <img src="assets/imgs/master-card.svg" alt="">
-                                        <img src="assets/imgs/american-ex.svg" alt="">
-                                        <img src="assets/imgs/jcb.svg" alt="">
+                                        <img [src]="images.VISA" alt="VISA">
+                                        <img [src]="images.MASTER_CARD" alt="MASTER_CARD">
+                                        <img [src]="images.AMERICAN_EX" alt="EX">
+                                        <img [src]="images.JCB" alt="JCB">
                                     </div>
                                 </label>
                             </div>
@@ -121,7 +121,7 @@
                                 <label for="digital" class="radio-lb">
                                     <span>DIGITAL PAYMENT</span>
                                     <div class="crd-img">
-                                        <img src="assets/imgs/paypal.svg" alt="">
+                                        <img [src]="images.PAYPAL" alt="">
                                     </div>
                                 </label>
                             </div>
@@ -158,7 +158,7 @@
                                             </div>
                                         </div>
                                     </form>
-                                    <img class="desktop" src="assets/imgs/card.png" alt="">
+                                    <img class="desktop" [src]="images.CARD" alt="">
                                 </div>
                                 <p-checkbox
                                     label="I agree to receive updates and promotions about Welrm and it’s affiliates or business partners viavarious channels, including WhatsApp. Opt out anytime. Read more in the Privacy Policy."
@@ -173,7 +173,7 @@
                                     <label>Pay nothing until 16 May 2024</label>
                                     <div class="cancel-msg">
                                         <span>
-                                            <img src="assets/imgs/shield-icon.svg" alt="">
+                                            <img [src]="images.SHIELD_ICON" alt="SHIELD_ICON">
                                             Cancellation is FREE
                                         </span>
                                         <p>This room is covered by Welrm EasyCance!</p>
@@ -181,7 +181,7 @@
                                 </div>
                             </div>
                             <div class="confirm-email">
-                                <img src="assets/imgs/confirm-email.svg" alt="">
+                                <img [src]="images.CONFIRM_EMAIL" alt="">
                                 <p>We’ll send confirmation of your booking to <b>{{userForm.value?.email}}</b></p>
                             </div>
                         </ng-container>
@@ -214,7 +214,7 @@
                                     <div class="left">
                                         <div class="cancel-msg">
                                             <span>
-                                                <img src="assets/imgs/shield-icon.svg" alt="">
+                                                <img [src]="images.SHIELD_ICON" alt="SHIELD_ICON">
                                                 Cancellation is FREE
                                             </span>
                                             <p>This room is covered by Welrm EasyCance!</p>
@@ -222,12 +222,12 @@
                                         <label>Pay nothing until 16 May 2024</label>
                                     </div>
                                     <button class="paypal-btn">
-                                        <img src="assets/imgs/paypal-text.svg" alt="">
+                                        <img [src]="images.PAYPAY_TEXT" alt="">
                                     </button>
                                 </div>
                             </div>
                             <div class="confirm-email">
-                                <img src="assets/imgs/confirm-email.svg" alt="">
+                                <img [src]="images.CONFIRM_EMAIL" alt="">
                                 <p>We’ll send confirmation of your booking to <b>abcd1234@gmail.com</b></p>
                             </div>
                         </ng-container>
@@ -243,13 +243,13 @@
                         <div class="detail-head">
                             <div class="head-inner">
                                 <h3>{{hotelName}}</h3>
-                                <span><img class="star" src="assets/imgs/star.svg" alt="">{{receivedData?.rating}}</span>
+                                <span><img class="star" [src]="images.STAR" alt="">{{receivedData?.rating}}</span>
                                 <div class="discount-ribbon responsive">
                                     <label>{{receivedData?.discount}}% OFF</label>
                                 </div>
                             </div>
                             <div class="location">
-                                <img src="assets/imgs/location-pin.svg" alt="" class="location-pin">
+                                <img [src]="images.LOCATION_PIN" alt="" class="location-pin">
                                 <p class="address">{{receivedData?.address}}<span class="see-span" (click)="gotoLocation()">SEE MAP</span></p>
                             </div>
                         </div>
@@ -273,20 +273,20 @@
                                             <label class="room-type">{{roomQuantity}} x {{receivedData?.roomType}}</label>
                                             <div class="room-capacity">
                                                 <div class="cap-inner">
-                                                    <img class="cap-img" src="assets/imgs/bed.svg" alt="">
+                                                    <img class="cap-img" [src]="images.BED" alt="">
                                                     <span class="cap-span">{{roomQuantity}} Room</span>
                                                 </div>
                                                 <div class="cap-inner">
-                                                    <img class="cap-img" src="assets/imgs/adults.svg" alt="">
+                                                    <img class="cap-img" [src]="images.ADULTS" alt="">
                                                     <span class="cap-span">{{receivedData?.adults}} Adults</span>
                                                 </div>
                                                 <div class="cap-inner" *ngIf="receivedData?.childs">
-                                                    <img class="cap-img" src="assets/imgs/adults.svg" alt="">
+                                                    <img class="cap-img" [src]="images.ADULTS" alt="">
                                                     <span class="cap-span">{{receivedData?.childs}} Kids</span>
                                                 </div>
                                             </div>
                                         </div>
-                                        <img class="edit-icon" src="assets/imgs/edit.svg" alt="" (click)="gotoedit()" *ngIf="activeStep === 0">
+                                        <img class="edit-icon" [src]="images.EDIT" alt="sdsd" (click)="gotoedit()" *ngIf="activeStep === 0">
                                     </div>
                                     <div class="hotel-row bottom">
                                         <div class="room-item checkin">
@@ -384,7 +384,7 @@
                                 <h3>{{hotelName}}</h3>
                             </div>
                             <div class="location">
-                                <img src="assets/imgs/location-pin.svg" alt="" class="location-pin">
+                                <img [src]="images.LOCATION_PIN" alt="" class="location-pin">
                                 <p class="address">{{receivedData?.address}}<span class="see-span" (click)="gotoLocation()">SEE MAP</span>
                                 </p>
                             </div>
@@ -392,7 +392,7 @@
                         <div class="custom-card">
                             <h4>Your booking is confirmed</h4>
                             <div class="confirm-box">
-                                <span class="fitbox"><img src="assets/imgs/checkmark-green.svg" alt=""></span>
+                                <span class="fitbox"><img [src]="images.CHECKMARK_GREEN" alt=""></span>
                                 <div>
                                     <p class="confirm-show"><span>Booking Confirmed</span> Your booing until {{ bookingSuccess?.bookingToDate | date:'MMM d, y' }}</p>
                                     <p>Free cancellation before 23:59 hrs. on {{ bookingSuccess?.bookingFromDate | date:'MMM d, y' }} (property local time)</p>
@@ -492,21 +492,21 @@
         <!-- support-card started here -->
         <div class="support-card custom-card">
             <div class="suport-inner">
-                <img class="support-img" src="assets/imgs/hotel-icon.svg" alt="">
+                <img class="support-img" [src]="images.HOTEL_ICON" alt="">
                 <div>
                     <label class="red-label">Explore a Variety of Hotel Options</label>
                     <span class="support-span">Find the perfect room, from budget-friendly to luxurious. Enjoy a wide selection of hotels.</span>
                 </div>
             </div>
             <div class="suport-inner">
-                <img class="support-img" src="assets/imgs/hotel-icon.svg" alt="">
+                <img class="support-img" [src]="images.HOTEL_ICON" alt="">
                 <div>
                     <label class="red-label">Easy and Hassle-Free Booking</label>
                     <span class="support-span">Book your hotel in a few clicks. Our platform makes it quick and easy.</span>
                 </div>
             </div>
             <div class="suport-inner">
-                <img class="support-img" src="assets/imgs/hotel-icon.svg" alt="">
+                <img class="support-img" [src]="images.HOTEL_ICON" alt="">
                 <div>
                     <label class="red-label">Exclusive Member Discounts</label>
                     <span class="support-span">Join our membership for exclusive hotel discounts. Save on your next stay and maximize your travel budget.</span>
@@ -537,15 +537,15 @@
                             <label class="room-type included">{{isBreakfastIncludes ? 'With':'Without'}} Breakfast</label>
                             <div class="room-capacity">
                                 <div class="cap-inner">
-                                    <img class="cap-img" src="assets/imgs/bed.svg" alt="">
+                                    <img class="cap-img" [src]="images.BED" alt="">
                                     <span class="cap-span">{{roomQuantity}} Room</span>
                                 </div>
                                 <div class="cap-inner">
-                                    <img class="cap-img" src="assets/imgs/adults.svg" alt="">
+                                    <img class="cap-img" [src]="images.ADULTS" alt="">
                                     <span class="cap-span">{{receivedData?.adults}} Adults</span>
                                 </div>
                                 <div class="cap-inner" *ngIf="receivedData?.childs">
-                                    <img class="cap-img" src="assets/imgs/adults.svg" alt="">
+                                    <img class="cap-img" [src]="images.ADULTS" alt="">
                                     <span class="cap-span">{{receivedData?.childs}} Kids</span>
                                 </div>
                             </div>

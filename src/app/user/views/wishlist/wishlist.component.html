@@ -1,7 +1,7 @@
 
 <div id="wishlist" >
     <div class="searchbar">
-        <img class="search-red" src="assets/imgs/search-red.svg" alt="">
+        <img class="search-red" [src]="images.SEARCH_RED" alt="">
         <input type="text" name="searchbar" placeholder="Search.....">
     </div>
     <div class="profile-card offwhite">
@@ -30,8 +30,8 @@
                     <h3>{{ result.hotelName }}</h3>
                     <div class="view-details" (click)="booking(result.id, result.hotelName)">
                       <label>View Details</label>
-                      <img src="assets/imgs/redirect-arrow.svg" alt="">
-                      <img class="red-x" src="assets/imgs/red-x-mark.svg" alt="" (click)="postHotelData(result)">
+                      <img [src]="images.REDIRECT_ARROW" alt="">
+                      <img class="red-x" [src]="images.RED_X_MARK" alt="" (click)="postHotelData(result)">
                     </div>
                   </div>
                   <div class="address">
@@ -49,7 +49,7 @@
                           </div>
                         </div>
                         <div class="review">
-                          <div class="review-rate"><img src="assets/imgs/walikng-man.svg" alt=""></div>
+                          <div class="review-rate"><img [src]="images.WALKING_MAN" alt=""></div>
                           <p class="walking-distance">{{ result.address | titlecase }}</p>
                         </div>
                       </div>
@@ -61,7 +61,7 @@
                       <div class="complementaries">
                         <div class="spacs" *ngFor="let list of result?.moreComp ? result.roomComplementaries : result.roomComplementaries?.slice(0,3);">
                           <div class="spacs-inner">
-                            <img src="assets/imgs/wifi.svg" alt="" *ngIf="list.name === 'WiFi'">
+                            <img [src]="images.WIFI" alt="" *ngIf="list.name === 'WiFi'">
                             {{list.name}}
                           </div>
                         </div>
@@ -85,7 +85,7 @@
                     <div class="complementaries">
                       <div class="spacs" *ngFor="let list of result?.moreComp ? result.roomComplementaries : result.roomComplementaries?.slice(0,3);">
                         <div class="spacs-inner">
-                          <img src="assets/imgs/wifi.svg" alt="" *ngIf="list.name === 'WiFi'">
+                          <img [src]="images.WIFI" alt="" *ngIf="list.name === 'WiFi'">
                           <!-- <img src="assets/imgs/adults.svg" alt="" *ngIf="list.name === 'Adults'">  -->
                           <!-- <img src="assets/imgs/bed.svg" alt="" *ngIf="list.name === 'Bed'"> -->
                           {{list.name}}
@@ -102,7 +102,7 @@
 
         <div class="profile-bd h-100 d-flex align-items-center justify-content-center" *ngIf="!results?.length">
           <div class="norecord-msg">
-              <img src="assets/imgs/norecord.svg" alt="">
+              <img [src]="images.NORECORD" alt="">
               <p>{{userData?.data?.user?.fullName}} You have no wishlist</p>
           </div>
         </div>

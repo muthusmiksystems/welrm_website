@@ -21,7 +21,7 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { WishlistServiceService } from '../wishlist/wishlist.service';
 import { finalize } from 'rxjs';
 import { BookinghistoryService } from '../bookings/bookinghistory.service';
-
+import {IMAGES} from '../../../shared/constants/images.constant'
 
 @Component({
   selector: 'app-getroom',
@@ -30,6 +30,7 @@ import { BookinghistoryService } from '../bookings/bookinghistory.service';
 
 })
 export class GetroomComponent implements OnInit {
+  public images=IMAGES;
   private tokenKey = 'access_token';
   private userKey = 'user_data';
   roomFilterData: any[] = [];
@@ -129,12 +130,12 @@ export class GetroomComponent implements OnInit {
   roomAvailability: boolean = false;
 
   highlight = [
-    { icon: 'assets/imgs/freewifi.svg', title: 'Free Wifi', name: 'WiFi' },
-    { icon: 'assets/imgs/hygieneplus.svg', title: 'Hygiene Plus', name: 'Sanitizer' },
-    { icon: 'assets/imgs/housekeeping.svg', title: 'Daily housekeeping', name: 'HouseKeeping' },
-    { icon: 'assets/imgs/breakfast.svg', title: 'Breakfast', name: 'In-room Dining' },
-    { icon: 'assets/imgs/ac.svg', title: 'AC', name: 'AC' },
-    { icon: 'assets/imgs/powerbackup.svg', title: 'Power Backup', name: 'Power Backup' },
+    { icon: this.images.FREEWIFI, title: 'Free Wifi', name: 'WiFi' },
+    { icon: this.images.HYGIENEPLUS, title: 'Hygiene Plus', name: 'Sanitizer' },
+    { icon: this.images.HOUSEKEEPING, title: 'Daily housekeeping', name: 'HouseKeeping' },
+    { icon: this.images.BREAKFAST, title: 'Breakfast', name: 'In-room Dining' },
+    { icon: this.images.AC, title: 'AC', name: 'AC' },
+    { icon: this.images.POWERBACKUP, title: 'Power Backup', name: 'Power Backup' },
   ]
   policyList = [
     { policyHead: 'Welcome to Welrm', policyDisc: 'Couples are not only welcome but encouraged to indulge in romantic getaways at our stunning retreat.' },
@@ -259,7 +260,7 @@ export class GetroomComponent implements OnInit {
   }
 
 
-  submit() {
+  submit(item:any) {
     if (this.selectRoomTypeId == 0) {
       //alert("Please select Room type")
       this.messageService1.add({ severity: 'error', summary: 'Error', detail: 'Please select Room type' });
@@ -280,7 +281,8 @@ export class GetroomComponent implements OnInit {
     } else {
 
       if (this.roomAvailability) {
-        this.goToSecondPage()
+        console.log("yuva");
+        this.goToSecondPage(item)
       } else {
         //alert(this.roomDeatilsInner.hotelName+" Room is not available")
         this.messageService1.add({ severity: 'error', summary: 'Error', detail: this.roomDeatilsInner.hotelName + " Room is not available" });
@@ -603,7 +605,8 @@ export class GetroomComponent implements OnInit {
   }
 
 
-  goToSecondPage() {
+  goToSecondPage(item:any) {
+    console.log("itemsss",item)
 
     var price = this.roomPrice * this.room * this.night;
     if (this.form.value.isCheckedB == true) {
@@ -665,19 +668,19 @@ export class GetroomComponent implements OnInit {
 
       rating: this.roomDeatils.rating,
       address: this.address,
-      roomType: this.selectRoom?.roomType?.name,
+      roomType: item?.roomType?.name,
       adults: this.adults,
       childs: this.childs,
       room: this.room,
-      checkIn: this.selectRoom.checkIn,
-      checkOut: this.selectRoom.checkOut,
+      checkIn: item.checkIn,
+      checkOut: item.checkOut,
       originalPrice: this.originalPrice,
       discount: this.discount,
-      roomImages: this.roomImages,
+      roomImages: item?.imageUrls,
       lat: this.roomDeatilsInner?.lat,
       log: this.roomDeatilsInner?.log,
     };
-
+    console.log("dataToSenddataToSend",dataToSend);
     this.hotelfilter.setApiData(dataToSend);
     this.router.navigate(['/billdetails']);
 

@@ -9,13 +9,14 @@ import { AuthService } from 'src/app/auth.service';
 import _ from 'lodash';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-
+import {IMAGES} from '../../../shared/constants/images.constant'
 @Component({
   selector: 'app-bookings',
   templateUrl: './bookings.component.html',
   styleUrls: ['./bookings.component.scss'],
 })
 export class BookingsComponent implements OnInit {
+  public images=IMAGES;
   productReview: string = '';
   recommendProduct: boolean = false;
   userRating: number = 0;
@@ -159,7 +160,7 @@ export class BookingsComponent implements OnInit {
   printInvoice(item) {
     const invoiceHtml: any = `<div class="invoice" id="invoice" style=" padding: 40px 50px 50px; min-width: 700px; background-color: #FFFFFF; margin:0 auto">
     <div class="in-logo" style="text-align: center; margin-bottom: 28px;">
-        <img src="assets/imgs/red-logo.png" alt="">
+        <img [src]="images.RED_LOGO" alt="">
     </div>
     <h1 style="font-family: 'Mona-Sans Bold'; font-size: 22px; font-weight: normal; line-height: 26px; text-align: center; margin-bottom: 28px;">Lorium Ipsum text Lorium Ipsum text Lorium Ipsum text</h1>
     <div class="in-boxs" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px;">
@@ -176,7 +177,7 @@ export class BookingsComponent implements OnInit {
         <div class="boxs-inner download-in" style="width: calc(50% - 17.5px); height: 184px; border-radius: 20px; background-color: #C42A250D; display: flex; flex-direction: column;">
             <div class="box-total" style="padding: 20px; display: flex; flex-direction: column; border-bottom: 1px solid #0000001A; flex: 1;">
                 <label style="font-family: 'Mona-Sans Regular'; font-size: 18px; line-height: 22px; color: #94A3B8; margin-bottom: 16px;">Download</label>
-                <label style="font-family: 'Mona-Sans Bold'; font-size: 18px; line-height: 32px; color: #4B5563;"><img src="assets/imgs/dl-invoice.svg" alt="" style="margin-right: 12px">Invoice PDF</label>
+                <label style="font-family: 'Mona-Sans Bold'; font-size: 18px; line-height: 32px; color: #4B5563;"><img [src]="images.DLINVOICE" alt="" style="margin-right: 12px">Invoice PDF</label>
             </div>
             <div class="pay-details" style="height: 52px; padding: 10px 20px;">
                 <span style="font-family: 'Mona-Sans Regular'; font-size: 18px; line-height: 22px; color: #94A3B8;">Paid :</span>
@@ -187,7 +188,7 @@ export class BookingsComponent implements OnInit {
     <div class="in-htl-details" style="margin-bottom: 28px;">
         <h2 style="font-family: 'Mona-Sans SemiBold'; font-size: 18px; line-height: 22px; color: #4B5563; margin-bottom: 0;">${item.hotelDetail?.hotelName}</h2>
         <div class="in-address" style="margin-top: 15px; display: flex; align-items: flex-start;">
-            <img src="assets/imgs/locpin-grey.svg" alt="" style="margin-right: 5px">
+            <img [src]="images.LOCPIN_GREY" alt="" style="margin-right: 5px">
             <p style="font-family: 'Mona-Sans Regular'; font-size: 16px; line-height: 20px; color: #94A3B8; margin-bottom: 0;">${item.hotelDetail?.address}</p>
         </div>
     </div>

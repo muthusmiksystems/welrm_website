@@ -10,7 +10,7 @@ import { WishlistServiceService } from '../wishlist/wishlist.service';
 import { AuthService } from 'src/app/auth.service';
 import { MessageService } from 'primeng/api';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-
+import {IMAGES} from '../../../shared/constants/images.constant'
 
 @Component({
   selector: 'app-hotel-listing',
@@ -18,6 +18,7 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
   styleUrls: ['./hotel-listing.component.scss']
 })
 export class HotelListingComponent implements OnInit {
+  public images=IMAGES
   isScrolled = false;
   defaultrating = 3;
   currentRoute: string;
@@ -355,11 +356,11 @@ export class HotelListingComponent implements OnInit {
 
   filterpriceCity() {
     this.results = [];
-    // this.resultsCopy.forEach(e => {
-    //   if (e.newPrice <= this.rangeValues) {
-    //     this.results.push(e);
-    //   }
-    // });
+    this.resultsCopy.forEach(e => {
+      if (e.newPrice <= this.rangeValues) {
+        this.results.push(e);
+      }
+    });
     return this.resultsCopy.filter(hotel => {
       const newPrice = hotel.newPrice;
       return newPrice >= this.rangeValues.value && newPrice <= this.rangeValues.highValue;
