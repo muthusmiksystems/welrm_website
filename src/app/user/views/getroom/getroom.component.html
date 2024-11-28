@@ -19,7 +19,7 @@
                         </span>
                     </div>
                     <div class="location">
-                        <img class="location-pin" src="assets/imgs/location-pin.svg" alt="">
+                        <img class="location-pin" [src]="images.LOCATION_PIN" alt="">
                         <p>{{address}}</p>
                         <span class="see-map-link" (click)="gotoLocation()">SEE MAP</span>
                     </div>
@@ -29,7 +29,7 @@
                         <img class="img-cover"
                             [src]="roomDeatils?.vindex ? roomImages[roomDeatils.vindex] : roomImages[0]" alt="">
                         <div class="see-photos">
-                            <img class="camera" src="assets/imgs/camera.svg" alt="">
+                            <img class="camera" [src]="images.CAMERA" alt="">
                             <span class="see-span" (click)="openModal(imgmodal, roomImages)">See All Photos</span>
                         </div>
                     </div>
@@ -43,24 +43,24 @@
 
                 <div class="detail-tabs">
                     <button type="button" class="tab-btn active" (click)="scrollToSection('chooseRoom')"><img
-                            src="assets/imgs/room.svg" alt="">Rooms</button>
+                            [src]="images.ROOM" alt="">Rooms</button>
                     <button type="button" class="tab-btn" (click)="scrollToSection('hotelAmenities')"><img
-                            src="assets/imgs/facility.svg" alt="">Facilities</button>
+                            [src]="images.FACILITY" alt="">Facilities</button>
                     <button type="button" class="tab-btn" (click)="scrollToSection('hotelPolicies')"><img
-                            src="assets/imgs/policies.svg" alt="">Policies</button>
+                            [src]="images.POLICIES" alt="">Policies</button>
                     <button *ngIf="userId !== null" type="button" class="tab-btn" (click)="scrollToSection('rating')"><img
-                            src="assets/imgs/policies.svg" alt="">Ratings</button>
+                            [src]="images.POLICIES" alt="">Ratings</button>
                 </div>
                 <div class="info-title d-block d-md-none">
                     <div class="title-head">
                         <h2>{{hotelName}}</h2>
                         <span class="rating">
-                            <img src="assets/imgs/star.svg" alt="">
+                            <img [src]="images.STAR" alt="star">
                             {{roomDeatils.rating}}
                         </span>
                     </div>
                     <div class="location">
-                        <img class="location-pin" src="assets/imgs/location-pin.svg" alt="">
+                        <img class="location-pin" [src]="images.LOCATION_PIN" alt="">
                         <p>{{address}}</p>
                         <span class="see-map-link">SEE MAP</span>
                     </div>
@@ -70,12 +70,12 @@
                     <div class="highlight-inner">
                         <ng-container *ngFor="let item of highlight">
                             <div class="fc-item" *ngIf="isComplementaries(item.name)">
-                                <img class="fc-img" src="{{item.icon}}" alt="">
+                                <img class="fc-img" [src]="item.icon" alt="">
                                 <label>{{ item.title }}</label>
                             </div>
                         </ng-container>
                         <div class="fc-item">
-                            <img class="fc-img" src="assets/imgs/viewall.svg" alt=""
+                            <img class="fc-img" [src]="images.VIEWALL" alt=""
                                 (click)="scrollToSection('hotelAmenities')">
                             <label>View All</label>
                         </div>
@@ -89,15 +89,15 @@
                             *ngIf="selectRoom?.roomType?.name">{{selectRoom?.roomType?.name}}</span>
                         <div class="facility">
                             <div class="facility-inner">
-                                <img class="facility-img" src="assets/imgs/adults.svg" alt="">
+                                <img class="facility-img" [src]="images.ADULTS" alt="">
                                 <span class="fac-span">{{adults}} Adults</span>
                             </div>
                             <div class="facility-inner" *ngIf="childs">
-                                <img class="facility-img" src="assets/imgs/adults.svg" alt="">
+                                <img class="facility-img" [src]="images.ADULTS" alt="">
                                 <span class="fac-span">{{childs}} Kids</span>
                             </div>
                             <div class="facility-inner">
-                                <img class="facility-img" src="assets/imgs/bed.svg" alt="">
+                                <img class="facility-img" [src]="images.BED" alt="">
                                 <span class="fac-span">{{room}} Room</span>
                             </div>
                         </div>
@@ -135,7 +135,7 @@
                         </div> -->
                     </div>
                     <div class="see-map">
-                        <img class="map-img" src="assets/imgs/see-map.svg" alt="" (click)="gotoLocation()">
+                        <img class="map-img" [src]="images.SEE_MAP" alt="" (click)="gotoLocation()">
                         <div class="see-rating">
                             <div class="rating-type">
                                 <!-- <span>{{ roomDeatils.rating }} </span> -->
@@ -188,11 +188,11 @@
                             <label class="room-type">{{ item.roomType.name }}</label>
                             <div class="room-fc">
                                 <div class="fc-inner">
-                                    <img src="assets/imgs/adults.svg" alt="">
+                                    <img [src]="images.ADULTS" alt="">
                                     <label>{{ item.guestCapacity }} Adults</label>
                                 </div>
                                 <div class="fc-inner">
-                                    <img src="assets/imgs/bed.svg" alt="">
+                                    <img [src]="images.BED" alt="">
                                     <label>1 Room</label>
                                 </div>
                             </div>
@@ -231,7 +231,7 @@
                                     (click)="selectRoomF(getCeilPrice(item.hour24Price), item.newPrice, item.roomType.name, item.roomId, item, item.roomType.id)">{{selectRoomTypeId
                                     === item.roomId ? 'Selected':'Select'}}</button>
                                 <!-- <button class="selectBtn-red">Select</button> -->
-                                <button class="selectroom-btn" (click)="submit()">Book Now</button>
+                                <button class="selectroom-btn" (click)="submit(item)">Book Now</button>
                                 <!-- <div class="book-this" *ngIf="selectRoomTypeId && selectRoomTypeId
                                 === item.roomId">
                                     <button (click)="submit()">Book Now</button> 
@@ -277,11 +277,11 @@
                         <div class="room-details">
                             <div class="room-fc">
                                 <div class="fc-inner">
-                                    <img src="assets/imgs/adults.svg" alt="">
+                                    <img [src]="images.ADULTS" alt="">
                                     <label>{{ item.guestCapacity }} Adults</label>
                                 </div>
                                 <div class="fc-inner">
-                                    <img src="assets/imgs/bed.svg" alt="">
+                                    <img [src]="images.BED" alt="">
                                     <label>1 Room</label>
                                 </div>
                             </div>
@@ -307,7 +307,7 @@
                         <button class="selectroom-btn"
                             (click)="selectRoomF(getCeilPrice(item.hour24Price), item.newPrice, item.roomType.name, item.roomId, item, item.roomType.id)">{{selectRoomTypeId
                             === item.roomId ? 'Selected':'Select'}}</button>
-                        <button class="selectroom-btn" (click)="submit()">Book Now</button>
+                        <button class="selectroom-btn" (click)="submit(item)">Book Now</button>
                         <!-- <div class="book-this"  *ngIf="selectRoomTypeId && selectRoomTypeId
                                 === item.roomId">
                         <button (click)="submit()">Book Now</button>
@@ -343,11 +343,11 @@
         </div>
         <div *ngIf="userId !== null" id="rating" class="feedback-section">
             <!-- <h3>Rating</h3> -->
-            <div class="feedback-section">
+            <!-- <div class="feedback-section">
                 <div class="modal-header">
                     <div class="rate-head">
                         <h3>Rating</h3>
-                        <!-- <p>How Satisfied are you With Your Experience With Us....</p> -->
+                        <p>How Satisfied are you With Your Experience With Us....</p>
                     </div>
                     <button class="close-x-btn">
                         <i class="fa-solid fa-xmark"></i>
@@ -358,7 +358,7 @@
                         <p-rating class="star-rating" [cancel]="false" [(ngModel)]="userRating" (onRate)="rating($event)"></p-rating>
                     </div>
                     <div class="textarea">
-                        <!-- <label>Do you have any thoughts you'd like to share?</label> -->
+                         <label>Do you have any thoughts you'd like to share?</label>
                         <textarea rows="4" cols="50" class="other-text" id="productReview" [(ngModel)]="productReview"
                             placeholder="Give your reason here if other than the above" (change)="onReviewChange($event)"></textarea>
                     </div>
@@ -367,7 +367,7 @@
                     <button class="custom-btn" (click)="submitReview()">Send</button>
                     <button class="custom-btn cancel">Cancel</button>
                 </div>
-            </div>
+            </div> -->
 
         </div>
         <div id="hotelAmenities" class="offered-amenities">

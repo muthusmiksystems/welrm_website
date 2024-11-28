@@ -14,7 +14,7 @@ export class BilldetailsService {
   getToken(): string | null {
     return localStorage.getItem('access_token');
   }
-  (
+  BookingHotelRoom(
     bookingFromDate: any,
     bookingToDate: any,
     breakFastPrice: any,

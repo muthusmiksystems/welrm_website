@@ -7,7 +7,7 @@
           <span class="bestprice-span">Search hotels In best prices</span>
           <div class="form-input location" [ngClass]="{ 'list-route': isListRoute }">
             <div class="input-head">
-              <img [ngClass]="{ 'list-route': isListRoute }" src="assets/imgs/location.svg" alt="">
+              <img [ngClass]="{ 'list-route': isListRoute }" [src]="images.LOCATIONS" alt="LOCATIONS">
               <!-- <span>Location</span> -->
               <span [ngClass]="{ 'list-route': isListRoute }">Enter City Name,Location or Specific hotel</span>
             </div>
@@ -20,7 +20,7 @@
                 <!-- City List -->
                 <ul class="col-12 wlsrc-ul border-warning" *ngIf="searchDataCities.length > 0">
                   <li *ngFor="let city of searchDataCities" (click)="selectCity(city.cityName)" ngbDropdownItem>
-                    <img src="assets/imgs/pin.png" alt="" class="search-icon">
+                    <img [src]="images.PINS" alt="" class="search-icon">
                     <div class="hotel-info">
                       <span class="hotel-name">{{city.cityName}}</span>
                     </div>
@@ -31,7 +31,7 @@
                 <ul class="col-12 wlsrc-ul bg-white" *ngIf="searchDataHotels.length > 0">
                   <li *ngFor="let hotelAddress of searchDataHotels" (click)="selectCity(hotelAddress.hotelName)"
                     ngbDropdownItem>
-                    <img src="assets/imgs/hotelsearch.png" alt="" class="search-icon">
+                    <img [src]="images.HOTELSEARCH" alt="" class="search-icon">
                     <div class="hotel-info">
                       <span class="hotel-name">{{hotelAddress.hotelName}}</span>
                       <br />
@@ -43,7 +43,7 @@
                 <!-- Location List -->
                 <ul class="col-12 wlsrc-ul bg-white" *ngIf="searchDataLocations.length > 0">
                   <li *ngFor="let location of searchDataLocations" (click)="selectCity(location.address)" ngbDropdownItem>
-                    <img src="assets/imgs/location-search-pin.svg" alt="" class="search-icon">
+                    <img [src]="images.LOCATION_SEARCH_PIN" alt="" class="search-icon">
                     <div class="hotel-info">
                       <span class="hotel-name">{{location.address}}</span>
                     </div>
@@ -92,7 +92,7 @@
 
           <div class="form-input checkIn" [ngClass]="{ 'list-route': isListRoute }">
             <div class="input-head">
-              <img *ngIf="!showSearch" [ngClass]="{ 'list-route': isListRoute }" src="assets/imgs/calendar.svg" alt="">
+              <img *ngIf="!showSearch" [ngClass]="{ 'list-route': isListRoute }" [src]="images.CALENDAR" alt="">
               <span [ngClass]="{ 'list-route': isListRoute }">Check-in</span>
             </div>
             <p-calendar id="checkInDate" [minDate]="minimumDate" dateFormat="d M y" class="calendar-control"
@@ -105,7 +105,7 @@
 
           <div class="form-input checkOut" [ngClass]="{ 'list-route': isListRoute }">
             <div class="input-head">
-              <img *ngIf="!showSearch" [ngClass]="{ 'list-route': isListRoute }" src="assets/imgs/calendar.svg" alt="">
+              <img *ngIf="!showSearch" [ngClass]="{ 'list-route': isListRoute }" [src]="images.CALENDAR" alt="">
               <span [ngClass]="{ 'list-route': isListRoute }">Check-out</span>
             </div>
             <p-calendar id="checkOutDate" [ngClass]="{ 'list-route': isListRoute }" [minDate]="minimumDatecIn"
@@ -117,7 +117,7 @@
 
           <div class="form-input gRooms">
             <div class="input-head">
-              <img *ngIf="!showSearch" [ngClass]="{ 'list-route': isListRoute }" src="assets/imgs/profile-2user.svg"
+              <img *ngIf="!showSearch" [ngClass]="{ 'list-route': isListRoute }" [src]="images.PROFILE_2USER"
                 alt="">
               <span [ngClass]="{ 'list-route': isListRoute }">Rooms & Guests</span>
             </div>
