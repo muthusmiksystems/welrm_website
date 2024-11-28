@@ -8,7 +8,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import _ from 'lodash';
-
+import {IMAGES} from '../../../shared/constants/images.constant'
 declare var Razorpay: any;
 
 
@@ -18,6 +18,7 @@ declare var Razorpay: any;
   styleUrls: ['./billdetails.component.scss'],
 })
 export class BilldetailsComponent implements OnInit {
+  public images=IMAGES;
   @ViewChild('myInput') myInput: ElementRef | any;
   receivedData: any;
   bookingFromDate: Date;
@@ -328,7 +329,7 @@ export class BilldetailsComponent implements OnInit {
               amount: this.getTotal() * 100, // 2000 paise = INR 20
               key: "rzp_live_WqbUf1Fe9qGtNX",
               name: this.hotelName,
-              image: "../../../assets/imgs/logo2.png",
+              image: this.images.LOGO2,
               prefill: {
                 name: this.userFullName,
                 email: this.userEmail,

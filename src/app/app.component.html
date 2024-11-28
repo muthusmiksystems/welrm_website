@@ -5,7 +5,7 @@
 
 <!-- whatsapp -->
 <div class="whatsapp" (cdkDragStarted)="handleDragStart($event)" (click)="handleClick($event)" cdkDrag>
-    <img src="assets/imgs/whatsapp.png" alt="Whatsapp Icon">
+    <img [src]="images.WHATSAPP" alt="Whatsapp Icon">
 </div>
 
 
@@ -22,7 +22,7 @@
         <ng-container *ngFor="let item of footerItems">
             <div class="footer-items" [routerLink]="[item.route]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngIf="item?.name === 'Home'" (click)="closeSidebar()">
                 <div class="icon-img">
-                    <img class="img-cover" src="{{ item.icon }}" alt="">
+                    <img class="img-cover" [src]="item.icon" alt="">
                 </div>                
                 <label>{{ item.name }}</label>
             </div>

@@ -9,13 +9,14 @@ import { GlobalConstants } from 'src/app/constants/common.constant';
 import { MessageService } from 'primeng/api';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { ResSidebarService } from 'src/app/res-sidebar.service';
-
+import {IMAGES} from '../constants/images.constant';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  public images = IMAGES; 
   isScrolled = false;
   showHotelSearch = false;
   currentRoute = false;

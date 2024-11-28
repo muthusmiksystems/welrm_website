@@ -1,0 +1,164 @@
+.sidebar {
+  // flex: 1;
+  border-right: 0.5px solid rgb(230, 227, 227);
+  // min-height: ;
+  background-color: white;
+  font-family: "Arial, sans-serif";
+  height: auto;
+  position: static;
+  transition: all 0.3s ease; // Smooth transition
+
+  &.sideclose {
+    width: auto;
+    z-index: 100;
+    position: absolute;
+    height: 100%;
+  }
+
+  &.sideopen {
+    width: 210px;
+    z-index: 100;
+    // position: absolute;
+  }
+
+  &.closed {
+    flex: 0;
+    width: 0;
+    z-index: auto;
+    position: inherit;
+  }
+
+  .top {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // padding: 20px;
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      color: #6439ff;
+    }
+  }
+
+  hr {
+    height: 0;
+    border: 0.5px solid rgb(230, 227, 227);
+  }
+
+  .center {
+    padding-left: 10px;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      .menucontainer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0px 10px;
+
+        .title {
+          font-size: 10px;
+          font-weight: bold;
+          background-color: #F1F5F9;
+          margin-top: 15px;
+          margin-bottom: 5px;
+          width: fit-content;
+          padding: 5px;
+          border-radius: 5px;
+        }
+
+        .titleicon {
+
+          background-color: #F1F5F9;
+          margin-top: 15px;
+          margin-bottom: 5px;
+          width: fit-content;
+          border-radius: 10px;
+
+        }
+      }
+
+
+      li {
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        cursor: pointer;
+        text-align: right;
+        margin: 20px 10px !important;
+        justify-content: space-between;
+        /* Ensure chevron is aligned to the right */
+        transition: all 0.3s;
+
+        .icon-container {
+          display: flex;
+          align-items: center;
+        }
+
+        &:hover {
+          background-color: #fff1e7;
+          border-radius: 10px;
+        }
+
+        .icon {
+          font-size: 18px;
+          color: #7451f8;
+        }
+
+        span {
+          font-size: 13px;
+          font-weight: 600;
+          color: #888;
+          margin-left: 10px;
+
+          &.active {
+            color: #c42a25;
+          }
+        }
+
+        &.active {
+          background-color: #fff1e7;
+          color: #c42a25;
+          border-radius: 10px;
+
+          span {
+            color: #c42a25;
+          }
+
+          .icon {
+            color: #c42a25;
+          }
+        }
+
+        .chevron {
+          margin-left: auto;
+          font-size: 18px;
+          color: #4b5563;
+        }
+      }
+
+      .sub-menu {
+        text-align: right;
+        display: inline;
+
+        li {
+          span {
+            margin-left: 10px;
+            text-align: right; // Align text to the right
+            
+            &.active {
+              margin-left: 10px;
+              color: #c42a25; // Active span color
+              font-weight: bold; // Make it bold for visibility
+            }
+          }
+        }
+      }
+    }
+  }
+}

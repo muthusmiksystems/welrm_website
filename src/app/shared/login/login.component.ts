@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GlobalConstants } from 'src/app/constants/common.constant';
 import { GetroomService } from 'src/app/user/views/getroom/getroom.service';
 import { MessageService } from 'primeng/api';
+import {IMAGES} from '../constants/images.constant'
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  public images = IMAGES; 
   loginForm!: FormGroup;
   result: any;
   max: number | null = 10;

@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ChangepasswordService } from './changepassword.service';
 import { catchError } from 'rxjs';
 import { MessageService } from 'primeng/api';
-
+import {IMAGES} from "../../../shared/constants/images.constant";
 @Component({
   selector: 'app-changepassword',
   templateUrl: './changepassword.component.html',
   styleUrls: ['./changepassword.component.scss'],
 })
 export class ChangepasswordComponent implements OnInit {
+  public images=IMAGES;
   passwordChangeForm!: FormGroup;
   public passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,}$/;
   

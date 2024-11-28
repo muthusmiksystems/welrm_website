@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-
+import {IMAGES} from '../../../shared/constants/images.constant';
 
 
 @Component({
@@ -15,6 +15,7 @@ import html2canvas from 'html2canvas';
   styleUrls: ['./thankyou.component.scss']
 })
 export class ThankyouComponent implements OnInit {
+  public images=IMAGES;
   response:any = [];
 
   @ViewChild('invoice') invoiceElement!: ElementRef;

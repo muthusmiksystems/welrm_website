@@ -4,16 +4,16 @@
     <div class="left-inner">
       <div class="logo">
         <a routerLink="/" class="desktop">
-          <img src="assets/imgs/logo.png" alt="Logo" height="42" width="145" />
+          <img [src]="images.LOGO" alt="Logo" height="42" width="145" />
         </a>
         <a routerLink="/" class="responsive">
-          <img src="assets/imgs/logo.png" alt="Logo" height="32" width="94" />
+          <img [src]="images.LOGO" alt="Logo" height="32" width="94" />
         </a>
       </div>
       <ul class="callPropertyLinks">
         <li>
           <figure>
-            <img src="assets/imgs/call.svg" alt="Call" />
+            <img [src]="images.CALL" alt="Call" />
           </figure>
           <div class="links">
             <span>Book now:</span>
@@ -22,7 +22,7 @@
         </li>
         <li>
           <figure>
-            <img src="assets/imgs/dollar-square.svg" alt="Dollar" />
+            <img [src]="images.DOLLAR_SQUARE" alt="Dollar" />
           </figure>
           <div class="links">
             <span>Start Earning:</span>
@@ -45,24 +45,24 @@
       </div>
       <div class="responsive call">
         <a href="tel:+919584290842">
-          <img class="profile-img" src="assets/imgs/call-white.svg" alt="Call" />
+          <img class="profile-img" [src]="images.CALL_WHITE" alt="Call" />
         </a>
       </div>
 
       <!-- Desktop login button -->
       <button class="login-btn" *ngIf="!isLoggedIn" (click)="openLogin()">
-        <img class="log-img" src="assets/imgs/profile.svg" alt="Login" />
+        <img class="log-img" [src]="images.PROFILE" alt="Login" />
         Login
       </button>
 
       <!-- Responsive login button -->
       <button type="button" class="responsive log-responsive" *ngIf="!isLoggedIn" (click)="openLogin()">
-        <img src="assets/imgs/profile-white.svg" alt="Login" />
+        <img [src]="images.PROFILE_WHITE" alt="Login" />
       </button>
       <div class="profile-item" *ngIf="isLoggedIn" (click)="gotoNext()">
         <div class="profile-img">
-          <img class="user-img img-cover desktop" src="assets/imgs/profile.svg" alt="User Profile" />
-          <img class="user-img img-cover responsive" src="assets/imgs/profile-white.svg" alt="User Profile" />
+          <img class="user-img img-cover desktop" [src]="images.PROFILE" alt="User Profile" />
+          <img class="user-img img-cover responsive" [src]="images.PROFILE_WHITE" alt="User Profile" />
         </div>
         <span class="user-name desktop" *ngIf="userData?.data?.user?.fullName">
           {{ userData?.data?.user?.fullName }}
@@ -77,16 +77,16 @@
     <div class="left-inner">
       <div class="logo">
         <a routerLink="/" class="desktop">
-          <img src="assets/imgs/logo.png" alt="Logo" height="42" width="145" />
+          <img [src]="images.LOGO" alt="Logo" height="42" width="145" />
         </a>
         <a routerLink="/" class="responsive">
-          <img src="assets/imgs/logo.png" alt="Logo" height="32" width="94" />
+          <img [src]="images.LOGO" alt="Logo" height="32" width="94" />
         </a>
       </div>
     </div>
     <div class="right-inner">
       <button class="search-toggle" (click)="toggleHotelSearch()">
-        <img src="assets/imgs/menu.png" alt="Search" />
+        <img [src]="images.MENU" alt="Search" />
       </button>
     </div>
   </div>
@@ -110,7 +110,7 @@
     </button>
     <div class="bd-inner">
       <div class="host-mobile">
-        <img class="img-cover" src="assets/imgs/iphone-mockup.svg" alt="iPhone Mockup" />
+        <img class="img-cover" [src]="images.IPHONE_MOCKUP" alt="iPhone Mockup" />
       </div>
       <div class="host-content">
         <h2>Download</h2>
@@ -121,18 +121,18 @@
         </p>
         <div class="host-dl">
           <div class="barcode">
-            <img class="img-cover" src="assets/imgs/banner-Qr.png" alt="QR Code" />
+            <img class="img-cover" [src]="images.BANNER_QR" alt="QR Code" />
           </div>
           <div class="host-platform">
             <div class="platform-inner">
               <a href="https://apps.apple.com/ca/app/welrm/id1643890398" target="_blank" rel="noopener noreferrer">
-                <img src="assets/imgs/iphone-dl.svg" alt="Download on App Store" />
+                <img [src]="images.IPHONE_DL" alt="Download on App Store" />
               </a>
             </div>
             <div class="platform-inner">
               <a href="https://play.google.com/store/apps/details?id=com.welrm" target="_blank"
                 rel="noopener noreferrer">
-                <img src="assets/imgs/google-dl.svg" alt="Download on Google Play" />
+                <img [src]="images.GOOGLE_DL" alt="Download on Google Play" />
               </a>
             </div>
           </div>

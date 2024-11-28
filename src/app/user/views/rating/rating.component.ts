@@ -4,7 +4,7 @@ import { RatingService } from './rating.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/auth.service';
-
+import {IMAGES} from '../../../shared/constants/images.constant'
 
 @Component({
   selector: 'app-rating',
@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/auth.service';
   styleUrls: ['./rating.component.scss'],
 })
 export class RatingComponent implements OnInit {
+  public images=IMAGES;
   searchForm!: FormGroup;
   allRating: any[] = [];
 

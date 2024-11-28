@@ -50,7 +50,7 @@
                                       <span class="review-type">Below Average</span>
                                   </div>
                                   <div class="r-date">
-                                      <img src="assets/imgs/review-black.svg" alt="">
+                                      <img [src]="images.REVIEW_BLACK" alt="">
                                       Review Date: {{ row.createdAt | date : "medium" }}
                                   </div>
                               </div>
@@ -66,7 +66,7 @@
 
     <div class="profile-bd h-100 d-flex align-items-center justify-content-center" *ngIf="!allRating?.length">
         <div class="norecord-msg">
-            <img src="assets/imgs/norecord.svg" alt="">
+            <img [src]="images.NORECORD" alt="">
             <p>{{userData?.data?.user?.fullName}} You have no review</p>
         </div>
     </div>
