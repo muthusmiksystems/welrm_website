@@ -7,14 +7,13 @@ import { DOCUMENT } from '@angular/common';
 import { CdkDragStart } from '@angular/cdk/drag-drop';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { ResSidebarService } from './res-sidebar.service';
-import {IMAGES} from './shared/constants/images.constant'
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  public images=IMAGES;
   isLoggedIn!: boolean;
   title = 'welrm_web';
   metaTags: any = [];
@@ -24,11 +23,11 @@ export class AppComponent {
   public dragging: boolean;
   isMobileView = false;
   footerItems: any = [
-    { icon: this.images.HOME_WHITE, name: 'Home', route: '/' },
-    { icon: this.images.BELL, name: 'Notifications', route: '/profile', slug:'Notifications' },
-    { icon: this.images.BOOKING, name: 'Bookings', route: '/profile', slug:'MyBookings' },
-    { icon: this.images.HEART_WHITE, name: 'My Wish', route: '/profile', slug:'WishList' },
-    { icon: this.images.USER, name: 'Profile', route: '/profile', slug:'MyProfile' },
+    { icon: 'assets/imgs/home-white.svg', name: 'Home', route: '/' },
+    { icon: 'assets/imgs/bell.svg', name: 'Notifications', route: '/profile', slug:'Notifications' },
+    { icon: 'assets/imgs/booking.svg', name: 'Bookings', route: '/profile', slug:'MyBookings' },
+    { icon: 'assets/imgs/heart-white.svg', name: 'My Wish', route: '/profile', slug:'WishList' },
+    { icon: 'assets/imgs/user.svg', name: 'Profile', route: '/profile', slug:'MyProfile' },
   ]
 
   constructor(
@@ -66,6 +65,7 @@ export class AppComponent {
     let url = event.url;
     let params = url.substring(1);
     this.metaService.getMetaData(params.length > 0 ? params : 'home').subscribe((response: any) => {
+      console.log("response.......",response);
       if (response.success) {
         this.metaTags = response.data instanceof Array ?response.data[0]:response.data;
         this.addTag();

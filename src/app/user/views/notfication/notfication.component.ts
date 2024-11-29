@@ -4,7 +4,7 @@ import { catchError, finalize } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/auth.service';
 import { Router } from '@angular/router';
-import {IMAGES} from '../../../shared/constants/images.constant'
+
 
 @Component({
   selector: 'app-notfication',
@@ -12,7 +12,6 @@ import {IMAGES} from '../../../shared/constants/images.constant'
   styleUrls: ['./notfication.component.scss'],
 })
 export class NotficationComponent implements OnInit {
-  public images=IMAGES;
   notifications: any[] = [];
   activeTab = 0;
   tabs: any[] = [
@@ -101,13 +100,13 @@ export class NotficationComponent implements OnInit {
           this.tabs[1].content = this.allOffers;
           this.notifications.forEach(el => {
             if (el?.title.includes('Booking Confirmed')) {
-              el.img = this.images.BOOKING_CONFIRM;
+              el.img = 'assets/imgs/booking-confirm.svg';
             } else if (el?.title.includes('Booking Cancelled')) {
-              el.img = this.images.CANCELLATION_POLICY;
+              el.img = 'assets/imgs/cancellation-policy.svg';
             } else if (el?.title.includes('Password changed')) {
-              el.img = this.images.EVENT;
+              el.img = 'assets/imgs/event.svg';
             } else if (el?.title.includes('Rating')) {
-              el.img = this.images.FEEDBACK_REQUEST;
+              el.img = 'assets/imgs/feedback-request.svg';
             }
           });
         }

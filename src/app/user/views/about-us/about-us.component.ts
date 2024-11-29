@@ -3,14 +3,13 @@ import { Router } from '@angular/router';
 import { catchError, finalize } from 'rxjs';
 import { HomeService } from '../home/home.service';
 import { Carousel } from 'primeng/carousel';
-import {IMAGES} from '../../../../app/shared/constants/images.constant'
+
 @Component({
   selector: 'app-about-us',
   templateUrl: './about-us.component.html',
   styleUrls: ['./about-us.component.scss']
 })
 export class AboutUsComponent implements OnInit {
-  public images=IMAGES;
   top_cities: any = [];
   top_Rated_Properties: any = [];
   cubeGrp = [
@@ -45,27 +44,27 @@ export class AboutUsComponent implements OnInit {
   ]
   meet_team = [
     {
-      img: this.images.NO_IMAGE,
+      img:'assets/imgs/no-image.png',
       name: 'Gurmukh Singh',
       post: 'Founder & Director'
     },    
     {
-      img: this.images.NO_IMAGE,
+      img:'assets/imgs/no-image.png',
       name: 'Arshpreet Kaur',
       post: 'Managing Director'
     },
     {
-      img: this.images.NO_IMAGE,
+      img:'assets/imgs/no-image.png',
       name: 'Jugjeet Singh',
       post: 'Director'
     },
     {
-      img: this.images.NO_IMAGE,
+      img:'assets/imgs/no-image.png',
       name: 'Harmeet Singh',
       post: 'Co-Founder'
     },
     {
-      img: this.images.NO_IMAGE,
+      img:'assets/imgs/no-image.png',
       name: 'Shahab Uddin',
       post: 'Graphic Designer'
     },
@@ -96,37 +95,37 @@ export class AboutUsComponent implements OnInit {
   top_destinations: any = [
     {
       "name": "Beaches",
-      "image_url": this.images.DESTINATION1,
+      "image_url": "assets/imgs/destination1.jpeg",
       "address": 'Goa',
       "rating": "4.9"
     },
     {
       "name": "Dream City",
-      "image_url": this.images.DESTINATION2,
+      "image_url": "assets/imgs/destination2.jpeg",
       "address": 'Mumbai',
       "rating": "4.9"
     },
     {
       "name": "Mountains and Snow",
-      "image_url": this.images.DESTINATION3,
+      "image_url": "assets/imgs/destination3.jpeg",
       "address": 'Manali',
       "rating": "4.9"
     },
     {
       "name": "Religious Places",
-      "image_url": this.images.DESTINATION4,
+      "image_url": "assets/imgs/destination4.jpeg",
       "address": 'Punjab',
       "rating": "4.9"
     },
     {
       "name": "Desert Safari",
-      "image_url": this.images.DESTINATION5,
+      "image_url": "assets/imgs/destination5.jpeg",
       "address": 'Jaisalmer',
       "rating": "4.9"
     },
     {
       "name": "Pink City",
-      "image_url": this.images.DESTINATION5,
+      "image_url": "assets/imgs/destination6.jpeg",
       "address": 'Jaipur',
       "rating": "4.9"
     },

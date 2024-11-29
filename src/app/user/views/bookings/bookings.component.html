@@ -14,50 +14,50 @@
                     <div class="item-content">
                         <div class="i-head">
                             <h3>{{item.hotelDetail?.hotelName}}</h3>
-                            <button class="edit-btn" (click)="gotoedit(item)" *ngIf="tabs[activeTab].slug === 'activeBookings'"><img class="img-icon" [src]="images.EDIT_PENCIL" alt="pencil">Edit</button>
+                            <button class="edit-btn" (click)="gotoedit(item)" *ngIf="tabs[activeTab].slug === 'activeBookings'"><img class="img-icon" src="assets/imgs/edit-pencil.svg" alt="">Edit</button>
                         </div>
                         <div class="i-info">
                             <div class="info-left">
                                 <div>
                                     <label class="roomtype-lb">Room type: <span class="bold">{{item.roomDetail.roomType.name}}</span></label>
                                     <ul class="fc-list" [ngClass]="{'d-flex': tabs[activeTab].slug === 'activeBookings'}">
-                                        <li><img [src]="images.DATE_RANGE" alt="">No. of Days: {{item.numberOfDays}}</li>
-                                        <li *ngIf="tabs[activeTab].slug === 'activeBookings'"><img [src]="images.LOCK" alt="">Passcode: {{item.confirmation_code}}</li>
-                                        <li><img [src]="images.HOME" alt="">No. of Rooms: {{item.roomQuantity}}</li>
-                                        <li *ngIf="tabs[activeTab].slug === 'activeBookings'"><img [src]="images.CHART" alt="">Booking Status: {{item.status | titlecase }}</li>
-                                        <li><img [src]="images.TAG" alt="">Price: ₹ {{getCeilPrice(item.price)}}</li>
+                                        <li><img src="assets/imgs/date-range.svg" alt="">No. of Days: {{item.numberOfDays}}</li>
+                                        <li *ngIf="tabs[activeTab].slug === 'activeBookings'"><img src="assets/imgs/lock.svg" alt="">Passcode: {{item.confirmation_code}}</li>
+                                        <li><img src="assets/imgs/home.svg" alt="">No. of Rooms: {{item.roomQuantity}}</li>
+                                        <li *ngIf="tabs[activeTab].slug === 'activeBookings'"><img src="assets/imgs/chart.svg" alt="">Booking Status: {{item.status | titlecase }}</li>
+                                        <li><img src="assets/imgs/tag.svg" alt="">Price: ₹ {{getCeilPrice(item.price)}}</li>
                                     </ul>
                                 </div>
                                 <div class="book-dates" *ngIf="item.status == 'pending'">
                                     <div class="dates-inner">
-                                        <img [src]="images.DATE_RANGE" alt="">
+                                        <img src="assets/imgs/date-range.svg" alt="">
                                         Booking From Date: {{item.bookingFromDate | date }}
                                     </div>
                                     <div class="dates-inner">
-                                        <img [src]="images.DATE_RANGE" alt="">
+                                        <img src="assets/imgs/date-range.svg" alt="">
                                         Booking To Date: {{item.bookingToDate | date }}
                                     </div>
                                 </div>
                                 <div class="book-dates" *ngIf="item.status == 'cancelled'">
                                     <div class="dates-inner">
-                                        <img [src]="images.DATE_RANGE" alt="">
+                                        <img src="assets/imgs/date-range.svg" alt="">
                                         Booking Date: {{item.bookingFromDate | date }}
                                     </div>
                                     <div class="dates-inner">
-                                        <img [src]="images.DATE_RANGE" alt="">
+                                        <img src="assets/imgs/date-range.svg" alt="">
                                         Cancel Date: {{item.cancelation_date | date }}
                                     </div>
                                 </div>
                                 <div class="check-date" *ngIf="item.status == 'completed'">
                                     <div class="check-in">
-                                        <img [src]="images.DATE_RANGE_WHITE" alt="">
+                                        <img src="assets/imgs/date-range-white.svg" alt="">
                                         <div class="check-inner">
                                             <span>Check-in</span>
                                             <span class="date">{{item.bookingFromDate | date }}</span>
                                         </div>
                                     </div>
                                     <div class="check-out">
-                                        <img [src]="images.DATE_RANGE" alt="">
+                                        <img src="assets/imgs/date-range.svg" alt="">
                                         <div class="check-inner">
                                             <span>Check-out</span>
                                             <span class="date">{{item.bookingToDate | date }}</span>
@@ -73,7 +73,7 @@
                                         <button class="status-btn" readonly>Cancelled</button>
                                         <div class="view-details">
                                             <span>Reason</span>
-                                            <img [src]="images.REDIRECT_ARROW" alt="">
+                                            <img src="assets/imgs/redirect-arrow.svg" alt="">
                                         </div>
                                     </div>
                                     <div class="right-inner" *ngIf="item.status == 'completed'">
@@ -87,7 +87,7 @@
                                         <button class="status-btn complete" readonly>Completed</button>
                                         <div class="book-dates me-0">
                                             <div class="dates-inner me-0 mt-3">
-                                                <img [src]="images.DATE_RANGE" alt="">
+                                                <img src="assets/imgs/date-range.svg" alt="">
                                                 Booking Date: {{ item.createdAt | date }}
                                             </div>
                                         </div>
@@ -102,7 +102,7 @@
         </div>
         <div class="profile-bd h-100 d-flex align-items-center justify-content-center" *ngIf="!tabs[activeTab].content?.length && !isLoading">
             <div class="norecord-msg">
-                <img [src]="images.NORECORD" alt="">
+                <img src="assets/imgs/norecord.svg" alt="">
                 <p>{{userData?.data?.user?.fullName}} You have no {{tabs[activeTab].label}} </p>
             </div>
         </div>

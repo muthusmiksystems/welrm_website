@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {IMAGES} from '../../../shared/constants/images.constant'
+
 @Component({
   selector: 'app-help-and-support',
   templateUrl: './help-and-support.component.html',
   styleUrls: ['./help-and-support.component.scss']
 })
 export class HelpAndSupportComponent implements OnInit {
-  public images=IMAGES;
   accordionItems = [
     {
       title: 'How can I become a WELRM member?',

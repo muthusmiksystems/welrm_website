@@ -79,7 +79,7 @@
             <div class="property-card">
               <div class="property-strip">
                 <div class="discount">
-                  <img loading="lazy" [src]="image.DISCOUNT" alt="">
+                  <img loading="lazy" src="assets/imgs/discount.svg" alt="">
                   {{top_property.discount}}% off
                 </div>
                 <div class="favorite"
@@ -97,7 +97,7 @@
                 <div class="content-head">
                   <h3 (click)="booking(top_property.id, top_property.hotelName)">{{top_property.hotelName}}</h3>
                   <span class="rating">
-                    <img loading="lazy" [src]="image.STAR" alt="">
+                    <img loading="lazy" src="assets/imgs/star.svg" alt="">
                     <!-- {{top_property.rating}} -->3
                   </span>
                 </div>
@@ -152,13 +152,13 @@
         <div class="col-lg-6">
           <div class="about-images">
             <div class="main-img">
-              <img loading="lazy" class="img-cover" [src]="image.ABOUTUS1" alt="">
+              <img loading="lazy" class="img-cover" src="assets/imgs/aboutus1.jpeg" alt="">
             </div>
             <div class="top-img">
-              <img loading="lazy" class="img-cover" [ngbNavItem]="image.ABOUTUS2" alt="">
+              <img loading="lazy" class="img-cover" src="assets/imgs/aboutus2.png" alt="">
             </div>
             <div class="bottom-img">
-              <img loading="lazy" class="img-cover" [src]="image.ABOUTUS3" alt="">
+              <img loading="lazy" class="img-cover" src="assets/imgs/aboutus3.jpeg" alt="">
             </div>
           </div>
         </div>
@@ -210,9 +210,9 @@
           </div>
           <div class="btn-holder">
             <button class="info-btn custom-btn cursor-default" (click)="scrollTop()"><img loading="lazy"
-                [src]="image.HOUSE" alt="HOUSE"> Luxurious Stay</button>
+                src="assets/imgs/house.svg" alt=""> Luxurious Stay</button>
             <button class="info-btn custom-btn cursor-default" (click)="scrollTop()"><img loading="lazy"
-                [src]="image.HEART" alt=""> Guest-Centric Care</button>
+                src="assets/imgs/heart.svg" alt=""> Guest-Centric Care</button>
           </div>
           <p class="paragraph">Our mission is to redefine hospitality by offering unparalleled comfort and personalized
             service.</p>
@@ -234,18 +234,18 @@
           <div class="mission-images">
             <div class="image-column">
               <div class="top-img">
-                <img loading="lazy" class="img-cover" [src]="image.MISSION1" alt="">
+                <img loading="lazy" class="img-cover" src="assets/imgs/mission1.jpeg" alt="">
               </div>
               <div class="bottom-img">
-                <img loading="lazy" class="img-cover" [src]="image.MISSION2" alt="">
+                <img loading="lazy" class="img-cover" src="assets/imgs/mission2.jpeg" alt="">
               </div>
             </div>
             <div class="image-column">
               <div class="half-img">
-                <img loading="lazy" class="img-cover" [src]="image.MISSION3" alt="">
+                <img loading="lazy" class="img-cover" src="assets/imgs/mission3.png" alt="">
               </div>
               <div class="half-img">
-                <img loading="lazy" class="img-cover" [src]="image.MISSION4" alt="">
+                <img loading="lazy" class="img-cover" src="assets/imgs/mission4.jpeg" alt="">
               </div>
             </div>
           </div>
@@ -284,11 +284,11 @@
           </div>
           <div class="d-flex">
             <div class="barcode">
-              <img loading="lazy" [src]="image.BANNER_QR" alt="ban">
+              <img loading="lazy" src="assets/imgs/banner-Qr.png" alt="">
             </div>
             <div class="scan-here">
               <button class="white-btn">Scan Code Here</button>
-              <img loading="lazy" [src]="image.ARROW" alt="">
+              <img loading="lazy" src="assets/imgs/arrow.svg" alt="">
             </div>
           </div>
         </div>
@@ -299,7 +299,7 @@
               <h3>Get 10-20% Off on First Booking</h3>
               <button class="custom-btn small"><a href="/offers">Avail Now</a></button>
               <div class="offer-avatar">
-                <img loading="lazy" [src]="image.OFFER_AVATAR1" alt="">
+                <img loading="lazy" src="assets/imgs/offer-avatar1.png" alt="">
               </div>
             </div>
             <div class="offer-box">
@@ -307,7 +307,7 @@
               <h3>Get 10-20% Off on Second Booking</h3>
               <button class="custom-btn small"><a href="/offers">Avail Now</a></button>
               <div class="offer-avatar">
-                <img loading="lazy" [src]="image.OFFER_AVATAR2" alt="">
+                <img loading="lazy" src="assets/imgs/offer-avatar2.png" alt="">
               </div>
             </div>
             <div class="offer-box">
@@ -315,7 +315,7 @@
               <h3>Get 10-20% Off on Third Booking</h3>
               <button class="custom-btn small"><a href="/offers">Avail Now</a></button>
               <div class="offer-avatar">
-                <img loading="lazy" [src]="image.OFFER_AVATAR3" alt="">
+                <img loading="lazy" src="assets/imgs/offer-avatar3.png" alt="">
               </div>
             </div>
           </div>
@@ -340,7 +340,7 @@
             </div>
             <div class="destination-strip">
               <div class="rating">
-                <img loading="lazy" [src]="image.STAR" alt="">
+                <img loading="lazy" src="assets/imgs/star.svg" alt="">
                 {{destination.rating}}
               </div>
               <div class="favorite"
@@ -355,12 +355,12 @@
               <div class="left">
                 <h3>{{destination.name}}</h3>
                 <span class="address">
-                  <img loading="lazy" [src]="image.LOCATION_PIN" alt="">
+                  <img loading="lazy" src="assets/imgs/location-pin.svg" alt="">
                   {{destination.address}}
                 </span>
               </div>
               <button class="custom-btn small" (click)="onCityChange(destination.address)">Book Now <img loading="lazy"
-                  [src]="image.RIGHT_ARROW" alt=""></button>
+                  src="assets/imgs/right-arrow.svg" alt=""></button>
             </div>
           </div>
         </div>
@@ -391,7 +391,7 @@
               </div>
               <div class="destination-strip">
                 <div class="rating">
-                  <img loading="lazy" [src]="image.STAR" alt="">
+                  <img loading="lazy" src="assets/imgs/star.svg" alt="">
                   {{destination.rating}}
                 </div>
                 <div class="favorite"
@@ -406,12 +406,12 @@
                 <div class="left">
                   <h3>{{destination.name}}</h3>
                   <span class="address">
-                    <img loading="lazy" [src]="image.LOCATION_PIN" alt="">
+                    <img loading="lazy" src="assets/imgs/location-pin.svg" alt="">
                     {{destination.address}}
                   </span>
                 </div>
                 <button class="custom-btn small" (click)="onCityChange(destination.address)">Book Now <img
-                    loading="lazy" [src]="image.RIGHT_ARROW" alt=""></button>
+                    loading="lazy" src="assets/imgs/right-arrow.svg" alt=""></button>
               </div>
             </div>
           </ng-template>
@@ -439,7 +439,7 @@
                 <p class="paragraph">{{blogs[0].meta_description?.substring(0,130)}}{{blogs[0].meta_description?.length
                   > 130 ? '...':''}}</p>
                 <div class="right-arrow" (click)="navigateToBlogDetails(blogs[0].slug)">
-                  <img loading="lazy" [src]="image.RIGHT_ARROW_RED" alt="">
+                  <img loading="lazy" src="assets/imgs/right-arrow-red.svg" alt="">
                 </div>
               </div>
             </div>
@@ -457,7 +457,7 @@
                 <p class="paragraph">{{blogs[1].meta_description?.substring(0,50)}}{{blogs[1].meta_description?.length >
                   50 ? '...':''}}</p>
                 <div class="right-arrow" (click)="navigateToBlogDetails(blogs[1].slug)">
-                  <img loading="lazy" [src]="image.RIGHT_ARROW_RED" alt="">
+                  <img loading="lazy" src="assets/imgs/right-arrow-red.svg" alt="">
                 </div>
               </div>
             </div>
@@ -473,7 +473,7 @@
                 <p class="paragraph">{{blogs[2].meta_description?.substring(0,50)}}{{blogs[2].meta_description?.length >
                   50 ? '...':''}}</p>
                 <div class="right-arrow" (click)="navigateToBlogDetails(blogs[2].slug)">
-                  <img loading="lazy" [src]="image.RIGHT_ARROW_RED" alt="">
+                  <img loading="lazy" src="assets/imgs/right-arrow-red.svg" alt="">
                 </div>
               </div>
             </div>
@@ -493,7 +493,7 @@
                 <p class="paragraph">{{blogs[3].meta_description?.substring(0,50)}}{{blogs[3].meta_description?.length >
                   50 ? '...':''}}</p>
                 <div class="right-arrow" (click)="navigateToBlogDetails(blogs[3].slug)">
-                  <img loading="lazy" [src]="image.RIGHT_ARROW_RED" alt="">
+                  <img loading="lazy" src="assets/imgs/right-arrow-red.svg" alt="">
                 </div>
               </div>
             </div>
@@ -511,7 +511,7 @@
                 <p class="paragraph">{{blogs[4].meta_description?.substring(0,130)}}{{blogs[4].meta_description?.length
                   > 130 ? '...':''}}</p>
                 <div class="right-arrow" (click)="navigateToBlogDetails(blogs[4].slug)">
-                  <img loading="lazy" [src]="image.RIGHT_ARROW_RED" alt="">
+                  <img loading="lazy" src="assets/imgs/right-arrow-red.svg" alt="">
                 </div>
               </div>
             </div>
@@ -561,11 +561,11 @@
           </div>
           <button class="custom-btn" (click)=" gotoNext('hotel-partner')">
             <span>Become a Host</span>
-            <img loading="lazy" [src]="image.HAND" alt="">
+            <img loading="lazy" src="assets/imgs/hand.svg" alt="">
           </button>
         </div>
         <div class="hosting-img">
-          <img loading="lazy" [src]="image.HOST_AVATAR" alt="">
+          <img loading="lazy" src="assets/imgs/host-avatar.svg" alt="">
         </div>
       </div>
     </div>
@@ -580,7 +580,7 @@
             <h2>Get answers to your key questions</h2>
           </div>
           <div class="faq-img">
-            <img loading="lazy" class="img-cover" [src]="image.FAQ_BG" alt="FAQ">
+            <img loading="lazy" class="img-cover" src="assets/imgs/faq-bg.jpeg" alt="">
           </div>
         </div>
         <div class="col-lg-7">
@@ -590,8 +590,8 @@
                 <button ngbAccordionButton>
                   {{ faq.title }}
                   <span class="plus-icon">
-                    <img loading="lazy" class="plus" [src]="image.PLUS" alt="">
-                    <img loading="lazy" class="minus" [src]="image.MINUS" alt="">
+                    <img loading="lazy" class="plus" src="assets/imgs/plus.svg" alt="">
+                    <img loading="lazy" class="minus" src="assets/imgs/minus.svg" alt="">
                   </span>
                 </button>
               </h2>
@@ -625,19 +625,19 @@
           </div>
           <div class="download-access">
             <div class="barcode">
-              <img loading="lazy" class="img-cover" [src]="image.BANNER_QR" alt="">
+              <img loading="lazy" class="img-cover" src="assets/imgs/banner-Qr.png" alt="">
             </div>
             <div class="store-img">
-              <img loading="lazy" [src]="image.APPLE_STORE" alt=""
+              <img loading="lazy" src="assets/imgs/apple-store.png" alt=""
                 (click)="openNew('https://apps.apple.com/ca/app/welrm/id1643890398')">
-              <img loading="lazy" [src]="image.GOOGLE_STORE" alt="GOOGLE_STORE"
+              <img loading="lazy" src="assets/imgs/google-store.png" alt=""
                 (click)="openNew('https://play.google.com/store/apps/details?id=com.welrm')">
             </div>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="mockup-img">
-            <img loading="lazy" [src]="image.APP_MOCKU" alt="">
+            <img loading="lazy" src="assets/imgs/app-mockup.png" alt="">
           </div>
         </div>
       </div>
@@ -687,7 +687,7 @@
         class="fa-solid fa-x"></i></button>
     <div class="bd-inner">
       <div class="host-mobile">
-        <img loading="lazy" class="img-cover" [src]="image.IPHONE_MOCKUP" alt="">
+        <img loading="lazy" class="img-cover" src="assets/imgs/iphone-mockup.svg" alt="">
       </div>
       <div class="host-content">
         <h2>Download</h2>
@@ -696,17 +696,17 @@
           exclusive features, enjoy seamless login, and stay updated with the latest deals anytime, anywhere.</p>
         <div class="host-dl">
           <div class="barcode">
-            <img loading="lazy" class="img-cover" [src]="image.BANNER_QR" alt="">
+            <img loading="lazy" class="img-cover" src="assets/imgs/banner-Qr.png" alt="">
           </div>
           <div class="host-platform">
             <div class="platform-inner">
               <a href="https://apps.apple.com/ca/app/welrm/id1643890398" target="_blank">
-                <img loading="lazy" [src]="image.IPHONE_DL" alt="">
+                <img loading="lazy" src="assets/imgs/iphone-dl.svg" alt="">
               </a>
             </div>
             <div class="platform-inner">
               <a href="https://play.google.com/store/apps/details?id=com.welrm" target="_blank">
-                <img loading="lazy" [src]="image.GOOGLE_DL" alt="">
+                <img loading="lazy" src="assets/imgs/google-dl.svg" alt="">
               </a>
             </div>
           </div>

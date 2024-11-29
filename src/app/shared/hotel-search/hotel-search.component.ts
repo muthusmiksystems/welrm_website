@@ -12,7 +12,7 @@ import {
 } from "@angular/forms";
 
 import { DataMessageService } from 'src/app/message.service'
-import {IMAGES} from '../constants/images.constant';
+
 interface AutoCompleteCompleteEvent {
 	originalEvent: Event;
 	query: string;
@@ -25,7 +25,6 @@ interface AutoCompleteCompleteEvent {
 	providers: [DatePipe],
 })
 export class HotelSearchComponent implements OnInit {
-	public images=IMAGES;
 	@ViewChild('calendarRef') private calendarRef: any;
 	@Input() allLocation: any;
 	@Output() searchQueryChange = new EventEmitter<string>();

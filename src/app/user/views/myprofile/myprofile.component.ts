@@ -3,7 +3,7 @@ import { MyprofileService } from './myprofile.service';
 import { catchError } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
 import { MessageService } from 'primeng/api';
-import {IMAGES} from "../../../shared/constants/images.constant";
+
 
 @Component({
   selector: 'app-myprofile',
@@ -11,7 +11,6 @@ import {IMAGES} from "../../../shared/constants/images.constant";
   styleUrls: ['./myprofile.component.scss'],
 })
 export class MyprofileComponent implements OnInit {
-  public images=IMAGES;
   profileData: any[] = [];
   fullName: string | undefined;
   email: string | undefined;

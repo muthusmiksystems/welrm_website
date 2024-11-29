@@ -5,11 +5,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class HeaderService {
-  // private apiUrl = 'https://api.welrm.com/api/user/send-otp';
-  // private valOtp = 'https://api.welrm.com/api/user/verify-otp';
-  private apiUrl = 'https://localhost:5001/api/user/send-otp';
-  private valOtp = 'https://localhost:5001/api/user/verify-otp';
-
+  private apiUrl = 'https://api.welrm.com/api/user/send-otp';
+  private valOtp = 'https://api.welrm.com/api/user/verify-otp';
 
   constructor(private http: HttpClient) { }
 

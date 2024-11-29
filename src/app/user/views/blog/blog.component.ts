@@ -3,7 +3,7 @@ import { BlogService } from './blog.service';
 import { Router } from '@angular/router';
 import { Carousel } from 'primeng/carousel';
 import _ from 'lodash';
-import {IMAGES} from '../../../shared/constants/images.constant'
+
 
 BlogService
 
@@ -13,7 +13,7 @@ BlogService
   styleUrls: ['./blog.component.scss']
 })
 export class BlogComponent implements OnInit {
-public images=IMAGES;
+
   currentPage: number = 1;
   totalRecords: number = 0;
   blogs: any;

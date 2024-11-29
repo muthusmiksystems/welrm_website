@@ -4,14 +4,13 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { catchError } from 'rxjs';
 import { ChangepasswordService } from 'src/app/user/views/changepassword/changepassword.service';
-import {IMAGES} from '../constants/images.constant'
+
 @Component({
   selector: 'app-set-password',
   templateUrl: './set-password.component.html',
   styleUrls: ['./set-password.component.scss']
 })
 export class SetPasswordComponent implements OnInit {
-  public images=IMAGES;
   passwordChangeForm!: FormGroup;
   public passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,}$/;
 

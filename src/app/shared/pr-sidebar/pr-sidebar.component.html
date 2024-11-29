@@ -1,6 +1,6 @@
 <div class="sidebar" [ngClass]="{'open': sidebarOpen}">
     <div class="logo" *ngIf="isMobileView">
-        <img [src]="images.LOGO_WHITE" alt="" height="32px" width="94px" />
+        <img src="assets/imgs/logo-white.png" alt="" height="32px" width="94px" />
       </div>
     <ul>
         <li [ngClass]="{'active': item.active }" *ngFor="let item of sidebar" (click)="swichTabs(item.slug)">

@@ -18,14 +18,10 @@ export class AuthService {
   private tokenKey = 'access_token';
   private expirationKey = 'token_expiration';
   private userKey = 'user_data';
-  // apiUrl = 'https://api.welrm.com/api/login';
-  // logoutUrl = 'https://api.welrm.com/api/logout';
-  // sendOtpUrl = 'https://api.welrm.com/api/user/send-otp';
-  // valOtpUrl = 'https://api.welrm.com/api/user/verify-otp';
-  apiUrl = 'https://localhost:5001/api/login';
-  logoutUrl = 'https://localhost:5001/api/logout';
-  sendOtpUrl = 'https://localhost:5001/api/user/send-otp';
-  valOtpUrl = 'https://localhost:5001/api/user/verify-otp';
+  apiUrl = 'https://api.welrm.com/api/login';
+  logoutUrl = 'https://api.welrm.com/api/logout';
+  sendOtpUrl = 'https://api.welrm.com/api/user/send-otp';
+  valOtpUrl = 'https://api.welrm.com/api/user/verify-otp';
 
   constructor(private messageService1: MessageService, private http: HttpClient, private router: Router, private apiService: ApiCallerService,
     public afAuth: AngularFireAuth

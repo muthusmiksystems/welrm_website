@@ -21,7 +21,7 @@
                 </div>
                 <div class="content-right">
                   <div class="arrow">
-                    <img [src]="images.REDIRECT_ARROW" alt="" class="img-cover">
+                    <img src="assets/imgs/redirect-arrow.svg" alt="" class="img-cover">
                   </div>
                 </div>
               </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="content-right">
                   <div class="arrow">
-                    <img [src]="images.REDIRECT_ARROW" alt="" class="img-cover">
+                    <img src="assets/imgs/redirect-arrow.svg" alt="" class="img-cover">
                   </div>
                 </div>
               </div>
@@ -58,7 +58,7 @@
     </div>
     <div class="profile-bd h-100 d-flex align-items-center justify-content-center" *ngIf="!tabs[activeTab].content?.length && !isLoading">
       <div class="norecord-msg">
-          <img [src]="images.NORECORD" alt="">
+          <img src="assets/imgs/norecord.svg" alt="">
           <p>{{userData?.data?.user?.fullName}} You have no {{tabs[activeTab].label}} </p>
       </div>
   </div>
