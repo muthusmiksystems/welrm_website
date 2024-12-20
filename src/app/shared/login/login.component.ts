@@ -141,7 +141,7 @@ export class LoginComponent implements OnInit {
 
         // Construct the payload from the response
         const payload = {
-          userType: "user",
+          userType: "customer",
           type: "google",
           social_loginId: res.user.providerData[0].uid, // Extract from the user object
           fcmToken: res.user.uid, // Replace with actual FCM token if available

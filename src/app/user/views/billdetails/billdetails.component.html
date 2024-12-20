@@ -5,7 +5,8 @@
             <div class="line">
                 <span class="fillline" [style.width]="stepper[activeStep].progress"></span>
             </div>
-            <div class="stepper-item" [ngClass]="{'active': item?.active, 'complete': item?.complete }" *ngFor="let item of stepper; let i = index">
+            <div class="stepper-item" [ngClass]="{'active': item?.active, 'complete': item?.complete }"
+                *ngFor="let item of stepper; let i = index">
                 <span>{{item.step}}</span>
                 <div class="step-desc">
                     <label>{{item.label}}</label>
@@ -24,39 +25,50 @@
                                 <div class="head-right" *ngIf="!isLoggedIn">
                                     <label class="right-label">Already Registered?</label>
                                     <button class="login-btn" (click)="openLogin()">
-                                        <img src="images.LOGIN_AVTAR_RED" alt="" />
+                                        <img [src]="images.LOGIN_AVTAR_RED" alt="" />
                                         Login
                                     </button>
                                 </div>
                             </div>
                             <div class="card-form">
-                                 <!-- sign-in form -->
+                                <!-- sign-in form -->
                                 <div *ngIf="!isLoggedIn">
                                     <app-register></app-register>
                                 </div>
-                                
+
                                 <form [formGroup]="userForm" class="detail-Form" *ngIf="isLoggedIn">
                                     <div class="custom-input read-only">
                                         <label class="form-label">Full name</label>
                                         <div class="position-relative">
-                                            <input type="text" class="input-field" formControlName="fullName" placeholder="Enter Your Full Name" [readonly]="userData?.data?.user?.fullName" >
+                                            <input type="text" class="input-field" formControlName="fullName"
+                                                placeholder="Enter Your Full Name"
+                                                [readonly]="userData?.data?.user?.fullName">
                                             <img [src]="images.CHECKMARK_GREEN" alt="" class="green-checkmark">
                                         </div>
-                                        <span class="inline-error" *ngIf="userForm.controls.fullName.hasError('required') && userForm.controls.fullName.touched">Full name is required</span>
+                                        <span class="inline-error"
+                                            *ngIf="userForm.controls.fullName.hasError('required') && userForm.controls.fullName.touched">Full
+                                            name is required</span>
                                     </div>
                                     <div class="custom-input">
                                         <label class="form-label">Email address</label>
-                                        <input type="text" class="input-field" formControlName="email" placeholder="Enter Your E-mail" [readonly]="userData?.data?.user?.email">
-                                        <span class="inline-error" *ngIf="userForm.controls.email.hasError('required') && userForm.controls.email.touched">Email is required</span>
+                                        <input type="text" class="input-field" formControlName="email"
+                                            placeholder="Enter Your E-mail" [readonly]="userData?.data?.user?.email">
+                                        <span class="inline-error"
+                                            *ngIf="userForm.controls.email.hasError('required') && userForm.controls.email.touched">Email
+                                            is required</span>
                                     </div>
                                     <div class="custom-input">
                                         <label class="form-label">Phone Number</label>
-                                        <input type="number" maxlength="10" class="input-field hide-spin" formControlName="mobile" placeholder="Enter Your Phone Number" [readonly]="userData?.data?.user?.mobile">
-                                        <span class="inline-error" *ngIf="userForm.controls.mobile.hasError('required') && userForm.controls.mobile.touched">Phone number is required</span>
+                                        <input type="number" maxlength="10" class="input-field hide-spin"
+                                            formControlName="mobile" placeholder="Enter Your Phone Number"
+                                            [readonly]="userData?.data?.user?.mobile">
+                                        <span class="inline-error"
+                                            *ngIf="userForm.controls.mobile.hasError('required') && userForm.controls.mobile.touched">Phone
+                                            number is required</span>
                                     </div>
                                 </form>
                                 <div class="check-request">
-                                    <p-checkbox [binary]="true" inputId="request" [(ngModel)]="isChecked"/>
+                                    <p-checkbox [binary]="true" inputId="request" [(ngModel)]="isChecked" />
                                     <label for="request">Special request select or type</label>
                                 </div>
                                 <div *ngIf="isChecked">
@@ -71,7 +83,9 @@
                                     </div> -->
                                     <div class="textarea">
                                         <h5 class="textarea-h5">Additional Request?</h5>
-                                        <textarea id="textarea" name="textarea" rows="4" cols="50" maxlength="500" placeholder="Type your special request here" [formControl]="additionalRequest"></textarea>
+                                        <textarea id="textarea" name="textarea" rows="4" cols="50" maxlength="500"
+                                            placeholder="Type your special request here"
+                                            [formControl]="additionalRequest"></textarea>
                                         <span class="textlength">{{ additionalRequest.value.length }} / 500</span>
                                     </div>
                                 </div>
@@ -84,8 +98,10 @@
                                 <div class="red-card">
                                     <img class="red-calendar" [src]="images.RED_CALENDAR" alt="">
                                     <div class="free-refundable">
-                                        <h5 class="refundable-h5">Risk-free and fully refundable <span class="Included">Included</span></h5>
-                                            <span class="cancel">Cancel before {{ this.receivedData.cancelFromDate | date: 'd MMM y' }} and you'll pay nothing.</span>
+                                        <h5 class="refundable-h5">Risk-free and fully refundable <span
+                                                class="Included">Included</span></h5>
+                                        <span class="cancel">Cancel before {{ this.receivedData.cancelFromDate | date:
+                                            'd MMM y' }} and you'll pay nothing.</span>
                                     </div>
                                 </div>
                                 <div class="freeDiv">
@@ -95,8 +111,10 @@
                             </div>
                         </div>
                         <div class="pay-btns responsive">
-                            <button class="paybtn hotel-pay" (click)="openPayHotel(payhotelmodal)" [disabled]="!isLoggedIn">Pay At Hotel</button>
-                            <button class="paybtn" (click)="openPayNow(paynowmodal)" [disabled]="!isLoggedIn">Pay Now</button>
+                            <button class="paybtn hotel-pay" (click)="openPayHotel(payhotelmodal)"
+                                [disabled]="!isLoggedIn">Pay At Hotel</button>
+                            <button class="paybtn" (click)="openPayNow(paynowmodal)" [disabled]="!isLoggedIn">Pay
+                                Now</button>
                         </div>
                     </div>
                     <!-- step 2 left section -->
@@ -130,8 +148,8 @@
                             <div class="pay-content credit-debit">
                                 <div class="select-method">
                                     <label class="select-label">Select payment method</label>
-                                    <p-dropdown [options]="payment" [(ngModel)]="selectedPayment"
-                                        optionLabel="option" placeholder="Select payment method" />
+                                    <p-dropdown [options]="payment" [(ngModel)]="selectedPayment" optionLabel="option"
+                                        placeholder="Select payment method" />
                                 </div>
                                 <div class="green-note">
                                     Final step! Your card will not be charged today. Your card is only required to
@@ -154,7 +172,8 @@
                                             </div>
                                             <div class="custom-input flex50">
                                                 <label class="form-label">CVC/CVV</label>
-                                                <input type="number" maxlength="3" class="input-field hide-spin" placeholder="">
+                                                <input type="number" maxlength="3" class="input-field hide-spin"
+                                                    placeholder="">
                                             </div>
                                         </div>
                                     </form>
@@ -189,8 +208,8 @@
                             <div class="pay-content credit-debit">
                                 <div class="select-method">
                                     <label class="select-label">Select payment method</label>
-                                    <p-dropdown [options]="payment" [(ngModel)]="selectedPayment"
-                                        optionLabel="option" placeholder="Select payment method" />
+                                    <p-dropdown [options]="payment" [(ngModel)]="selectedPayment" optionLabel="option"
+                                        placeholder="Select payment method" />
                                 </div>
                                 <div class="green-note">
                                     Final step! Your card will not be charged today. Your card is only required to
@@ -243,19 +262,27 @@
                         <div class="detail-head">
                             <div class="head-inner">
                                 <h3>{{hotelName}}</h3>
-                                <span><img class="star" [src]="images.STAR" alt="">{{receivedData?.rating}}</span>
+                                <span class="rating">
+                                    <p-rating [(ngModel)]="rating" [readonly]="true" [cancel]="false"
+                                        class="star-rating">
+                                    </p-rating>
+                                </span>
+                                <!-- <span><img class="star" [src]="images.STAR" alt="">{{receivedData?.rating}}</span> -->
                                 <div class="discount-ribbon responsive">
                                     <label>{{receivedData?.discount}}% OFF</label>
                                 </div>
                             </div>
                             <div class="location">
                                 <img [src]="images.LOCATION_PIN" alt="" class="location-pin">
-                                <p class="address">{{receivedData?.address}}<span class="see-span" (click)="gotoLocation()">SEE MAP</span></p>
+                                <p class="address">{{receivedData?.address}}<span class="see-span"
+                                        (click)="gotoLocation()">SEE MAP</span></p>
                             </div>
                         </div>
                         <div class="hotel-info">
                             <div class="hotel-img">
-                                <img class="img-cover" [src]="receivedData?.roomImages?.length ? receivedData?.roomImages[0] : 'assets/imgs/destination5.jpeg'" alt="">
+                                <img class="img-cover"
+                                    [src]="receivedData?.roomImages?.length ? receivedData?.roomImages[0] : 'assets/imgs/destination5.jpeg'"
+                                    alt="">
                             </div>
                             <div class="hotel-content">
                                 <div class="hotel-row top">
@@ -270,7 +297,8 @@
                                 <div class="hotelcontent-inner">
                                     <div class="hotel-row center">
                                         <div class="center-inner">
-                                            <label class="room-type">{{roomQuantity}} x {{receivedData?.roomType}}</label>
+                                            <label class="room-type">{{roomQuantity}} x
+                                                {{receivedData?.roomType}}</label>
                                             <div class="room-capacity">
                                                 <div class="cap-inner">
                                                     <img class="cap-img" [src]="images.BED" alt="">
@@ -286,22 +314,41 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <img class="edit-icon" [src]="images.EDIT" alt="sdsd" (click)="gotoedit()" *ngIf="activeStep === 0">
+                                        <img class="edit-icon" [src]="images.EDIT" alt="sdsd" (click)="gotoedit()"
+                                            *ngIf="activeStep === 0">
                                     </div>
                                     <div class="hotel-row bottom">
                                         <div class="room-item checkin">
                                             <span>Check-In</span>
-                                            <span class="bold">{{ bookingFromDate | date: 'EE, MMM d, y' }}</span>
-                                            <span>{{receivedData?.checkIn}}</span>
+                                            <span class="bold">{{ bookingFromDate | date: 'EE, MMM d, y ' }}</span>
+                                            <span
+                                                *ngIf="receivedData?.checkIn?.includes('Am') || receivedData?.checkIn?.includes('Pm'); else fromDb">
+                                                <!-- {{ receivedData?.checkIn }} -->
+                                                {{ formatTime(receivedData?.checkIn) }}
+                                            </span>
+
+
+                                            <ng-template #fromDb>
+                                                {{ formatTime(receivedData?.checkIn) }}
+                                            </ng-template>
+
                                         </div>
                                         <div class="room-item checkout">
                                             <span>Check-Out</span>
-                                            <span class="bold">{{ bookingToDate | date: 'EE, MMM d, y' }}</span>
-                                            <span>{{receivedData?.checkOut}}</span>
+                                            <span class="bold">{{ bookingToDate | date: 'EE, MMM d, y ' }}</span>
+                                            <span
+                                                *ngIf="receivedData?.checkOut?.includes('Am') || receivedData?.checkOut?.includes('Pm'); else fromDb2">
+                                                {{ formatTime(receivedData?.checkOut) }}
+                                            </span>
+
+                                            <ng-template #fromDb2>
+                                                {{ formatTime(receivedData?.checkOut) }}
+                                            </ng-template>
                                         </div>
                                         <div class="room-item roomguest">
                                             <span>Guest/Room</span>
-                                            <span class="bold">{{receivedData?.guest}} Guest {{roomQuantity}} Room</span>
+                                            <span class="bold">{{receivedData?.guest}} Guest {{roomQuantity}}
+                                                Room</span>
                                             <span>{{numberOfDays}} night</span>
                                         </div>
                                     </div>
@@ -312,8 +359,10 @@
                             <h3>Price Summary</h3>
                             <ul class="prices">
                                 <li class="black23">
-                                    <label class="label">Original price ({{roomQuantity}} room {{numberOfDays}} night)</label>
-                                    <label class="value res-red">₹ <span class="new-price res-red">{{roomPrice * numberOfDays * roomQuantity}}</span></label>
+                                    <label class="label">Original price ({{roomQuantity}} room {{numberOfDays}}
+                                        night)</label>
+                                    <label class="value res-red">₹ <span class="new-price res-red">{{roomPrice *
+                                            numberOfDays * roomQuantity}}</span></label>
                                 </li>
                                 <!-- <li class="black23">
                                     <label class="label">Total Discount</label>
@@ -329,12 +378,46 @@
                                     <label class="label">Other Discount ({{couponValue}})</label>
                                     <label class="value">-₹ <span>{{getDiscount()}}</span></label>
                                 </li>
-                                <li class="price-dis black3f">
+                                <!-- <li class="price-dis black3f">
                                     <div class="d-flex align-items-center">
                                         <p-checkbox [binary]="true" inputId="inputId" [(ngModel)]="isBreakfastIncludes" [disabled]="activeStep !== 0" />
                                         <label for="inputId" class="label">Breakfast</label>
                                     </div>
                                     <label class="value">+₹<span>{{isBreakfastIncludes ? (breakFastPrice * roomQuantity * numberOfDays) : 0}}</span></label>
+                                </li> -->
+                                <li class="price-dis black3f">
+                                    <div class="d-flex align-items-center">
+                                        <!-- <p-checkbox [binary]="true" inputId="inputId" [(ngModel)]="isBreakfastIncludes" [disabled]="activeStep !== 0" />
+                                        <label for="inputId" class="label">Breakfast</label>-->
+                                        <ng-container *ngIf="isBreakfastIncludes === 1">
+                                            <!-- <input type="checkbox" disabled class="me-2">
+                                            <label class="label">with Breakfast</label>  -->
+                                            <!-- <input type="checkbox" id="breakFastPrice" [disabled]="breakFastPrice === 0" class="me-2"
+                                                [checked]="breakFastPrice > 0"> -->
+                                            <input type="checkbox" id="breakFastPrice"
+                                                [checked]="  isBreakfastChecked"
+                                                class="me-2" [(ngModel)]="isBreakfastChecked"
+                                                (change)="onBreakfastChange($event)" [disabled]="isBreakfastIncludes === 1 && breakFastPrice===0 ? true : false">
+                                            <label class="label">
+                                                {{ breakFastPrice > 0 ? 'with Breakfast' : 'Breakfast included' }}
+                                            </label>
+                                        </ng-container>
+                                        <!-- <ng-container *ngIf="isBreakfastIncludes === 1 && breakFastPrice === 0">
+                                            <input type="checkbox" disabled class="me-2">
+                                            <label class="label">Breakfast included</label>
+                                        </ng-container> -->
+
+                                    </div>
+                                    <ng-container *ngIf="isBreakfastIncludes === 1 && breakFastPrice > 0">
+                                        <label class="value">
+                                            +₹<span>{{ isBreakfastChecked ? breakFastPrice : 0 }}</span>
+                                        </label>
+                                    </ng-container>
+                                    <ng-container *ngIf="isBreakfastIncludes === 1 && breakFastPrice === 0">
+                                        <label class="value">
+                                            +₹<span>0</span>
+                                        </label>
+                                    </ng-container>
                                 </li>
                                 <li class="price-dis black3f">
                                     <label class="label">Total Amount</label>
@@ -358,13 +441,16 @@
                             <div class="promo-code custom-card">
                                 <div class="flex1">
                                     <input #myInput type="text" maxlength="6" placeholder="Got A Promocode?">
-                                    <span class="inline-error" *ngIf="couponValidationError">{{couponValidationError}}</span>
+                                    <span class="inline-error"
+                                        *ngIf="couponValidationError">{{couponValidationError}}</span>
                                 </div>
                                 <button class="custom-btn" (click)="checkCoupon()">Apply</button>
                             </div>
                             <div class="pay-btns desktop">
-                                <button class="paybtn hotel-pay" (click)="openPayHotel(payhotelmodal)" [disabled]="!isLoggedIn">Pay At Hotel</button>
-                                <button class="paybtn" (click)="openPayNow(paynowmodal)" [disabled]="!isLoggedIn">Pay Now</button>
+                                <button class="paybtn hotel-pay" (click)="openPayHotel(payhotelmodal)"
+                                    [disabled]="!isLoggedIn">Pay At Hotel</button>
+                                <button class="paybtn" (click)="openPayNow(paynowmodal)" [disabled]="!isLoggedIn">Pay
+                                    Now</button>
                             </div>
                         </div>
                         <div class="desktop" *ngIf="activeStep === 1">
@@ -385,7 +471,8 @@
                             </div>
                             <div class="location">
                                 <img [src]="images.LOCATION_PIN" alt="" class="location-pin">
-                                <p class="address">{{receivedData?.address}}<span class="see-span" (click)="gotoLocation()">SEE MAP</span>
+                                <p class="address">{{receivedData?.address}}<span class="see-span"
+                                        (click)="gotoLocation()">SEE MAP</span>
                                 </p>
                             </div>
                         </div>
@@ -394,8 +481,10 @@
                             <div class="confirm-box">
                                 <span class="fitbox"><img [src]="images.CHECKMARK_GREEN" alt=""></span>
                                 <div>
-                                    <p class="confirm-show"><span>Booking Confirmed</span> Your booing until {{ bookingSuccess?.bookingToDate | date:'MMM d, y' }}</p>
-                                    <p>Free cancellation before 23:59 hrs. on {{ bookingSuccess?.bookingFromDate | date:'MMM d, y' }} (property local time)</p>
+                                    <p class="confirm-show"><span>Booking Confirmed</span> Your booing until {{
+                                        bookingSuccess?.bookingToDate | date:'MMM d, y' }}</p>
+                                    <p>Free cancellation before 23:59 hrs. on {{ bookingSuccess?.bookingFromDate |
+                                        date:'MMM d, y' }} (property local time)</p>
                                 </div>
                             </div>
                             <h4>Booking Details</h4>
@@ -407,16 +496,38 @@
                                 <div class="col-sm-4 col-6 info-box">
                                     <label>Check-In</label>
                                     <span>{{bookingSuccess?.bookingFromDate | date: 'EE, MMM d, y'}}</span>
-                                    <small>from {{receivedData?.checkIn}}</small>
+                                    <small>from
+                                        <span
+                                            *ngIf="receivedData?.checkIn?.includes('Am') || receivedData?.checkIn?.includes('Pm'); else fromDb5">
+                                            {{ formatTime(receivedData?.checkIn) }}
+                                        </span>
+
+                                        <ng-template #fromDb5>
+                                            {{ formatTime(receivedData?.checkIn) }}
+                                        </ng-template>
+
+
+                                    </small>
                                 </div>
                                 <div class="col-sm-4 col-6 info-box">
                                     <label>Check-Out</label>
                                     <span>{{bookingSuccess?.bookingToDate | date: 'EE, MMM d, y'}}</span>
-                                    <small>from {{receivedData?.checkOut}}</small>
+                                    <small>to
+                                        <span
+                                            *ngIf="receivedData?.checkOut?.includes('Am') || receivedData?.checkOut?.includes('Pm'); else fromDb6">
+                                            {{ formatTime(receivedData?.checkOut) }}
+                                        </span>
+
+                                        <ng-template #fromDb6>
+                                            {{ formatTime(receivedData?.checkOut) }}
+                                        </ng-template>
+
+                                    </small>
                                 </div>
                                 <div class="col-sm-4 col-6 info-box">
                                     <label>Your Reservation</label>
-                                    <span>{{bookingSuccess?.numberOfDays}} Nights, {{bookingSuccess?.roomQuantity}} Room</span>
+                                    <span>{{bookingSuccess?.numberOfDays}} Nights, {{bookingSuccess?.roomQuantity}}
+                                        Room</span>
                                 </div>
                                 <div class="col-sm-4 col-6 info-box">
                                     <label>Room type</label>
@@ -442,8 +553,11 @@
                                 <h3>Price Summary</h3>
                                 <ul class="prices">
                                     <li class="black23">
-                                        <label class="label">Original price ({{bookingSuccess?.roomQuantity}} room {{bookingSuccess?.numberOfDays}} night)</label>
-                                        <label class="value">₹ <span class="new-price">{{bookingSuccess?.roomPrice * bookingSuccess?.numberOfDays * bookingSuccess?.roomQuantity}}</span></label>
+                                        <label class="label">Original price ({{bookingSuccess?.roomQuantity}} room
+                                            {{bookingSuccess?.numberOfDays}} night)</label>
+                                        <label class="value">₹ <span class="new-price">{{bookingSuccess?.roomPrice *
+                                                bookingSuccess?.numberOfDays *
+                                                bookingSuccess?.roomQuantity}}</span></label>
                                     </li>
                                     <!-- <li class="black23">
                                         <label class="label">Total Discount</label>
@@ -461,10 +575,13 @@
                                     </li>
                                     <li class="price-dis black3f">
                                         <div class="d-flex align-items-center">
-                                            <p-checkbox [binary]="true" inputId="inputId" [(ngModel)]="isBreakfastIncludes" [disabled]="true" />
+                                            <p-checkbox [binary]="true" inputId="inputId"
+                                                [(ngModel)]="isBreakfastIncludes" [disabled]="true" />
                                             <label for="inputId" class="label">Breakfast</label>
                                         </div>
-                                        <label class="value">+₹<span>{{isBreakfastIncludes ? (breakFastPrice * bookingSuccess?.roomQuantity * bookingSuccess?.numberOfDays) : 0}}</span></label>
+                                        <label class="value">+₹<span>{{isBreakfastIncludes ? (breakFastPrice *
+                                                bookingSuccess?.roomQuantity * bookingSuccess?.numberOfDays) :
+                                                0}}</span></label>
                                     </li>
                                     <li class="price-dis black3f">
                                         <label class="label">Total Amount</label>
@@ -488,28 +605,31 @@
                 </div>
             </ng-container>
         </div>
-        
+
         <!-- support-card started here -->
         <div class="support-card custom-card">
             <div class="suport-inner">
                 <img class="support-img" [src]="images.HOTEL_ICON" alt="">
                 <div>
                     <label class="red-label">Explore a Variety of Hotel Options</label>
-                    <span class="support-span">Find the perfect room, from budget-friendly to luxurious. Enjoy a wide selection of hotels.</span>
+                    <span class="support-span">Find the perfect room, from budget-friendly to luxurious. Enjoy a wide
+                        selection of hotels.</span>
                 </div>
             </div>
             <div class="suport-inner">
                 <img class="support-img" [src]="images.HOTEL_ICON" alt="">
                 <div>
                     <label class="red-label">Easy and Hassle-Free Booking</label>
-                    <span class="support-span">Book your hotel in a few clicks. Our platform makes it quick and easy.</span>
+                    <span class="support-span">Book your hotel in a few clicks. Our platform makes it quick and
+                        easy.</span>
                 </div>
             </div>
             <div class="suport-inner">
                 <img class="support-img" [src]="images.HOTEL_ICON" alt="">
                 <div>
                     <label class="red-label">Exclusive Member Discounts</label>
-                    <span class="support-span">Join our membership for exclusive hotel discounts. Save on your next stay and maximize your travel budget.</span>
+                    <span class="support-span">Join our membership for exclusive hotel discounts. Save on your next stay
+                        and maximize your travel budget.</span>
                 </div>
             </div>
         </div>
@@ -522,7 +642,7 @@
 <ng-template #payhotelmodal let-modal>
     <div class="modal-header">
         <!-- <h5>Are you sure you Pay At Hotel?</h5> -->
-         <h5>Please confirm if you are sure you want to book this hotel with the following details</h5>
+        <h5>Please confirm if you are sure you want to book this hotel with the following details</h5>
     </div>
     <div class="modal-body">
         <div class="modal-body-inner">
@@ -534,7 +654,8 @@
                     <div class="hotel-row center">
                         <div>
                             <label class="room-type mb-1">{{roomQuantity}} x {{receivedData?.roomType}}</label>
-                            <label class="room-type included">{{isBreakfastIncludes ? 'With':'Without'}} Breakfast</label>
+                            <label class="room-type included">{{isBreakfastIncludes === 1 && breakFastPrice > 0 ? "with
+                                Breakfast":"Breakfast included"}}</label>
                             <div class="room-capacity">
                                 <div class="cap-inner">
                                     <img class="cap-img" [src]="images.BED" alt="">
@@ -555,12 +676,26 @@
                         <div class="room-item checkin">
                             <span>Check-In</span>
                             <span class="bold">{{ bookingFromDate | date: 'EE, MMM d, y' }}</span>
-                            <span>{{receivedData?.checkIn}}</span>
+                            <span
+                                *ngIf="receivedData?.checkIn?.includes('Am') || receivedData?.checkIn?.includes('Pm'); else fromDb3">
+                                {{ formatTime(receivedData?.checkIn) }}
+                            </span>
+
+                            <ng-template #fromDb3>
+                                {{ formatTime(receivedData?.checkIn) }}
+                            </ng-template>
                         </div>
                         <div class="room-item checkout">
                             <span>Check-Out</span>
                             <span class="bold">{{ bookingToDate | date: 'EE, MMM d, y' }}</span>
-                            <span>{{receivedData?.checkOut}}</span>
+                            <span
+                                *ngIf="receivedData?.checkOut?.includes('Am') || receivedData?.checkOut?.includes('Pm'); else fromDb4">
+                                {{ formatTime(receivedData?.checkOut) }}
+                            </span>
+
+                            <ng-template #fromDb4>
+                                {{ formatTime(receivedData?.checkOut) }}
+                            </ng-template>
                         </div>
                         <div class="room-item roomguest">
                             <span>Guest/Room</span>
@@ -580,15 +715,16 @@
 </ng-template>
 
 <!-- Pay now Modal -->
-<ng-template #paynowmodal id="staticBackdrop" let-modal  class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<ng-template #paynowmodal id="staticBackdrop" let-modal class="modal fade" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <!-- <div class="modal-body">
         <p>We are not storing any information and redirect to third party razorpay.</p>
     </div> -->
     <div class="modal-body text-center">
         <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
+            <span class="visually-hidden">Loading...</span>
         </div>
         <!-- Optional: Add any message below the spinner -->
         <!-- <p>Processing payment...</p> -->
-      </div>
+    </div>
 </ng-template>

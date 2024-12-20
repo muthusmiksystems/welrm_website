@@ -39,25 +39,13 @@ export class NotficationComponent implements OnInit {
         {
           img: 'assets/imgs/destination4.jpeg',
           title: 'Avail New Year discounts on Luxury Hotels upto 35%',
-          desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci',
+          desc: 'Get a flat 15% discount on your first booking.',
+          date : new Date()
         },
-        {
-          img: 'assets/imgs/destination4.jpeg',
-          title: 'Avail New Year discounts on Luxury Hotels upto 35%',
-          desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci',
-        },
+         
       ]
     },
-    {
-      label: '1 week Ago',
-      child: [
-        {
-          img: 'assets/imgs/destination4.jpeg',
-          title: 'Avail New Year discounts on Luxury Hotels upto 35%',
-          desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci',
-        },
-      ]
-    }
+    
   ];
   isLoading = false;
   userData: any;

@@ -9,14 +9,14 @@ import { AuthService } from 'src/app/auth.service';
 import _ from 'lodash';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import {IMAGES} from '../../../shared/constants/images.constant'
+import { IMAGES } from '../../../shared/constants/images.constant'
 @Component({
   selector: 'app-bookings',
   templateUrl: './bookings.component.html',
   styleUrls: ['./bookings.component.scss'],
 })
 export class BookingsComponent implements OnInit {
-  public images=IMAGES;
+  public images = IMAGES;
   productReview: string = '';
   recommendProduct: boolean = false;
   userRating: number = 0;
@@ -56,7 +56,7 @@ export class BookingsComponent implements OnInit {
     private messageService1: MessageService,
     private router: Router,
     private auth_service: AuthService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.userData = this.auth_service.getUserData();
@@ -65,9 +65,10 @@ export class BookingsComponent implements OnInit {
   }
 
   submitReview(bookingId: any) {
+    console.log("this.hotelDetail",this.hotelDetail.hotelId)
     this.book_history
       .rateHotel(
-        bookingId,
+        this.hotelDetail.hotelId,
         this.userRating,
         this.recommendProduct,
         this.productReview
@@ -140,11 +141,12 @@ export class BookingsComponent implements OnInit {
   }
 
   openModal(content: any, key: any, item: any) {
+    console.log("item", item)
     this.selectedType = null;
     this.hotelDetail = item;
     if (content === 'ratingmodal') {
       this.hotelName = this.hotelDetail.hotelDetail.hotelName;
-      this.bookingId = this.hotelDetail.id;
+      this.bookingId = item.hotelId;
     }
     this.modalService.open(content, { windowClass: key === 'cancelmodal' ? 'bcancelation-modal' : 'brating-modal' });
   }
@@ -152,22 +154,32 @@ export class BookingsComponent implements OnInit {
   gotoedit(item) {
     this.router.navigate(['room-details', 'getroom'], { queryParams: { hotelId: item?.hotelId, hotelName: item?.hotelDetail?.hotelName } })
   }
-
+  getTax(item) {
+    let price = 0;
+    price += item.roomPrice * item.roomQuantity * item.numberOfDays;
+    // if (this.isCouponAplied) {
+    //   price -= this.getDiscount();
+    // }
+    let tax = (price / 100) * 12;
+    return _.ceil(tax);
+  }
   getCeilPrice(price) {
     return _.ceil(price);
   }
 
   printInvoice(item) {
+    console.log("itemsssss", item);
     const invoiceHtml: any = `<div class="invoice" id="invoice" style=" padding: 40px 50px 50px; min-width: 700px; background-color: #FFFFFF; margin:0 auto">
     <div class="in-logo" style="text-align: center; margin-bottom: 28px;">
         <img [src]="images.RED_LOGO" alt="">
     </div>
-    <h1 style="font-family: 'Mona-Sans Bold'; font-size: 22px; font-weight: normal; line-height: 26px; text-align: center; margin-bottom: 28px;">Lorium Ipsum text Lorium Ipsum text Lorium Ipsum text</h1>
+    <h1 style="font-family: 'Mona-Sans Bold'; font-size: 22px; font-weight: normal; line-height: 26px; text-align: center; margin-bottom: 28px;">${item.hotelDetail?.hotelName}</h1>
+    <p style="font-family: 'Mona-Sans Regular'; font-size: 16px; line-height: 20px; color: #94A3B8; margin-bottom: 0;text-align: center;">${item.hotelDetail?.address}</p>
     <div class="in-boxs" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px;">
         <div class="boxs-inner" style="width: calc(50% - 17.5px); height: 184px; border-radius: 20px; background-color: #F1F5F999; display: flex; flex-direction: column;">
             <div class="box-total" style="padding: 20px; display: flex; flex-direction: column; border-bottom: 1px solid #0000001A; flex: 1;">
-                <span style="font-family: 'Mona-Sans Regular'; font-size: 18px; line-height: 22px; color: #94A3B8; margin-bottom: 16px;">Grand Total</span>
-                <label style="font-family: 'Mona-Sans Bold'; font-size: 18px; line-height: 32px; color: #4B5563;">${item?.price}</label>
+                <span style="font-family: 'Mona-Sans Regular'; font-size: 18px; line-height: 22px; color: #94A3B8; margin-bottom: 16px;">Total Price</span>
+                <label style="font-family: 'Mona-Sans Bold'; font-size: 18px; line-height: 32px; color: #4B5563;">${(item?.price).toFixed(2)}</label>
             </div>
             <div class="pay-details" style="height: 52px; padding: 10px 20px;">
                 <span style="font-family: 'Mona-Sans Regular'; font-size: 18px; line-height: 22px; color: #94A3B8;">Payment method :</span>
@@ -181,17 +193,11 @@ export class BookingsComponent implements OnInit {
             </div>
             <div class="pay-details" style="height: 52px; padding: 10px 20px;">
                 <span style="font-family: 'Mona-Sans Regular'; font-size: 18px; line-height: 22px; color: #94A3B8;">Paid :</span>
-                <label style=" font-family: 'Mona-Sans Bold'; font-size: 18px; line-height: 32px; color: #4B5563; margin-left: 10px;">July 1,2024</label>
+                <label style=" font-family: 'Mona-Sans Bold'; font-size: 18px; line-height: 32px; color: #4B5563; margin-left: 10px;">${item.createdAt}</label>
             </div>
         </div>
     </div>
-    <div class="in-htl-details" style="margin-bottom: 28px;">
-        <h2 style="font-family: 'Mona-Sans SemiBold'; font-size: 18px; line-height: 22px; color: #4B5563; margin-bottom: 0;">${item.hotelDetail?.hotelName}</h2>
-        <div class="in-address" style="margin-top: 15px; display: flex; align-items: flex-start;">
-            <img [src]="images.LOCPIN_GREY" alt="" style="margin-right: 5px">
-            <p style="font-family: 'Mona-Sans Regular'; font-size: 16px; line-height: 20px; color: #94A3B8; margin-bottom: 0;">${item.hotelDetail?.address}</p>
-        </div>
-    </div>
+    
     <div class="in-details" style=" background-color: #F1F5F9; border: 1px solid #CBD5E1; border-radius: 20px;">
         <div class="details-head" style="display: flex; justify-content: center; align-items: center; padding: 12px 0 6px;">
             <h2 style="font-family: 'Mona-Sans SemiBold'; font-size: 18px; line-height: 22px; color: #4B5563; margin-bottom: 0;">Booking Details</h2>
@@ -238,7 +244,7 @@ export class BookingsComponent implements OnInit {
         </div>
     </div>
 </div>`;
-    
+
     const invoiceElement = document.createElement('div');
     invoiceElement.innerHTML = invoiceHtml;
     document.body.appendChild(invoiceElement);

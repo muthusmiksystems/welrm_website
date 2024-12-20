@@ -25,10 +25,14 @@
                                         <li *ngIf="tabs[activeTab].slug === 'activeBookings'"><img [src]="images.LOCK" alt="">Passcode: {{item.confirmation_code}}</li>
                                         <li><img [src]="images.HOME" alt="">No. of Rooms: {{item.roomQuantity}}</li>
                                         <li *ngIf="tabs[activeTab].slug === 'activeBookings'"><img [src]="images.CHART" alt="">Booking Status: {{item.status | titlecase }}</li>
-                                        <li><img [src]="images.TAG" alt="">Price: ₹ {{getCeilPrice(item.price)}}</li>
+                                        <!-- <li><img [src]="images.TAG" alt="">Price: ₹ {{getCeilPrice(item?.roomPrice + ((item?.commision_percent/100)*item?.price)).toFixed(2)}}</li> -->
+                                        <!-- <li><img [src]="images.TAG" alt="">Price: ₹ {{getCeilPrice((item?.roomPrice) + getTax(item)).toFixed(2)}}</li> -->
+                                        <li><img [src]="images.TAG" alt="">Price: ₹ {{getCeilPrice((item?.price)).toFixed(2)}}</li>
+
+
                                     </ul>
                                 </div>
-                                <div class="book-dates" *ngIf="item.status == 'pending'">
+                                <div class="book-dates" *ngIf="item.status == 'pending' || item.status == 'active' || item.status == 'confirmed'">
                                     <div class="dates-inner">
                                         <img [src]="images.DATE_RANGE" alt="">
                                         Booking From Date: {{item.bookingFromDate | date }}
@@ -48,7 +52,7 @@
                                         Cancel Date: {{item.cancelation_date | date }}
                                     </div>
                                 </div>
-                                <div class="check-date" *ngIf="item.status == 'completed'">
+                                <div class="check-date" *ngIf="item.status == 'checkout'">
                                     <div class="check-in">
                                         <img [src]="images.DATE_RANGE_WHITE" alt="">
                                         <div class="check-inner">
@@ -68,7 +72,7 @@
                             <div class="info-right">
                                 <button class="dl-invoice" type="button" (click)="printInvoice(item)"><i class="fa-solid fa-file-arrow-down"></i>Invoice</button>
                                 <div>
-                                    <button class="status-btn" *ngIf="item.status == 'pending'" (click)="openModal(cancelmodal, 'cancelmodal', item)">Cancel</button>
+                                    <button class="status-btn" *ngIf="item.status == 'pending' || item.status == 'active' || item.status == 'confirmed'" (click)="openModal(cancelmodal, 'cancelmodal', item)">Cancel</button>
                                     <div *ngIf="item.status == 'cancelled'">
                                         <button class="status-btn" readonly>Cancelled</button>
                                         <div class="view-details">
@@ -76,7 +80,7 @@
                                             <img [src]="images.REDIRECT_ARROW" alt="">
                                         </div>
                                     </div>
-                                    <div class="right-inner" *ngIf="item.status == 'completed'">
+                                    <div class="right-inner" *ngIf="item.status == 'checkout'">
                                         <div class="review"  (click)="openModal(ratingmodal, 'ratingmodal',  item)">
                                             <div class="review-rate">{{item.rating}}</div>
                                             <div class="review-type">

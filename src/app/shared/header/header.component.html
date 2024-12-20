@@ -26,7 +26,7 @@
           </figure>
           <div class="links">
             <span>Start Earning:</span>
-            <a href="/hotel-partner">List Your Property</a>
+            <a target="_blank" href="https://partner.welrm.com/">List Your Property</a>
           </div>
         </li>
       </ul>
@@ -83,18 +83,72 @@
           <img [src]="images.LOGO" alt="Logo" height="32" width="94" />
         </a>
       </div>
+      <!-- <ul class="callPropertyLinks">
+        <li>
+          <figure>
+            <img [src]="images.CALL" alt="Call" />
+          </figure>
+          <div class="links">
+            <span>Book now:</span>
+            <a href="tel:+919584290842">+91-9584290842</a>
+          </div>
+        </li>
+        <li>
+          <figure>
+            <img [src]="images.DOLLAR_SQUARE" alt="Dollar" />
+          </figure>
+          <div class="links">
+            <span>Start Earning:</span>
+            <a target="_blank" href="https://partner.welrm.com/">List Your Property</a>
+          </div>
+        </li>
+      </ul> -->
     </div>
     <div class="right-inner">
+      <!-- <ul>
+        <li routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</li>
+        <li routerLink="/about-us" routerLinkActive="active">About Us</li>
+        <li routerLink="/contact-us" routerLinkActive="active">Contact Us</li>
+        <li routerLink="/blog" routerLinkActive="active">Blogs</li>
+      </ul>
+      <div class="notification" *ngIf="isLoggedIn">
+        <i class="bi bi-bell-fill" id="heart" (click)="gotoNext('Notifications')">
+          <span class="badge" *ngIf="notification">{{ notification }}</span>
+        </i>
+      </div>
+      <div class="responsive call">
+        <a href="tel:+919584290842">
+          <img class="profile-img" [src]="images.CALL_WHITE" alt="Call" />
+        </a>
+      </div> -->
+      <!-- Desktop login button -->
+      <!-- <button class="login-btn" *ngIf="!isLoggedIn" (click)="openLogin()">
+        <img class="log-img" [src]="images.PROFILE" alt="Login" />
+        Login
+      </button> -->
+
+      <!-- Responsive login button -->
+      <!-- <button type="button" class="responsive log-responsive" *ngIf="!isLoggedIn" (click)="openLogin()">
+        <img [src]="images.PROFILE_WHITE" alt="Login" />
+      </button>
+      <div class="profile-item" *ngIf="isLoggedIn" (click)="gotoNext()">
+        <div class="profile-img">
+          <img class="user-img img-cover desktop" [src]="images.PROFILE" alt="User Profile" />
+          <img class="user-img img-cover responsive" [src]="images.PROFILE_WHITE" alt="User Profile" />
+        </div>
+        <span class="user-name desktop" *ngIf="userData?.data?.user?.fullName">
+          {{ userData?.data?.user?.fullName }}
+        </span>
+      </div> -->
       <button class="search-toggle" (click)="toggleHotelSearch()">
         <img [src]="images.MENU" alt="Search" />
       </button>
     </div>
   </div>
-
-  <!-- Ensure this div is outside .inner-header -->
-  <div *ngIf="showHotelSearch" class="search">
-    <app-hotel-search (searchChange)="onSearchChange($event)"></app-hotel-search>
-  </div>
+ <!-- Ensure this div is outside .inner-header -->
+ <div *ngIf="showHotelSearch" class="search">
+  <app-hotel-search (searchChange)="onSearchChange($event)"></app-hotel-search>
+</div>
 </div>
 
 <div *ngIf="isScrolled" class="search-head">

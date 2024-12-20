@@ -15,7 +15,7 @@ export class HelpAndSupportComponent implements OnInit {
     },
     {
       title: 'How much is the membership fees?',
-      content: 'Initially WELRM provided 2 months listing free and will charge from 3rd month. Basic 1 month membership fee starts from 1,500/- Indian rupees.',
+      content: 'there is no cost to list your property with Welrm.',
       
     },
     {
@@ -23,11 +23,11 @@ export class HelpAndSupportComponent implements OnInit {
       content: 'You can fill the contact us form from the site or check the contact us or support page from the application.',
       
     },
-    {
-      title: 'How to pay monthly membership fees?',
-      content: 'From Subscription tab, you can see the valid plans, and the user can choose a plan and select the pay button and then choose any payment method from the list.',
+    // {
+    //   title: 'How to pay monthly membership fees?',
+    //   content: 'From Subscription tab, you can see the valid plans, and the user can choose a plan and select the pay button and then choose any payment method from the list.',
       
-    },
+    // },
     {
       title: 'Can I change the price of a Room?',
       content: 'Yes, Hotel partners can edit any room price, images, discounts from the Edit room option.',
@@ -45,7 +45,7 @@ export class HelpAndSupportComponent implements OnInit {
     },
     {
       title: 'Is there any commission charges that I have to pay to WELRM?',
-      content: 'No, WELRM is not charging any commission from any booking. All the price belongs to the hotel.',
+      content: 'Yes, WelRM is charging minimal cost i.e. 15% commission per booking.',
       
     }
   ];

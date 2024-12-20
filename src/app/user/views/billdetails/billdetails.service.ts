@@ -15,6 +15,7 @@ export class BilldetailsService {
     return localStorage.getItem('access_token');
   }
   BookingHotelRoom(
+    numberOfGuest:any,
     bookingFromDate: any,
     bookingToDate: any,
     breakFastPrice: any,
@@ -38,6 +39,7 @@ export class BilldetailsService {
     razorpay_payment_id: any
   ): Observable<any[]> {
     const body = {
+      total_guest: numberOfGuest,
       bookingFromDate: bookingFromDate,
       bookingToDate: bookingToDate,
       breakFastPrice: breakFastPrice,

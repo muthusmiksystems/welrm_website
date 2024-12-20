@@ -91,17 +91,20 @@
               </div>
               <div class="address">
                 <p class="addressPara">{{ result.address | titlecase }} <span class="span-link" (click)="gotoLocation(result)">Show on maps</span></p>
-                <p-rating [readonly]="true"  class="star-rating" [(ngModel)]="defaultrating" [cancel]="false"></p-rating>
+                <span *ngIf="result?.rating ==='0'">
+                <p-rating [readonly]="true"  class="star-rating" [(ngModel)]="defaultrating" [cancel]="false"></p-rating></span>
+                <span *ngIf="result?.rating >0">
+                  <p-rating [readonly]="true"  class="star-rating" [(ngModel)]="result.rating" [cancel]="false"></p-rating></span>
               </div>
               <div class="content-inner">
                 <div class="content-left">
                   <div class="review-grp">
                     <div class="review">
                       <!-- <div class="review-rate">{{result.rating}}</div> -->
-                      <div class="review-rate">{{result.rating}}</div>
+                      <div class="review-rate">{{result.rating ==='0' ? 3 : result?.rating}}</div>
                       <div class="review-type">
                         <span class="review-label">Excellent</span>
-                        <span class="review-number">(0 Reviews)</span>
+                        <span class="review-number">({{result.review > 0 ? result.review : 0}} Reviews)</span>
                       </div>
                     </div>
                     <div class="review">

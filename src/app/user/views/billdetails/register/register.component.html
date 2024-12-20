@@ -1,5 +1,21 @@
 <div id="register">
     <form [formGroup]="userForm" class="detail-Form">
+        <!-- <div class="social-login">
+            <button class="scl-btn google-btn" (click)="GoogleAuth()">
+              <img [src]="images.GOOGLE_ICON" alt="GOOGLE_ICON">
+              <span>Google</span>
+            </button>
+            <div class="fb-apple-group">
+              <button class="scl-btn fb-btn">
+                <img [src]="images.FB_ICON" alt="FB_">
+                <span>Facebook</span>
+              </button>
+              <button class="scl-btn apple-btn">
+                <img [src]="images.APPLE_ICON" alt="apple">
+                <span>Apple</span>
+              </button>
+            </div>
+          </div> -->
         <div class="custom-input">
             <label class="form-label">Full name</label>
             <input type="text" class="input-field" formControlName="fullName" placeholder="Enter Your Full Name">

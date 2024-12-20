@@ -427,6 +427,7 @@ export class HotelListingComponent implements OnInit {
       ).subscribe((response: any) => {
         if (response.success) {
           let hotelRes = response.data;
+          console.log("hotelReshotelRes",hotelRes)
           hotelRes?.result.forEach((element: any, index: number) => {
             element.newPrice = _.ceil(element.price - (element.price * element.discount) / 100);
             element.tax = _.ceil((element.newPrice / 100) * 12);
