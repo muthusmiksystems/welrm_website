@@ -8,7 +8,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/auth.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import _ from 'lodash';
-
+import {IMAGES} from '../../../shared/constants/images.constant'
 declare var Razorpay: any;
 
 
@@ -18,8 +18,10 @@ declare var Razorpay: any;
   styleUrls: ['./billdetails.component.scss'],
 })
 export class BilldetailsComponent implements OnInit {
+  public images=IMAGES;
   @ViewChild('myInput') myInput: ElementRef | any;
   receivedData: any;
+  numberOfGuest: any | 0;
   bookingFromDate: Date;
   bookingToDate: Date;
   bookingStatus: any = "0";
@@ -48,6 +50,9 @@ export class BilldetailsComponent implements OnInit {
   isCouponAplied: boolean = false;
   totalPrice: any | null;
   selectedPaymentTypeId: any = '';
+  rating : any | null;
+  discount : any | null;
+  isBreakfastChecked: boolean ;
   
   paymentTypes: any = [];
   isLoggedIn = false;
@@ -109,18 +114,23 @@ export class BilldetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.userData = this.auth_service.getUserData();
+    console.log("this.userData",this.userData);
     if (this.userData?.data?.user) {
       this.userForm.patchValue(this.userData.data.user);
     }
     this.dataService.getApiData().subscribe((data) => {
       if (data != null) {
+        console.log("billl detailssss...",data);
+        this.numberOfGuest= data.guest;
         this.bookingFromDate = data.bookingFromDate;
         this.bookingToDate = data.bookingToDate;
         this.breakFastPrice = data.breakFastPrice;
+       this.isBreakfastChecked = data.isBreakfastIncludes === 1 && this.breakFastPrice >= 0;
         this.daily = data.daily;
         this.holdingHour = data.holdingHour;
         this.hotelId = data.hotelId;
         this.hotelName = data.hotelName;
+        this.rating = data.rating > 0 ? data.rating : 3; 
         this.isBreakfastIncludes = data.isBreakfastIncludes ? 1 : 0;
         this.is_paid = 'no';
         this.numberOfDays = data.numberOfDays;
@@ -147,7 +157,9 @@ export class BilldetailsComponent implements OnInit {
       }
     });
   }
-
+  onBreakfastChange(event: Event) {
+    this.isBreakfastChecked = (event.target as HTMLInputElement).checked;
+  }
   getDiscount() {
     let price = this.totalPrice;
     if (this.isCouponAplied) {
@@ -159,7 +171,7 @@ export class BilldetailsComponent implements OnInit {
     let price = 0;
     price += this.roomPrice * this.roomQuantity * this.numberOfDays;
     if (this.isBreakfastIncludes) {
-      price += this.breakFastPrice * this.roomQuantity * this.numberOfDays;
+      price += this.isBreakfastChecked ? this.breakFastPrice : 0 * this.roomQuantity * this.numberOfDays;
     }
     if (this.isCouponAplied) {
       price -= this.getDiscount();
@@ -171,7 +183,7 @@ export class BilldetailsComponent implements OnInit {
     let price = 0;
     price += this.roomPrice * this.roomQuantity * this.numberOfDays;
     if (this.isBreakfastIncludes) {
-      price += this.breakFastPrice * this.roomQuantity * this.numberOfDays;
+      price += this.isBreakfastChecked ? this.breakFastPrice : 0 * this.roomQuantity * this.numberOfDays;
     }
     if (this.isCouponAplied) {
       price -= this.getDiscount();
@@ -275,6 +287,7 @@ export class BilldetailsComponent implements OnInit {
           if (this.selectedPaymentTypeId == 'cod') {
             this.billservice
               .BookingHotelRoom(
+                this.numberOfGuest,
                 this.bookingFromDate,
                 this.bookingToDate,
                 this.breakFastPrice,
@@ -328,7 +341,7 @@ export class BilldetailsComponent implements OnInit {
               amount: this.getTotal() * 100, // 2000 paise = INR 20
               key: "rzp_live_WqbUf1Fe9qGtNX",
               name: this.hotelName,
-              image: "../../../assets/imgs/logo2.png",
+              image: this.images.LOGO2,
               prefill: {
                 name: this.userFullName,
                 email: this.userEmail,
@@ -370,6 +383,7 @@ export class BilldetailsComponent implements OnInit {
     if (response.razorpay_payment_id != '' || response.razorpay_payment_id != null || response.razorpay_payment_id != 'null') {
       this.billservice
         .BookingHotelRoom(
+          this.numberOfGuest,
           this.bookingFromDate,
           this.bookingToDate,
           this.breakFastPrice,
@@ -469,7 +483,9 @@ export class BilldetailsComponent implements OnInit {
   }
 
   openPayHotel(content: any) {
+    console.log('userForm',this.userForm)
     if (this.userForm.invalid) {
+
       this.userForm.markAllAsTouched();
     } else {
       this.modalService.open(content, { windowClass: 'pay-hotel-modal' }).result.then(
@@ -526,5 +542,9 @@ export class BilldetailsComponent implements OnInit {
       let url = `http://google.com/maps/place/${this.receivedData.lat},${this.receivedData.log}`;
       window.open(url, '_blank');
     }
+  }
+  formatTime(time: string): string {
+    const formattedTime = time.replace(/:\d{2} /, ' '); // Removes only seconds
+    return formattedTime;
   }
 }

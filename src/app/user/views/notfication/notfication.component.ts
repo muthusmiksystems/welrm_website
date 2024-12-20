@@ -4,7 +4,7 @@ import { catchError, finalize } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/app/auth.service';
 import { Router } from '@angular/router';
-
+import {IMAGES} from '../../../shared/constants/images.constant'
 
 @Component({
   selector: 'app-notfication',
@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./notfication.component.scss'],
 })
 export class NotficationComponent implements OnInit {
+  public images=IMAGES;
   notifications: any[] = [];
   activeTab = 0;
   tabs: any[] = [
@@ -38,25 +39,13 @@ export class NotficationComponent implements OnInit {
         {
           img: 'assets/imgs/destination4.jpeg',
           title: 'Avail New Year discounts on Luxury Hotels upto 35%',
-          desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci',
+          desc: 'Get a flat 15% discount on your first booking.',
+          date : new Date()
         },
-        {
-          img: 'assets/imgs/destination4.jpeg',
-          title: 'Avail New Year discounts on Luxury Hotels upto 35%',
-          desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci',
-        },
+         
       ]
     },
-    {
-      label: '1 week Ago',
-      child: [
-        {
-          img: 'assets/imgs/destination4.jpeg',
-          title: 'Avail New Year discounts on Luxury Hotels upto 35%',
-          desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae consequat orci',
-        },
-      ]
-    }
+    
   ];
   isLoading = false;
   userData: any;
@@ -100,13 +89,13 @@ export class NotficationComponent implements OnInit {
           this.tabs[1].content = this.allOffers;
           this.notifications.forEach(el => {
             if (el?.title.includes('Booking Confirmed')) {
-              el.img = 'assets/imgs/booking-confirm.svg';
+              el.img = this.images.BOOKING_CONFIRM;
             } else if (el?.title.includes('Booking Cancelled')) {
-              el.img = 'assets/imgs/cancellation-policy.svg';
+              el.img = this.images.CANCELLATION_POLICY;
             } else if (el?.title.includes('Password changed')) {
-              el.img = 'assets/imgs/event.svg';
+              el.img = this.images.EVENT;
             } else if (el?.title.includes('Rating')) {
-              el.img = 'assets/imgs/feedback-request.svg';
+              el.img = this.images.FEEDBACK_REQUEST;
             }
           });
         }

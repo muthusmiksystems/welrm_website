@@ -3,22 +3,23 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { distinctUntilChanged, filter, tap } from 'rxjs';
 import { ResSidebarService } from 'src/app/res-sidebar.service';
-
+import {IMAGES} from '../constants/images.constant';
 @Component({
   selector: 'app-pr-sidebar',
   templateUrl: './pr-sidebar.component.html',
   styleUrls: ['./pr-sidebar.component.scss']
 })
 export class PrSidebarComponent implements OnInit {
+  public images=IMAGES;
   sidebar: any = [
-    { id: '1', img: 'assets/imgs/profile.svg', name: 'My Profile', slug: 'MyProfile', size: '0px 0px', hSize: '0px -50px'},
-    { id: '2', img: 'assets/imgs/profile.svg', name: 'My Bookings', slug: 'MyBookings', size: '-50px 0px', hSize: '-50px -50px' },
-    { id: '3', img: 'assets/imgs/profile.svg', name: 'Notifications', slug: 'Notifications', size: '-100px 0px', hSize: '-100px -50px' },
-    { id: '4', img: 'assets/imgs/profile.svg', name: 'My Reviews', slug: 'MyReviews', size: '-150px 0px', hSize: '-150px -50px' },
-    { id: '5', img: 'assets/imgs/profile.svg', name: 'Wish List', slug: 'WishList', size: '-200px 0px', hSize: '-200px -50px' },
-    { id: '6', img: 'assets/imgs/profile.svg', name: 'Change Password', slug: 'ChangePassword', size: '-250px 0px', hSize: '-250px -50px' },
-    { id: '7', img: 'assets/imgs/profile.svg', name: 'Settings', slug: 'Settings', size: '-300px 0px', hSize: '-300px -50px' },
-    { id: '8', img: 'assets/imgs/profile.svg', name: 'Sign Out', slug: 'SignOut', size: '-400px 0px', hSize: '-400px -50px' },
+    { id: '1', img: this.images.PROFILE, name: 'My Profile', slug: 'MyProfile', size: '0px 0px', hSize: '0px -50px'},
+    { id: '2', img: this.images.PROFILE, name: 'My Bookings', slug: 'MyBookings', size: '-50px 0px', hSize: '-50px -50px' },
+    { id: '3', img: this.images.PROFILE, name: 'Notifications', slug: 'Notifications', size: '-100px 0px', hSize: '-100px -50px' },
+    { id: '4', img: this.images.PROFILE, name: 'My Reviews', slug: 'MyReviews', size: '-150px 0px', hSize: '-150px -50px' },
+    { id: '5', img: this.images.PROFILE, name: 'Wish List', slug: 'WishList', size: '-200px 0px', hSize: '-200px -50px' },
+    { id: '6', img: this.images.PROFILE, name: 'Change Password', slug: 'ChangePassword', size: '-250px 0px', hSize: '-250px -50px' },
+    { id: '7', img: this.images.PROFILE, name: 'Settings', slug: 'Settings', size: '-300px 0px', hSize: '-300px -50px' },
+    { id: '8', img: this.images.PROFILE, name: 'Sign Out', slug: 'SignOut', size: '-400px 0px', hSize: '-400px -50px' },
   ];
   activeTab: any;
   isMobileView = false;

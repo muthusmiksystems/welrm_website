@@ -3,12 +3,12 @@
     <div class="bg-banner">
         <div class="bg-banner-inner">
             <div class="searchbar">
-                <img class="search-red" src="assets/imgs/search-red.svg" alt="">
+                <img class="search-red" [src]="images.SEARCH_RED" alt="">
                 <input type="text" name="searchbar" placeholder="Search....." (input)="search($event)">
             </div>
             <ul class="wlsrc-ul rounded" *ngIf="showSearch">
                 <li *ngFor="let city of searchResults" ngbDropdownItem (click)="navigateToBlogDetails(city.slug)">
-                    <img src="assets/imgs/location-search-pin.svg" alt="">{{city.meta_title}}
+                    <img [src]="images.LOCATION_SEARCH_PIN" alt="">{{city.meta_title}}
                 </li>
             </ul>
             <h1 *ngIf="showText">Welcome to Welrm, We have Trending & Latest Blogs For You</h1>
@@ -50,7 +50,7 @@
                                     <h4>{{ blogs.title }}</h4>
                                 </div>
                                 <div class="address">
-                                    <img src="assets/imgs/location-pin.svg" alt="">
+                                    <img [src]="images.LOCATION_PIN" alt="">
                                     <span class="tp-span">India</span>
                                 </div>
                             </div>
@@ -113,7 +113,7 @@
                             <p class="cont-info">{{ item.post_date | date:'MMM d, y' }}</p>
                             <div class="cont-title" (click)="navigateToBlogDetails(item.slug)">
                                 <h3>{{item.title}}</h3>
-                                <img src="assets/imgs/arrow-up-right.svg" alt="" class="up-right-arrow">
+                                <img [src]="images.ARROW_UP_RIGHT" alt="" class="up-right-arrow">
                             </div>
                             <p class="cont-disc">{{ item.meta_description?.substring(0,150)
                                 }}{{item.meta_description?.length > 150 ? '...':''}}</p>

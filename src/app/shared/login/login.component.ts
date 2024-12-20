@@ -8,6 +8,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GlobalConstants } from 'src/app/constants/common.constant';
 import { GetroomService } from 'src/app/user/views/getroom/getroom.service';
 import { MessageService } from 'primeng/api';
+import {IMAGES} from '../constants/images.constant'
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  public images = IMAGES; 
   loginForm!: FormGroup;
   result: any;
   max: number | null = 10;
@@ -139,7 +141,7 @@ export class LoginComponent implements OnInit {
 
         // Construct the payload from the response
         const payload = {
-          userType: "user",
+          userType: "customer",
           type: "google",
           social_loginId: res.user.providerData[0].uid, // Extract from the user object
           fcmToken: res.user.uid, // Replace with actual FCM token if available

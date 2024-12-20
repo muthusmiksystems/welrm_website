@@ -7,6 +7,7 @@ import { HoteldetailsService } from '../hoteldetails/hoteldetails.service';
 import { PrimeNGConfig } from 'primeng/api';
 import { DataMessageService } from 'src/app/message.service'
 import { MessageService } from 'primeng/api';
+import { DatePipe } from '@angular/common';
 import _ from 'lodash';
 
 
@@ -21,15 +22,18 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { WishlistServiceService } from '../wishlist/wishlist.service';
 import { finalize } from 'rxjs';
 import { BookinghistoryService } from '../bookings/bookinghistory.service';
-
+import {IMAGES} from '../../../shared/constants/images.constant'
 
 @Component({
   selector: 'app-getroom',
   templateUrl: './getroom.component.html',
   styleUrls: ['./getroom.component.scss'],
+  providers: [DatePipe],
 
 })
 export class GetroomComponent implements OnInit {
+
+  public images=IMAGES;
   private tokenKey = 'access_token';
   private userKey = 'user_data';
   roomFilterData: any[] = [];
@@ -83,7 +87,8 @@ export class GetroomComponent implements OnInit {
   price: any | null; //will assign in next page
 
   checkInOut: boolean = false;
-
+  checkIn:any = '';
+  checkOut:any = '';
   paramiterForhotelSearch: any;
   cityOrhotelOrneighborhood: any = '';
   checkInDate: any = '';
@@ -117,6 +122,9 @@ export class GetroomComponent implements OnInit {
 
   selectRoom: any = 0;
   selectRoomTypeId: any = 0;
+  
+  
+  
 
   form = new FormGroup({
     checkInDate: new FormControl("", [Validators.required]),
@@ -129,12 +137,12 @@ export class GetroomComponent implements OnInit {
   roomAvailability: boolean = false;
 
   highlight = [
-    { icon: 'assets/imgs/freewifi.svg', title: 'Free Wifi', name: 'WiFi' },
-    { icon: 'assets/imgs/hygieneplus.svg', title: 'Hygiene Plus', name: 'Sanitizer' },
-    { icon: 'assets/imgs/housekeeping.svg', title: 'Daily housekeeping', name: 'HouseKeeping' },
-    { icon: 'assets/imgs/breakfast.svg', title: 'Breakfast', name: 'In-room Dining' },
-    { icon: 'assets/imgs/ac.svg', title: 'AC', name: 'AC' },
-    { icon: 'assets/imgs/powerbackup.svg', title: 'Power Backup', name: 'Power Backup' },
+    { icon: this.images.FREEWIFI, title: 'Free Wifi', name: 'WiFi' },
+    { icon: this.images.HYGIENEPLUS, title: 'Hygiene Plus', name: 'Sanitizer' },
+    { icon: this.images.HOUSEKEEPING, title: 'Daily housekeeping', name: 'HouseKeeping' },
+    { icon: this.images.BREAKFAST, title: 'Breakfast', name: 'In-room Dining' },
+    { icon: this.images.AC, title: 'AC', name: 'AC' },
+    { icon: this.images.POWERBACKUP, title: 'Power Backup', name: 'Power Backup' },
   ]
   policyList = [
     { policyHead: 'Welcome to Welrm', policyDisc: 'Couples are not only welcome but encouraged to indulge in romantic getaways at our stunning retreat.' },
@@ -162,6 +170,8 @@ export class GetroomComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private wishlistService: WishlistServiceService,
     private book_history: BookinghistoryService,
+    private datePipe: DatePipe,
+
   ) {
 
     this.paramiterForhotelSearch = localStorage.getItem('paramiterForhotelSearch');
@@ -209,8 +219,7 @@ export class GetroomComponent implements OnInit {
     }
   }
 
-
-
+  
   selectCheckIndate(v: any) {
     this.minimumDatecIn = v;
 
@@ -259,7 +268,7 @@ export class GetroomComponent implements OnInit {
   }
 
 
-  submit() {
+  submit(item:any) {
     if (this.selectRoomTypeId == 0) {
       //alert("Please select Room type")
       this.messageService1.add({ severity: 'error', summary: 'Error', detail: 'Please select Room type' });
@@ -280,7 +289,7 @@ export class GetroomComponent implements OnInit {
     } else {
 
       if (this.roomAvailability) {
-        this.goToSecondPage()
+        this.goToSecondPage(item)
       } else {
         //alert(this.roomDeatilsInner.hotelName+" Room is not available")
         this.messageService1.add({ severity: 'error', summary: 'Error', detail: this.roomDeatilsInner.hotelName + " Room is not available" });
@@ -291,10 +300,11 @@ export class GetroomComponent implements OnInit {
     }
   }
 
-  selectRoomF(originalPrice: any, includeDiscountroomPrice: any, name: any, id: any, roomComplementarities: any, PProomTypeId: any) {
+  selectRoomF(originalPrice: any, includeDiscountroomPrice: any, name: any, id: any, roomComplementarities: any, PProomTypeId: any,checkIn:any,checkOut:any) {
     this.roomAvailability = false;
     this.roomDeatilsInner.hotelName = name;
-
+    this.checkIn = checkIn;
+    this.checkOut =checkOut;
     this.onGethotelFilter(this.hotelId, this.PProomTypeId);
     setTimeout(() => {
 
@@ -467,10 +477,11 @@ export class GetroomComponent implements OnInit {
   onGetdetails(id: any) {
     if (id) {
       this.homedetailsService.getHotelDetails(id).subscribe((data: any) => {
-
+        //console.log("my hotel details",data);
         this.hotelId = data.data.rows[0].id;
         this.roomDeatils = data.data;
         this.roomDeatilsInner = data.data.rows[0];
+        this.defaultrating = data.data.rows[0].avgRating > 0 ? data.data.rows[0].avgRating : this.defaultrating; 
         //this.roomId = data.data.result[0].id;
 
         let priceSetArray: any[] = []
@@ -499,10 +510,14 @@ export class GetroomComponent implements OnInit {
                   this.discount = ele.discount;
                   this.selectRoomTypeId = ele.roomId
                   this.roomId = ele.roomId;
-                  this.selectRoom = ele;
+                  // this.selectRoom = ele;
+                  this.selectRoom = {
+                    ...ele,
+                    checkIn: this.formatTime(ele.checkIn)
+                  };
                   // this.selectRoom = {
                   //   ...ele,
-                  //   checkIn: this.formatTime(ele.checkIn)
+                  //   checkIn: this.datePipe.transform(ele.checkIn, 'hh:mm a') 
                   // };
                   console.log('ele', ele)
                   this.selectRoom.checkIn = this.formatTime(this.selectRoom.checkIn)
@@ -603,8 +618,10 @@ export class GetroomComponent implements OnInit {
   }
 
 
-  goToSecondPage() {
-
+  goToSecondPage(item:any) {
+    console.log("itemsss",item)
+    this.breakFastPrice=item.breakfast_price
+    
     var price = this.roomPrice * this.room * this.night;
     if (this.form.value.isCheckedB == true) {
       this.price = (price * 1) * 1 + (this.breakFastPrice * this.room) * 1
@@ -645,7 +662,7 @@ export class GetroomComponent implements OnInit {
       holdingHour: null,
       hotelId: this.hotelId,
       hotelName: this.hotelName,
-      isBreakfastIncludes: this.form.value.isCheckedB,
+      isBreakfastIncludes: item.breakfast_available,
       is_paid: null,
       numberOfDays: this.numberOfDays,
       roomId: this.roomId,
@@ -665,19 +682,19 @@ export class GetroomComponent implements OnInit {
 
       rating: this.roomDeatils.rating,
       address: this.address,
-      roomType: this.selectRoom?.roomType?.name,
+      roomType: item?.roomType?.name,
       adults: this.adults,
       childs: this.childs,
       room: this.room,
-      checkIn: this.selectRoom.checkIn,
-      checkOut: this.selectRoom.checkOut,
+      checkIn: item.checkIn,
+      checkOut: item.checkOut,
       originalPrice: this.originalPrice,
-      discount: this.discount,
-      roomImages: this.roomImages,
+      discount: item?.discount,
+      roomImages: item?.imageUrls,
       lat: this.roomDeatilsInner?.lat,
       log: this.roomDeatilsInner?.log,
     };
-
+    console.log("dataToSenddataToSend",dataToSend);
     this.hotelfilter.setApiData(dataToSend);
     this.router.navigate(['/billdetails']);
 
@@ -900,5 +917,10 @@ export class GetroomComponent implements OnInit {
   onReviewChange(event: any) {
     console.log('Review on change:', event.target.value); // Logs the final value after the change event
     this.productReview = event.target.value; // Optionally update the value manually
+  }
+
+  formatTime1(time: string): string {
+    const formattedTime = time.replace(/:\d{2} /, ' '); // Removes only seconds
+    return formattedTime;
   }
 }

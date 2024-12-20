@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ContactUsService } from './contact-us.service';
 import { MessageService } from 'primeng/api';
-
+import {IMAGES} from '../../../shared/constants/images.constant'
 @Component({
   selector: 'app-contact-us',
   // templateUrl: './contact-us.component.html',
@@ -12,6 +12,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./contact-us.component.scss']
 })
 export class ContactUsComponent implements OnInit {
+  public images=IMAGES;
   contactForm: FormGroup;
   isLoading = false;
 

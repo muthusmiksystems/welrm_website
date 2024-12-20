@@ -86,26 +86,29 @@
                 <h3>{{ result.hotelName }}</h3>
                 <div class="view-details" (click)="booking(result.id, result.hotelName)">
                   <label>View Details</label>
-                  <img src="assets/imgs/redirect-arrow.svg" alt="">
+                  <img [src]="images.REDIRECT_ARROW" alt="">
                 </div>
               </div>
               <div class="address">
                 <p class="addressPara">{{ result.address | titlecase }} <span class="span-link" (click)="gotoLocation(result)">Show on maps</span></p>
-                <p-rating [readonly]="true"  class="star-rating" [(ngModel)]="defaultrating" [cancel]="false"></p-rating>
+                <span *ngIf="result?.rating ==='0'">
+                <p-rating [readonly]="true"  class="star-rating" [(ngModel)]="defaultrating" [cancel]="false"></p-rating></span>
+                <span *ngIf="result?.rating >0">
+                  <p-rating [readonly]="true"  class="star-rating" [(ngModel)]="result.rating" [cancel]="false"></p-rating></span>
               </div>
               <div class="content-inner">
                 <div class="content-left">
                   <div class="review-grp">
                     <div class="review">
                       <!-- <div class="review-rate">{{result.rating}}</div> -->
-                      <div class="review-rate">{{result.rating}}</div>
+                      <div class="review-rate">{{result.rating ==='0' ? 3 : result?.rating}}</div>
                       <div class="review-type">
                         <span class="review-label">Excellent</span>
-                        <span class="review-number">(0 Reviews)</span>
+                        <span class="review-number">({{result.review > 0 ? result.review : 0}} Reviews)</span>
                       </div>
                     </div>
                     <div class="review">
-                      <div class="review-rate"><img src="assets/imgs/walikng-man.svg" alt=""></div>
+                      <div class="review-rate"><img [src]="images.WALKING_MAN" alt=""></div>
                       <p class="walking-distance">{{ result.address | titlecase }}</p>
                     </div>
                   </div>
@@ -117,7 +120,7 @@
                   <div class="complementaries">
                     <div class="spacs" *ngFor="let list of result?.moreComp ? result.roomComplementaries : result.roomComplementaries?.slice(0,3);">
                       <div class="spacs-inner">
-                        <img src="assets/imgs/wifi.svg" alt="" *ngIf="list.name === 'WiFi'">
+                        <img [src]="images.WIFI" alt="" *ngIf="list.name === 'WiFi'">
                         {{list.name}}
                       </div>
                     </div>
@@ -141,7 +144,7 @@
                 <div class="complementaries">
                   <div class="spacs" *ngFor="let list of result?.moreComp ? result.roomComplementaries : result.roomComplementaries?.slice(0,3);">
                     <div class="spacs-inner">
-                      <img src="assets/imgs/wifi.svg" alt="" *ngIf="list.name === 'WiFi'">
+                      <img [src]="images.WIFI" alt="" *ngIf="list.name === 'WiFi'">
                       <!-- <img src="assets/imgs/adults.svg" alt="" *ngIf="list.name === 'Adults'">  -->
                       <!-- <img src="assets/imgs/bed.svg" alt="" *ngIf="list.name === 'Bed'"> -->
                       {{list.name}}

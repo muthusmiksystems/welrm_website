@@ -3,7 +3,7 @@ import { MyprofileService } from './myprofile.service';
 import { catchError } from 'rxjs';
 import { AuthService } from 'src/app/auth.service';
 import { MessageService } from 'primeng/api';
-
+import { IMAGES } from "../../../shared/constants/images.constant";
 
 @Component({
   selector: 'app-myprofile',
@@ -11,14 +11,16 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./myprofile.component.scss'],
 })
 export class MyprofileComponent implements OnInit {
+  private userKey = 'user_data';
+  public images = IMAGES;
   profileData: any[] = [];
   fullName: string | undefined;
   email: string | undefined;
   mobile: any | null;
   countryCode: any | null;
   userImg = null;
-
-  constructor(private messageService1: MessageService, private myprofile_service: MyprofileService,private auth_service:AuthService) {}
+  userData: any;
+  constructor(private messageService1: MessageService, private myprofile_service: MyprofileService, private auth_service: AuthService) { }
 
   ngOnInit(): void {
     this.getprofile();
@@ -53,11 +55,17 @@ export class MyprofileComponent implements OnInit {
         }
       });
   }
+  storeUserData(response: any) {
+    localStorage.setItem(this.userKey, JSON.stringify(response));
+    // this.loggedInSubject.next(true);
+  }
   updateCustomerProfile() {
     const email = this.email;
-    const name  = this.fullName;
+    const name = this.fullName;
+    const mobile=this.mobile;
+
     this.myprofile_service
-      .updateProfile(name,email)
+      .updateProfile(name, email,mobile)
       .pipe(
         catchError((error: any) => {
           // Handle the error here, e.g., display an error message
@@ -72,6 +80,18 @@ export class MyprofileComponent implements OnInit {
       )
       .subscribe((data: any) => {
         if (data.success) {
+          console.log("data", data)
+          this.userData = this.auth_service.getUserData();
+          if (this.userData?.data?.user) {
+            console.log("mobile===========",mobile);
+            this.userData.data.user.fullName = name;
+            this.userData.data.user.email = email;
+            this.userData.data.user.mobile=mobile;
+            // this.userData.data.user.countryCode=countryCode;
+
+            this.storeUserData(this.userData);
+          }
+
           //alert(data.message);
           this.messageService1.add({ severity: 'success', summary: 'Success', detail: data.message });
 

@@ -4,16 +4,16 @@
     <h1>Login</h1>
     <div class="social-login">
       <button class="scl-btn google-btn" (click)="GoogleAuth()">
-        <img src="assets/imgs/google-icon.svg" alt="">
+        <img [src]="images.GOOGLE_ICON" alt="GOOGLE_ICON">
         <span>Google</span>
       </button>
       <div class="fb-apple-group">
         <button class="scl-btn fb-btn">
-          <img src="assets/imgs/fb-icon.svg" alt="">
+          <img [src]="images.FB_ICON" alt="FB_">
           <span>Facebook</span>
         </button>
         <button class="scl-btn apple-btn">
-          <img src="assets/imgs/apple-icon.svg" alt="">
+          <img [src]="images.APPLE_ICON" alt="apple">
           <span>Apple</span>
         </button>
       </div>
@@ -31,8 +31,8 @@
       <div class="input-group password-group">
         <input [type]="newPass ? 'text' : 'password'" placeholder="Password" formControlName="password" />
         <img class="blind-pass" [src]="newPass
-            ? 'assets/imgs/visibility_off.svg'
-            : 'assets/imgs/visibility.svg'" alt="" (click)="newPass = !newPass" />
+            ? this.images.VISIBILITY_OFF
+            : this.images.VISIBILITY" alt="" (click)="newPass = !newPass" />
         <span class="inline-error" *ngIf="
             loginForm.controls.password.hasError('required') &&
             loginForm.controls.password.touched

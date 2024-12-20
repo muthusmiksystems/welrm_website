@@ -21,11 +21,13 @@ export class GetroomService {
   
   getHotelFilter(hotelId: any, roomTypeId: any): Observable<any[]> {
     let url = `${Url.CUSTOMER_ROOMS}${hotelId}/${roomTypeId}`;
+    console.log("fetching bill detials");
     return this.apiService.callApi('GET',url, null,false, false);
   }
 
   // Setter method
   setApiData(data: any) {
+    console.log("datadatadata",data);
     this.sharedData.next(data);
     // Store the data in Local Storage
     localStorage.setItem('bookingData', JSON.stringify(data));
